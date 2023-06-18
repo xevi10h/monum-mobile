@@ -1,24 +1,21 @@
-import React from 'react';
-import {SafeAreaView, StatusBar, StyleSheet} from 'react-native';
-// import auth from '@react-native-firebase/auth';
-import {GoogleSignin} from '@react-native-google-signin/google-signin';
-import LoginScreen from './src/screens/LoginScreen';
+import React, {useEffect} from 'react';
+import {StatusBar, StyleSheet, View} from 'react-native';
+import AuthNavigator from './src/auth/navigator/AuthNavigator';
+import GoogleAuthService from './src/auth/services/GoogleAuthService';
 
-function App(): JSX.Element {
-  GoogleSignin.configure({
-    webClientId:
-      '944908105248-u4k7dp5du3a3ahcg1u6a284u0mri26av.apps.googleusercontent.com',
-  });
-
+function App() {
+  useEffect(() => {
+    GoogleAuthService.configureGoogleSignIn();
+  }, []);
   return (
-    <SafeAreaView style={styles.container}>
+    <View style={styles.container}>
       <StatusBar
         translucent
         backgroundColor="transparent"
         barStyle="light-content"
       />
-      <LoginScreen />
-    </SafeAreaView>
+      <AuthNavigator />
+    </View>
   );
 }
 

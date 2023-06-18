@@ -1,0 +1,15 @@
+{
+  "authScreens": {
+    "loginWithGoogle": "Accedeix amb Google",
+    "loginWithCredentials": "Accedeix amb credencials",
+    "notRegistered": "Encara no estàs registrat?",
+    "register": "Registra't",
+    "emailOrUsername": "Correu electrònic o nom d'usuari",
+    "password": "Contrasenya",
+    "forgotPassword": "Has oblidat la contrasenya?",
+    "username": "Nom d'usuari",
+    "email": "Correu electrònic",
+    "footerText": "Xplorear S.L @2023",
+    "access": "Accedir"
+  }
+}

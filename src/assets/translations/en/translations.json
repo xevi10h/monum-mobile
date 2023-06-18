@@ -1,0 +1,15 @@
+{
+  "authScreens": {
+    "loginWithGoogle": "Access with Google",
+    "loginWithCredentials": "Access with credentials",
+    "notRegistered": "Not registered yet?",
+    "register": "Register",
+    "emailOrUsername": "Email or username",
+    "password": "Password",
+    "forgotPassword": "Forgot password?",
+    "username": "Username",
+    "email": "Email",
+    "footerText": "Xplorear S.L @2023",
+    "access": "Access"
+  }
+}
