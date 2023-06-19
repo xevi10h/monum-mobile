@@ -1,10 +1,12 @@
 import Mapbox, {StyleURL} from '@rnmapbox/maps';
-import React from 'react';
-import {StyleSheet, View} from 'react-native';
+import React, {useEffect} from 'react';
+import {Dimensions, StyleSheet, View} from 'react-native';
 
 Mapbox.setAccessToken(
-  'sk.eyJ1IjoieGV2aWh0IiwiYSI6ImNsajF1bW9wMjA1ZjAzY28weDExdTk1M2wifQ.cn_vkVvxv31jJC4VH7R_Pg',
+  'pk.eyJ1IjoieHBsb3JlYXIiLCJhIjoiY2xqMmU0Z3NyMGFxeTNwbzByNW90dmdxcSJ9.cMT52Rc64Z05YUGPIutXFw',
 );
+
+// sk.eyJ1IjoieHBsb3JlYXIiLCJhIjoiY2xqMmVqOHg1MGF4czNqbzB3eDN2end6OSJ9.Cy_Y7Z44Y-SP4ron5L2w7w
 
 export default function MapScreen() {
   return (
@@ -12,7 +14,7 @@ export default function MapScreen() {
       <View style={styles.container}>
         <Mapbox.MapView
           style={styles.map}
-          styleURL={StyleURL.Street} // Aquí configuramos el estilo explícitamente.
+          // styleURL={StyleURL.Street}
         />
       </View>
     </View>
@@ -26,8 +28,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   container: {
-    height: 300,
-    width: 300,
+    height: Dimensions.get('screen').height,
+    width: Dimensions.get('screen').width,
   },
   map: {
     flex: 1,
