@@ -1,6 +1,7 @@
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
 import React from 'react';
+import {StatusBar} from 'react-native';
 
 import BottomTabNavigator from '../../BottomTabNavigator';
 import LoginScreen from '../screens/LoginScreen';
@@ -21,6 +22,11 @@ const Stack = createStackNavigator<RootStackParamList>();
 function AuthNavigator() {
   return (
     <NavigationContainer>
+      <StatusBar
+        translucent
+        backgroundColor="transparent"
+        barStyle="light-content"
+      />
       <Stack.Navigator
         initialRouteName="Login"
         screenOptions={{headerShown: false}}>

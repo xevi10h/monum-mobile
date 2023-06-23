@@ -1,5 +1,6 @@
 import React, {useEffect} from 'react';
-import {StatusBar, StyleSheet, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
+
 import AuthNavigator from './src/auth/navigator/AuthNavigator';
 import GoogleAuthService from './src/auth/services/GoogleAuthService';
 
@@ -9,11 +10,6 @@ function App() {
   }, []);
   return (
     <View style={styles.container}>
-      <StatusBar
-        translucent
-        backgroundColor="transparent"
-        barStyle="light-content"
-      />
       <AuthNavigator />
     </View>
   );

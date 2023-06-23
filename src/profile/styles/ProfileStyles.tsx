@@ -1,8 +1,10 @@
-import {StyleSheet} from 'react-native';
+import {Dimensions, StyleSheet} from 'react-native';
 
 export const styles = StyleSheet.create({
   backgroundContainer: {
     flex: 1,
+    width: Dimensions.get('screen').width,
+    height: Dimensions.get('screen').height,
   },
   backgroundColor: {
     ...StyleSheet.absoluteFillObject,
