@@ -1,7 +1,7 @@
-import {createMaterialBottomTabNavigator} from '@react-navigation/material-bottom-tabs';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {NavigationContainer} from '@react-navigation/native';
-import React from 'react';
-import {StyleSheet, Image, StatusBar} from 'react-native';
+import React, {useState} from 'react';
+import {StyleSheet, Image, StatusBar, SafeAreaView, View} from 'react-native';
 
 import bottom_bar_list_inactive from './assets/images/icons/bottom_bar_list_inactive.png';
 import bottom_bar_map_inactive from './assets/images/icons/bottom_bar_map_inactive.png';
@@ -22,9 +22,10 @@ export type BottomTabBarIconProps = {
   name?: string;
 };
 
-const Tab = createMaterialBottomTabNavigator<RootBottomTabList>();
+const Tab = createBottomTabNavigator<RootBottomTabList>();
 
 function BottomTabNavigator() {
+  const [isTabBarVisible, setTabBarVisible] = useState(true);
   const renderTabBarIcon = ({focused, name}: BottomTabBarIconProps) => {
     let source;
     switch (name) {
@@ -46,7 +47,9 @@ function BottomTabNavigator() {
         source={source}
         style={[
           styles.bottom_bar_logo_image,
-          {tintColor: focused ? '#3F713B' : '#BDBDBD'},
+          {
+            tintColor: focused ? '#3F713B' : '#BDBDBD',
+          },
         ]}
         resizeMode="contain"
       />
@@ -60,7 +63,16 @@ function BottomTabNavigator() {
         backgroundColor="transparent"
         barStyle="dark-content"
       />
-      <Tab.Navigator initialRouteName="Map" labeled={false}>
+      <Tab.Navigator
+        initialRouteName="Map"
+        screenOptions={{
+          tabBarStyle: [
+            styles.hol,
+            {display: isTabBarVisible ? 'flex' : 'none'},
+          ],
+          tabBarShowLabel: false,
+          headerShown: false,
+        }}>
         <Tab.Screen
           name="List"
           component={ProfileScreen}
@@ -71,11 +83,11 @@ function BottomTabNavigator() {
         />
         <Tab.Screen
           name="Map"
-          component={MapScreen}
           options={{
             tabBarIcon: ({focused}) => renderTabBarIcon({focused, name: 'Map'}),
-          }}
-        />
+          }}>
+          {() => <MapScreen setTabBarVisible={setTabBarVisible} />}
+        </Tab.Screen>
         <Tab.Screen
           name="Profile"
           component={ProfileScreen}
@@ -93,6 +105,20 @@ const styles = StyleSheet.create({
   bottom_bar_logo_image: {
     width: 30,
     height: 30,
+  },
+  hol: {
+    height: 70,
+    position: 'absolute',
+    backgroundColor: 'white',
+    shadowColor: 'black',
+    shadowOffset: {width: 0, height: 2},
+    shadowOpacity: 0.8,
+    shadowRadius: 10,
+    elevation: 10,
+    borderTopLeftRadius: 24,
+    borderTopRightRadius: 24,
+    justifyContent: 'flex-start',
+    alignItems: 'center',
   },
 });
 
