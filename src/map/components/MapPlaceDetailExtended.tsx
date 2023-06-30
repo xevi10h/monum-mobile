@@ -1,5 +1,13 @@
 import React from 'react';
-import {Button, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
+import {
+  Button,
+  Image,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+  View,
+} from 'react-native';
 import {
   PanGestureHandler,
   PanGestureHandlerGestureEvent,
@@ -13,6 +21,7 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 
+import place_pre_detail_importance_1 from '../../assets/images/icons/placeImportance/place_pre_detail_importance_1.png';
 interface MapPlaceDetailExtendedProps {
   placeId: string | null;
   setMarkerSelected: (...args: any[]) => unknown;
@@ -50,39 +59,93 @@ export default function MapPlaceDetailExtended({
   return (
     <PanGestureHandler onGestureEvent={panGestureEvent}>
       <Animated.View style={[styles.container, animatedStyle]}>
-        <LinearGradient
-          start={{x: 0, y: 0}}
-          end={{x: 0, y: 0.2}}
-          colors={['#0004', '#0000']}
+        <View
           style={{
             position: 'absolute',
-            top: 0,
             bottom: 0,
             left: 0,
             right: 0,
-            paddingTop: 20,
           }}>
+          <TouchableWithoutFeedback
+            onPress={() => {
+              setShowPlaceDetailExtended(true);
+              setTabBarVisible(false);
+            }}>
+            <View
+              style={{
+                width: '100%',
+                height: '20%',
+                alignItems: 'center',
+                justifyContent: 'center',
+                borderTopLeftRadius: 24,
+                borderTopRightRadius: 24,
+                paddingTop: 8,
+              }}>
+              <Image
+                source={place_pre_detail_importance_1}
+                style={{
+                  height: 30,
+                  width: 30,
+                  transform: [{rotate: '0deg'}],
+                }}
+                resizeMode="contain"
+              />
+            </View>
+          </TouchableWithoutFeedback>
           <View
             style={{
-              flex: 1,
-              backgroundColor: 'blue',
-              width: 100,
-              height: 100,
-            }}></View>
-          <TouchableOpacity
-            onPress={() => {
-              setShowPlaceDetailExtended(false);
-              setTabBarVisible(true);
-              setMarkerSelected(null);
-            }}
-            style={{
-              flex: 1,
-              backgroundColor: 'red',
-              height: 50,
-              width: 20,
-            }}
-          />
-        </LinearGradient>
+              width: '100%',
+              height: '80%',
+              alignItems: 'center',
+              justifyContent: 'center',
+              flexDirection: 'row',
+              paddingBottom: '6%',
+              paddingTop: 10,
+            }}>
+            <View
+              style={{
+                flex: 2.5,
+                alignItems: 'center',
+                justifyContent: 'center',
+                overflow: 'hidden',
+                paddingHorizontal: 12,
+              }}>
+              <Image
+                source={{
+                  uri: 'k',
+                }}
+                style={{
+                  width: '100%',
+                  height: '100%',
+                }}
+                resizeMode="cover"
+              />
+            </View>
+            <View
+              style={{
+                flex: 4,
+                justifyContent: 'space-between',
+                height: '100%',
+              }}>
+              <Text
+                style={{fontWeight: 'bold', fontSize: 16, color: '#032000'}}>
+                {'jj'}
+              </Text>
+              <Text
+                style={{
+                  fontSize: 16,
+                  color: '#032000',
+                }}>{`${'jjjj'}, ${'kkk'}`}</Text>
+            </View>
+            <View style={{flex: 1, marginHorizontal: '6%'}}>
+              <Image
+                source={place_pre_detail_importance_1}
+                resizeMode="contain"
+                style={{width: '90%', height: '90%'}}
+              />
+            </View>
+          </View>
+        </View>
       </Animated.View>
     </PanGestureHandler>
   );
@@ -92,7 +155,7 @@ const styles = StyleSheet.create({
   container: {
     position: 'absolute',
     width: '100%',
-    height: 1000,
+    height: 400,
     backgroundColor: 'white',
     borderTopLeftRadius: 24,
     borderTopRightRadius: 24,
@@ -101,6 +164,5 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.5,
     shadowRadius: 4,
     elevation: 10,
-    bottom: 0,
   },
 });

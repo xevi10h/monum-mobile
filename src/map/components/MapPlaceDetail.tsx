@@ -140,6 +140,8 @@ export default function MapPlaceDetail({
         setArrowDown(false);
         position.value = withTiming(SHEET_OPEN_HEIGHT, {duration: 300});
       }
+    } else {
+      position.value = SHEET_CLOSED_HEIGHT;
     }
   }, [placeId, position]);
 
