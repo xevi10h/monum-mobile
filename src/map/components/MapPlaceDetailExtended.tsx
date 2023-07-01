@@ -1,10 +1,11 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {
-  Button,
+  Dimensions,
   Image,
+  ImageSourcePropType,
+  SafeAreaView,
   StyleSheet,
   Text,
-  TouchableOpacity,
   TouchableWithoutFeedback,
   View,
 } from 'react-native';
@@ -21,9 +22,17 @@ import Animated, {
   withTiming,
 } from 'react-native-reanimated';
 
-import place_pre_detail_importance_1 from '../../assets/images/icons/placeImportance/place_pre_detail_importance_1.png';
+import place_detail_arrow_bottom_white from '../../assets/images/icons/place_detail_arrow_bottom_white.png';
+import place_detail_play_media from '../../assets/images/icons/place_detail_play_media.png';
+import {IPlace} from '../domain/IPlace';
+import {IPlaceMedia} from '../domain/IPlaceMedia';
+import {getPlaceMedia} from '../services/FakeData';
+
+import ShowRatingStars from './ShowRatingStars';
+const {height} = Dimensions.get('window');
 interface MapPlaceDetailExtendedProps {
-  placeId: string | null;
+  importanceIcon: ImageSourcePropType;
+  placeInformation: IPlace;
   setMarkerSelected: (...args: any[]) => unknown;
   setTabBarVisible: (...args: any[]) => unknown;
   setShowPlaceDetailExtended: (...args: any[]) => unknown;
@@ -34,12 +43,15 @@ type GestureContext = {
 };
 
 export default function MapPlaceDetailExtended({
-  placeId,
+  importanceIcon,
+  placeInformation,
   setMarkerSelected,
   setTabBarVisible,
   setShowPlaceDetailExtended,
 }: MapPlaceDetailExtendedProps) {
+  const [placeMedia, setPlaceMedia] = useState<IPlaceMedia[]>();
   const position = useSharedValue(0);
+
   const panGestureEvent = useAnimatedGestureHandler<
     PanGestureHandlerGestureEvent,
     GestureContext
@@ -47,25 +59,72 @@ export default function MapPlaceDetailExtended({
     onStart: (_, context) => {
       context.startY = position.value;
     },
-    onActive: (event, context) => {},
-    onEnd: event => {},
+    onActive: (event, context) => {
+      const newPosition = context.startY + event.translationY;
+      if (newPosition < 0) {
+        position.value = 0;
+      } else {
+        position.value = newPosition;
+      }
+    },
+    onEnd: event => {
+      if (position.value > height / 2 || event.velocityY > 0) {
+        position.value = withTiming(height);
+      } else {
+        position.value = withTiming(0);
+      }
+    },
   });
   const animatedStyle = useAnimatedStyle(() => {
+    if (position.value >= height) {
+      runOnJS(setMarkerSelected)(null);
+    }
     return {
-      bottom: position.value,
+      marginTop: position.value + 50,
     };
   });
 
+  useEffect(() => {
+    if (placeInformation) {
+      // TO DO: Change it for a call to the API
+      const placeMedia = {};
+      if (placeInformation) {
+        setPlaceMedia(getPlaceMedia());
+        position.value = withTiming(0, {duration: 300});
+      }
+    }
+  }, [placeInformation, position]);
+
   return (
-    <PanGestureHandler onGestureEvent={panGestureEvent}>
-      <Animated.View style={[styles.container, animatedStyle]}>
-        <View
-          style={{
-            position: 'absolute',
-            bottom: 0,
-            left: 0,
-            right: 0,
-          }}>
+    <View
+      style={{
+        position: 'absolute',
+        width: '100%',
+        height: height,
+        backgroundColor: 'rgba(0, 0, 0, 0.8)',
+        top: 0,
+      }}>
+      <PanGestureHandler onGestureEvent={panGestureEvent}>
+        <Animated.View style={[animatedStyle]}>
+          <View
+            style={{
+              height: 200,
+              borderTopLeftRadius: 24,
+              borderTopRightRadius: 24,
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}>
+            <Image
+              source={{uri: placeInformation.imageUrl}}
+              resizeMode="cover"
+              style={{
+                width: '100%',
+                height: '100%',
+                borderTopLeftRadius: 24,
+                borderTopRightRadius: 24,
+              }}
+            />
+          </View>
           <TouchableWithoutFeedback
             onPress={() => {
               setShowPlaceDetailExtended(true);
@@ -73,20 +132,31 @@ export default function MapPlaceDetailExtended({
             }}>
             <View
               style={{
+                position: 'absolute',
                 width: '100%',
-                height: '20%',
+                height: 40,
                 alignItems: 'center',
                 justifyContent: 'center',
-                borderTopLeftRadius: 24,
-                borderTopRightRadius: 24,
-                paddingTop: 8,
               }}>
+              <LinearGradient
+                start={{x: 0, y: 0}}
+                end={{x: 0, y: 1}}
+                colors={['rgba(3, 32, 0, 1)', 'rgba(3, 32, 0, 0)']}
+                style={{
+                  position: 'absolute',
+                  top: 0,
+                  bottom: 0,
+                  left: 0,
+                  right: 0,
+                  borderTopLeftRadius: 24,
+                  borderTopRightRadius: 24,
+                }}
+              />
               <Image
-                source={place_pre_detail_importance_1}
+                source={place_detail_arrow_bottom_white}
                 style={{
                   height: 30,
                   width: 30,
-                  transform: [{rotate: '0deg'}],
                 }}
                 resizeMode="contain"
               />
@@ -94,75 +164,85 @@ export default function MapPlaceDetailExtended({
           </TouchableWithoutFeedback>
           <View
             style={{
-              width: '100%',
-              height: '80%',
+              height: 100,
+              backgroundColor: 'white',
+              justifyContent: 'space-between',
               alignItems: 'center',
-              justifyContent: 'center',
               flexDirection: 'row',
-              paddingBottom: '6%',
-              paddingTop: 10,
+              paddingHorizontal: 15,
             }}>
-            <View
-              style={{
-                flex: 2.5,
-                alignItems: 'center',
-                justifyContent: 'center',
-                overflow: 'hidden',
-                paddingHorizontal: 12,
-              }}>
-              <Image
-                source={{
-                  uri: 'k',
-                }}
-                style={{
-                  width: '100%',
-                  height: '100%',
-                }}
-                resizeMode="cover"
-              />
-            </View>
-            <View
-              style={{
-                flex: 4,
-                justifyContent: 'space-between',
-                height: '100%',
-              }}>
+            <View>
               <Text
                 style={{fontWeight: 'bold', fontSize: 16, color: '#032000'}}>
-                {'jj'}
+                {placeInformation?.name}
               </Text>
               <Text
                 style={{
                   fontSize: 16,
                   color: '#032000',
-                }}>{`${'jjjj'}, ${'kkk'}`}</Text>
+                }}>{`${placeInformation?.address.city}, ${placeInformation?.address.country}`}</Text>
+              <ShowRatingStars rating={placeInformation?.rating || 0} />
             </View>
-            <View style={{flex: 1, marginHorizontal: '6%'}}>
+            <View>
               <Image
-                source={place_pre_detail_importance_1}
+                source={importanceIcon}
+                style={{width: 40, height: 40}}
                 resizeMode="contain"
-                style={{width: '90%', height: '90%'}}
               />
             </View>
           </View>
-        </View>
-      </Animated.View>
-    </PanGestureHandler>
+          <View
+            style={{
+              width: '100%',
+              backgroundColor: 'white',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}>
+            {placeMedia?.map((media, i) => (
+              <View
+                key={i}
+                style={{
+                  width: '95%',
+                  height: 60,
+                  borderRadius: 12,
+                  shadowColor: '#000',
+                  shadowOffset: {width: 0, height: 2},
+                  shadowOpacity: 0.3,
+                  shadowRadius: 1,
+                  elevation: 2,
+                  backgroundColor: 'white',
+                  marginVertical: 10,
+                  marginHorizontal: 20,
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  paddingHorizontal: 20,
+                  paddingVertical: 5,
+                }}>
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    alignItems: 'baseline',
+                  }}>
+                  <Text
+                    style={{fontWeight: 'bold', fontSize: 20, marginRight: 10}}>
+                    {media.id}
+                  </Text>
+                  <Text style={{fontSize: 17}}>{media.title}</Text>
+                </View>
+                <View>
+                  <Image
+                    source={place_detail_play_media}
+                    style={{width: 24, height: 24}}
+                    resizeMode="contain"
+                  />
+                </View>
+              </View>
+            ))}
+          </View>
+        </Animated.View>
+      </PanGestureHandler>
+    </View>
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    position: 'absolute',
-    width: '100%',
-    height: 400,
-    backgroundColor: 'white',
-    borderTopLeftRadius: 24,
-    borderTopRightRadius: 24,
-    shadowColor: 'black',
-    shadowOffset: {width: 0, height: 2},
-    shadowOpacity: 0.5,
-    shadowRadius: 4,
-    elevation: 10,
-  },
-});
+const styles = StyleSheet.create({});

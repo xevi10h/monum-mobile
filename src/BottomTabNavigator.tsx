@@ -2,6 +2,7 @@ import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {NavigationContainer} from '@react-navigation/native';
 import React, {useState} from 'react';
 import {StyleSheet, Image, StatusBar, SafeAreaView, View} from 'react-native';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 import bottom_bar_list_inactive from './assets/images/icons/bottom_bar_list_inactive.png';
 import bottom_bar_map_inactive from './assets/images/icons/bottom_bar_map_inactive.png';
@@ -58,17 +59,16 @@ function BottomTabNavigator() {
 
   return (
     <NavigationContainer independent={true}>
-      <StatusBar
-        translucent
-        backgroundColor="transparent"
-        barStyle="dark-content"
-      />
+      <StatusBar translucent barStyle="dark-content" />
       <Tab.Navigator
         initialRouteName="Map"
         screenOptions={{
           tabBarStyle: [
             styles.hol,
-            {display: isTabBarVisible ? 'flex' : 'none'},
+            {
+              display: isTabBarVisible ? 'flex' : 'none',
+              height: useSafeAreaInsets().bottom + 60,
+            },
           ],
           tabBarShowLabel: false,
           headerShown: false,
@@ -107,7 +107,6 @@ const styles = StyleSheet.create({
     height: 30,
   },
   hol: {
-    height: 70,
     position: 'absolute',
     backgroundColor: 'white',
     shadowColor: 'black',

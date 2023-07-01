@@ -18,7 +18,7 @@ export interface MarkerProps {
   coordinates: [number, number];
   importance: number;
   selected?: boolean;
-  setMarkerSelected: (...args: any[]) => unknown;
+  setMarkerSelected?: (...args: any[]) => unknown;
 }
 
 export function MarkerComponent({
@@ -70,8 +70,7 @@ export function MarkerComponent({
   const singleTap = Gesture.Tap()
     .maxDuration(250)
     .onStart(() => {
-      ('worklet');
-      runOnJS(setMarkerSelected)(id);
+      if (setMarkerSelected) runOnJS(setMarkerSelected)(id);
     });
 
   useEffect(() => {

@@ -7,6 +7,7 @@ import CenterCoordinatesButton from '../components/CenterCoordinatesButton';
 import FilterComponent from '../components/FilterComponent';
 import MapPlaceDetail from '../components/MapPlaceDetail';
 import {MarkerComponent, MarkerProps} from '../components/Marker';
+import {getAllMarkers} from '../services/FakeData';
 import {styles} from '../styles/MapStyles';
 
 Mapbox.setAccessToken(
@@ -30,38 +31,7 @@ export default function MapScreen({setTabBarVisible}: MapScreenProps) {
 
   useEffect(() => {
     // const places = await PlacesService.get(filters)
-    setMarkers([
-      {
-        id: '1',
-        coordinates: [-124.032, 38.7272],
-        importance: 5,
-        setMarkerSelected,
-      },
-      {
-        id: '2',
-        coordinates: [-125.032, 37.5272],
-        importance: 4,
-        setMarkerSelected,
-      },
-      {
-        id: '3',
-        coordinates: [-127.032, 38.7272],
-        importance: 3,
-        setMarkerSelected,
-      },
-      {
-        id: '4',
-        coordinates: [-128.032, 38.9272],
-        importance: 2,
-        setMarkerSelected,
-      },
-      {
-        id: '5',
-        coordinates: [-123.032, 36.9272],
-        importance: 1,
-        setMarkerSelected,
-      },
-    ]);
+    setMarkers(getAllMarkers());
     setCoordinatesLoaded(true);
   }, [filters]);
 

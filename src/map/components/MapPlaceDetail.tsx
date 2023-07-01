@@ -20,6 +20,7 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 import place_pre_detail_arrow_top from '../../assets/images/icons/place_pre_detail_arrow_top.png';
 import place_pre_detail_importance_1 from '../../assets/images/icons/placeImportance/place_pre_detail_importance_1.png';
@@ -28,15 +29,12 @@ import place_pre_detail_importance_3 from '../../assets/images/icons/placeImport
 import place_pre_detail_importance_4 from '../../assets/images/icons/placeImportance/place_pre_detail_importance_4.png';
 import place_pre_detail_importance_5 from '../../assets/images/icons/placeImportance/place_pre_detail_importance_5.png';
 import {IPlace} from '../domain/IPlace';
+import {getPlaceInformation} from '../services/FakeData';
 
 import MapPlaceDetailExtended from './MapPlaceDetailExtended';
 import ShowRatingStar from './ShowRatingStars';
 const {height} = Dimensions.get('window');
-
-const BOTTOM_TAB_HEIGHT = 70 - 24;
 const SHEET_OCUPIED_HEIGHT = 150;
-const SHEET_OPEN_HEIGHT = BOTTOM_TAB_HEIGHT;
-const SHEET_CLOSED_HEIGHT = BOTTOM_TAB_HEIGHT - SHEET_OCUPIED_HEIGHT;
 
 interface MapPlaceDetailProps {
   placeId: string | null;
@@ -53,6 +51,10 @@ export default function MapPlaceDetail({
   setMarkerSelected,
   setTabBarVisible,
 }: MapPlaceDetailProps) {
+  const BOTTOM_TAB_HEIGHT = useSafeAreaInsets().bottom + 60 - 24;
+
+  const SHEET_OPEN_HEIGHT = BOTTOM_TAB_HEIGHT;
+  const SHEET_CLOSED_HEIGHT = BOTTOM_TAB_HEIGHT - SHEET_OCUPIED_HEIGHT;
   const [arrowDown, setArrowDown] = useState(false);
   const [showPlaceDetailExtended, setShowPlaceDetailExtended] = useState(false);
 
@@ -118,36 +120,27 @@ export default function MapPlaceDetail({
   });
 
   useEffect(() => {
+    console.log('HOLAAAAAAAA', placeId);
     if (placeId) {
       // TO DO: Change it for a call to the API
       const placeInformation = {};
       console.log('placeId', placeId);
       if (placeInformation) {
-        setPlaceInformation({
-          name: 'La Sagrada Familia',
-          rating: 4.3,
-          importance: 5,
-          address: {
-            city: 'Barcelona',
-            province: 'Barcelona',
-            country: 'Spain',
-            street: 'Carrer de Mallorca 401',
-          },
-          coordinates: [41.4036299, 2.1743558],
-          imageUrl:
-            'https://lh3.googleusercontent.com/p/AF1QipP3QmBuE3KmQBWw3DnRhUnvky-IJ53m6FvNwdbB=s680-w680-h510',
-        });
+        setPlaceInformation(getPlaceInformation());
         setArrowDown(false);
         position.value = withTiming(SHEET_OPEN_HEIGHT, {duration: 300});
       }
     } else {
       position.value = SHEET_CLOSED_HEIGHT;
+      setTabBarVisible(true);
+      setShowPlaceDetailExtended(false);
     }
   }, [placeId, position]);
 
-  return showPlaceDetailExtended ? (
+  return showPlaceDetailExtended && placeInformation ? (
     <MapPlaceDetailExtended
-      placeId={placeId}
+      importanceIcon={importanceIcon()}
+      placeInformation={placeInformation}
       setMarkerSelected={setMarkerSelected}
       setTabBarVisible={setTabBarVisible}
       setShowPlaceDetailExtended={setShowPlaceDetailExtended}
@@ -185,11 +178,11 @@ export default function MapPlaceDetail({
               <Image
                 source={place_pre_detail_arrow_top}
                 style={{
-                  height: 30,
-                  width: 30,
+                  height: 24,
+                  width: 24,
                   transform: [{rotate: arrowDown ? '180deg' : '0deg'}],
                 }}
-                resizeMode="contain"
+                resizeMode="cover"
               />
             </View>
           </TouchableWithoutFeedback>
@@ -237,14 +230,13 @@ export default function MapPlaceDetail({
                   fontSize: 16,
                   color: '#032000',
                 }}>{`${placeInformation?.address.city}, ${placeInformation?.address.country}`}</Text>
-
               <ShowRatingStar rating={placeInformation?.rating || 0} />
             </View>
             <View style={{flex: 1, marginHorizontal: '6%'}}>
               <Image
                 source={importanceIcon()}
                 resizeMode="contain"
-                style={{width: '90%', height: '90%'}}
+                style={{width: 40, height: 40}}
               />
             </View>
           </View>
