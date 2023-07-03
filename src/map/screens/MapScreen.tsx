@@ -1,7 +1,7 @@
 import Geolocation from '@react-native-community/geolocation';
-import Mapbox, {Camera, MapView} from '@rnmapbox/maps';
+import Mapbox, {Camera} from '@rnmapbox/maps';
 import React, {useEffect, useRef, useState} from 'react';
-import {Dimensions, View} from 'react-native';
+import {Dimensions, StyleSheet, View} from 'react-native';
 
 import CenterCoordinatesButton from '../components/CenterCoordinatesButton';
 import FilterComponent from '../components/filter/FilterComponent';
@@ -9,7 +9,6 @@ import MapPlaceDetail from '../components/MapPlaceDetail';
 import {MarkerComponent, MarkerProps} from '../components/Marker';
 import {IFilter} from '../domain/IFilter';
 import {getAllFilters, getAllMarkers} from '../services/FakeData';
-import {styles} from '../styles/MapStyles';
 
 Mapbox.setAccessToken(
   'pk.eyJ1IjoieHBsb3JlYXIiLCJhIjoiY2xqMmU0Z3NyMGFxeTNwbzByNW90dmdxcSJ9.cMT52Rc64Z05YUGPIutXFw',
@@ -113,3 +112,12 @@ export default function MapScreen({setTabBarVisible}: MapScreenProps) {
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  mapContainer: {
+    flex: 1,
+    height: Dimensions.get('screen').height,
+    width: Dimensions.get('screen').width,
+  },
+  mapView: {flex: 1, color: 'white', intensity: 0.4},
+});

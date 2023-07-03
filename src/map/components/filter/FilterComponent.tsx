@@ -1,9 +1,7 @@
-import React, {useEffect, useRef, useState} from 'react';
-import {NativeScrollEvent, ScrollView, View} from 'react-native';
+import React, {useRef, useState} from 'react';
+import {NativeScrollEvent, ScrollView, StyleSheet} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
 import {IFilter} from 'src/map/domain/IFilter';
-
-import {styles} from '../../styles/MapStyles';
 
 import FilterArrow from './FilterArrow';
 import FilterPill from './FilterPill';
@@ -87,3 +85,7 @@ export default function FilterComponent({
     </SafeAreaView>
   );
 }
+
+const styles = StyleSheet.create({
+  filterContainer: {position: 'absolute'},
+});

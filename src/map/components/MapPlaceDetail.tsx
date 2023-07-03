@@ -1,8 +1,6 @@
-import {useEffect, useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
-  Dimensions,
   Image,
-  Platform,
   StyleSheet,
   Text,
   TouchableWithoutFeedback,
@@ -33,7 +31,6 @@ import {getPlaceInformation} from '../services/FakeData';
 
 import MapPlaceDetailExtended from './MapPlaceDetailExtended';
 import ShowRatingStar from './ShowRatingStars';
-const {height} = Dimensions.get('window');
 const SHEET_OCUPIED_HEIGHT = 150;
 
 interface MapPlaceDetailProps {
@@ -61,8 +58,6 @@ export default function MapPlaceDetail({
   const [placeInformation, setPlaceInformation] = useState<IPlace>();
 
   const position = useSharedValue(SHEET_CLOSED_HEIGHT);
-
-  // const [showDetailExtended, setShowDetailExtended] = useState(false);
 
   const importanceIcon = () => {
     switch (placeInformation?.importance) {
@@ -102,7 +97,6 @@ export default function MapPlaceDetail({
         : runOnJS(setArrowDown)(false);
     },
     onEnd: event => {
-      console.log(event.velocityY);
       if (-position.value > SHEET_OCUPIED_HEIGHT / 2 || event.velocityY > 0) {
         position.value = withTiming(SHEET_CLOSED_HEIGHT);
         runOnJS(setMarkerSelected)(null);

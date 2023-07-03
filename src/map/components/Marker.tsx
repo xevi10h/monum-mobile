@@ -1,7 +1,7 @@
 import {MarkerView} from '@rnmapbox/maps';
 import {useState} from 'react';
 import React, {useEffect} from 'react';
-import {Image, View, TouchableOpacity, Button, Alert} from 'react-native';
+import {Image, View} from 'react-native';
 import {Gesture, GestureDetector} from 'react-native-gesture-handler';
 import {runOnJS} from 'react-native-reanimated';
 
@@ -11,7 +11,6 @@ import map_marker_importance_3 from '../../assets/images/icons/map_marker_import
 import map_marker_importance_4 from '../../assets/images/icons/map_marker_importance_4.png';
 import map_marker_importance_5 from '../../assets/images/icons/map_marker_importance_5.png';
 import map_marker_importance_selected from '../../assets/images/icons/map_marker_importance_selected.png';
-import {styles} from '../styles/MapStyles';
 
 export interface MarkerProps {
   id: string;

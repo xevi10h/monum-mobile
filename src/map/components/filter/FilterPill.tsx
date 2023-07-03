@@ -1,6 +1,11 @@
-import {GestureResponderEvent, Text, TouchableOpacity} from 'react-native';
-
-import {styles} from '../../styles/MapStyles';
+import React from 'react';
+import {
+  GestureResponderEvent,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 
 interface FilterPillProps {
   label: string;
@@ -10,13 +15,36 @@ interface FilterPillProps {
 
 export default function FilterPill({label, active, onPress}: FilterPillProps) {
   return (
-    <TouchableOpacity
-      style={[styles.filterPill, {backgroundColor: active ? 'grey' : 'white'}]}
-      onPress={onPress}>
-      <Text
-        style={[styles.filterPillText, {color: active ? 'white' : 'black'}]}>
-        {label}
-      </Text>
+    <TouchableOpacity onPress={onPress}>
+      <View
+        style={[
+          styles.filterPill,
+          {backgroundColor: active ? 'grey' : 'white'},
+        ]}>
+        <Text
+          style={[styles.filterPillText, {color: active ? 'white' : 'black'}]}>
+          {label}
+        </Text>
+      </View>
     </TouchableOpacity>
   );
 }
+
+const styles = StyleSheet.create({
+  filterPill: {
+    borderRadius: 10,
+    paddingVertical: 5,
+    height: 30,
+    shadowColor: '#000',
+    shadowOffset: {width: 0, height: 2},
+    shadowOpacity: 0.5,
+    shadowRadius: 4,
+    elevation: 20,
+    marginHorizontal: 10,
+    marginVertical: 30,
+  },
+  filterPillText: {
+    textAlign: 'center',
+    marginHorizontal: 10,
+  },
+});

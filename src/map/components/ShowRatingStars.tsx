@@ -120,7 +120,7 @@ export default function ShowRatingStars({rating}: ShowRatingStarsProps) {
 
   return (
     <View style={{flexDirection: 'row'}}>
-      {renderFilledStars()}
+      {filledStars > 0 && renderFilledStars()}
       {partialStarRating > 0 && renderPartialStar()}
       {emptyStars > 0 && renderEmptyStars()}
     </View>
