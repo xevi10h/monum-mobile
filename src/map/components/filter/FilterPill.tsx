@@ -1,6 +1,6 @@
 import {GestureResponderEvent, Text, TouchableOpacity} from 'react-native';
 
-import {styles} from '../styles/MapStyles';
+import {styles} from '../../styles/MapStyles';
 
 interface FilterPillProps {
   label: string;

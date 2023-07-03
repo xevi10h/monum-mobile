@@ -1,41 +1,33 @@
-import {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {NativeScrollEvent, ScrollView, View} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
+import {IFilter} from 'src/map/domain/IFilter';
 
-import {styles} from '../styles/MapStyles';
+import {styles} from '../../styles/MapStyles';
 
-import FilterLeftArrow from './FilterLeftArrow';
+import FilterArrow from './FilterArrow';
 import FilterPill from './FilterPill';
-import FilterRightArrow from './FilterRightArrow';
 
-export default function FilterComponent() {
+interface FilterComponent {
+  filters: IFilter[];
+  setFilters: (...args: any[]) => unknown;
+}
+
+export default function FilterComponent({
+  filters,
+  setFilters,
+}: FilterComponent) {
   const scrollRef = useRef<ScrollView>(null);
   const [showRightArrow, setShowRightArrow] = useState(true);
   const [showLeftArrow, setShowLeftArrow] = useState(false);
-  const [filters, setFilters] = useState<
-    {id: number; label: string; active: boolean}[]
-  >([]);
 
-  useEffect(() => {
-    //Fer una crida amb un GET de posibles filtres
-    setFilters([
-      {id: 1, label: 'Cultura', active: false},
-      {id: 3, label: 'Entreteniment', active: false},
-      {id: 4, label: 'Art', active: false},
-      {id: 5, label: 'Historia', active: false},
-      {id: 6, label: 'Natura', active: false},
-      {id: 2, label: 'Restaurants', active: false},
-    ]);
-  }, []);
-
-  const handlePillPress = (pillId: number) => {
+  const handlePillPress = (pillId: string) => {
     // Cambiar el estado de la pastilla y realizar la llamada al backend
-    setFilters(filters =>
+    setFilters((filters: IFilter[]) =>
       filters.map(filter =>
         filter.id === pillId ? {...filter, active: !filter.active} : filter,
       ),
     );
-
     // Realizar la llamada al backend y cambiar los filtros del mapa
     // ...
   };
@@ -86,8 +78,12 @@ export default function FilterComponent() {
           />
         ))}
       </ScrollView>
-      {showRightArrow && <FilterRightArrow onPress={handlePressRight} />}
-      {showLeftArrow && <FilterLeftArrow onPress={handlePressLeft} />}
+      {showRightArrow && (
+        <FilterArrow direction="left" onPress={handlePressRight} />
+      )}
+      {showLeftArrow && (
+        <FilterArrow direction="right" onPress={handlePressLeft} />
+      )}
     </SafeAreaView>
   );
 }

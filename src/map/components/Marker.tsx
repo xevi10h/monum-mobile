@@ -102,7 +102,7 @@ export function MarkerComponent({
           }}>
           <Image
             source={icon}
-            style={[styles.filterArrowIcon]}
+            style={{width: '65%', height: '65%'}}
             resizeMode={'contain'}
           />
         </View>

@@ -3,7 +3,6 @@ import {
   Dimensions,
   Image,
   ImageSourcePropType,
-  SafeAreaView,
   StyleSheet,
   Text,
   TouchableWithoutFeedback,

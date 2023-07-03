@@ -4,10 +4,11 @@ import React, {useEffect, useRef, useState} from 'react';
 import {Dimensions, View} from 'react-native';
 
 import CenterCoordinatesButton from '../components/CenterCoordinatesButton';
-import FilterComponent from '../components/FilterComponent';
+import FilterComponent from '../components/filter/FilterComponent';
 import MapPlaceDetail from '../components/MapPlaceDetail';
 import {MarkerComponent, MarkerProps} from '../components/Marker';
-import {getAllMarkers} from '../services/FakeData';
+import {IFilter} from '../domain/IFilter';
+import {getAllFilters, getAllMarkers} from '../services/FakeData';
 import {styles} from '../styles/MapStyles';
 
 Mapbox.setAccessToken(
@@ -20,11 +21,9 @@ interface MapScreenProps {
 
 export default function MapScreen({setTabBarVisible}: MapScreenProps) {
   const mapRef = useRef(null);
-  const [showPlaceDetail, setShowPlaceDetail] = useState(false);
-  const [filters, setFilters] = useState(['']);
+  const [filters, setFilters] = useState<IFilter[]>([]);
   const [centerCamera, setCenterCamera] = useState(false);
   const [centerCoordinates, setCenterCoordinates] = useState([0, 0]);
-  const [coordinatesLoaded, setCoordinatesLoaded] = useState(false);
   const [markers, setMarkers] = useState<MarkerProps[]>([]);
   const [markerSelected, setMarkerSelected] = useState<string | null>(null);
   const camera = useRef<Camera>(null);
@@ -32,11 +31,9 @@ export default function MapScreen({setTabBarVisible}: MapScreenProps) {
   useEffect(() => {
     // const places = await PlacesService.get(filters)
     setMarkers(getAllMarkers());
-    setCoordinatesLoaded(true);
   }, [filters]);
 
   useEffect(() => {
-    console.log(4);
     if (markerSelected) {
       camera.current?.setCamera({
         animationDuration: 1000,
@@ -71,6 +68,11 @@ export default function MapScreen({setTabBarVisible}: MapScreenProps) {
     setCenterCamera(false);
   }, [centerCamera]);
 
+  useEffect(() => {
+    //Fer una crida amb un GET de posibles filtres
+    setFilters(getAllFilters());
+  }, []);
+
   return (
     <View style={styles.mapContainer}>
       <View
@@ -100,7 +102,7 @@ export default function MapScreen({setTabBarVisible}: MapScreenProps) {
             ref={camera}
           />
         </Mapbox.MapView>
-        <FilterComponent />
+        <FilterComponent filters={filters} setFilters={setFilters} />
         <CenterCoordinatesButton setCenterCamera={setCenterCamera} />
         <MapPlaceDetail
           placeId={markerSelected}
