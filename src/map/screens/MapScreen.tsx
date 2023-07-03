@@ -5,8 +5,8 @@ import {Dimensions, StyleSheet, View} from 'react-native';
 
 import CenterCoordinatesButton from '../components/CenterCoordinatesButton';
 import FilterComponent from '../components/filter/FilterComponent';
-import MapPlaceDetail from '../components/MapPlaceDetail';
 import {MarkerComponent, MarkerProps} from '../components/Marker';
+import MapPlaceDetail from '../components/placeDetail/MapPlaceDetail';
 import {IFilter} from '../domain/IFilter';
 import {getAllFilters, getAllMarkers} from '../services/FakeData';
 

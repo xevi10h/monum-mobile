@@ -29,8 +29,8 @@ const styles = StyleSheet.create({
   centerCoordinatesContainer: {
     position: 'absolute',
     backgroundColor: 'white',
-    width: 40,
-    height: 40,
+    width: 48,
+    height: 48,
     borderRadius: 10,
     bottom: Dimensions.get('window').height * 0.15,
     right: 20,
