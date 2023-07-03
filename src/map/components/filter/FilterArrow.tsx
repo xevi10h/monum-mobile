@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
-import map_filter_arrow from '../../assets/images/icons/map_filter_arrow.png';
+import map_filter_arrow from '../../../assets/images/icons/map_filter_arrow.png';
 
 interface FilterArrowProps {
   onPress?: (event: GestureResponderEvent) => void;

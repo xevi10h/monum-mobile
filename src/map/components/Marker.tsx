@@ -1,6 +1,6 @@
 import {MarkerView} from '@rnmapbox/maps';
 import {useState} from 'react';
-import {useEffect} from 'react';
+import React, {useEffect} from 'react';
 import {Image, View, TouchableOpacity, Button, Alert} from 'react-native';
 import {Gesture, GestureDetector} from 'react-native-gesture-handler';
 import {runOnJS} from 'react-native-reanimated';
