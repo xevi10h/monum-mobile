@@ -33,7 +33,7 @@ export function getAllMarkers(): MarkerProps[] {
   ];
 }
 
-export function getPlaceInformation(): IPlace {
+export function getPlaceReducedInfo(): IPlace {
   return {
     id: '1',
     name: 'La Sagrada Familia',

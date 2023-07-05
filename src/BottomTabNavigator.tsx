@@ -10,6 +10,8 @@ import bottom_bar_profile_inactive from './assets/images/icons/bottom_bar_profil
 import MapScreen from './map/screens/MapScreen';
 import ProfileScreen from './profile/screens/ProfileScreen';
 
+const BOTTOM_TAB_NAVIGATOR_HEIGHT = 56;
+
 // Define un tipo para las rutas
 export type RootBottomTabList = {
   List: undefined;
@@ -67,7 +69,7 @@ function BottomTabNavigator() {
             styles.hol,
             {
               display: isTabBarVisible ? 'flex' : 'none',
-              height: useSafeAreaInsets().bottom + 60,
+              height: useSafeAreaInsets().bottom + BOTTOM_TAB_NAVIGATOR_HEIGHT,
             },
           ],
           tabBarShowLabel: false,
