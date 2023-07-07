@@ -1,5 +1,6 @@
 import React from 'react';
-import {Dimensions, Image, StyleSheet, TouchableOpacity} from 'react-native';
+import {Image, StyleSheet, TouchableOpacity} from 'react-native';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 import map_center_coordinates from '../../assets/images/icons/map_center_coordinates.png';
 
@@ -12,7 +13,10 @@ export default function CenterCoordinatesButton({
 }: CenterCoordinatesButtonProps) {
   return (
     <TouchableOpacity
-      style={styles.centerCoordinatesContainer}
+      style={[
+        styles.centerCoordinatesContainer,
+        {bottom: useSafeAreaInsets().bottom + 80},
+      ]}
       onPress={() => {
         setCenterCamera(true);
       }}>
@@ -32,7 +36,6 @@ const styles = StyleSheet.create({
     width: 48,
     height: 48,
     borderRadius: 10,
-    bottom: Dimensions.get('window').height * 0.15,
     right: 20,
     alignItems: 'center',
     justifyContent: 'center',

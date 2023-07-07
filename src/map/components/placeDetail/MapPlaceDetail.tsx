@@ -1,8 +1,9 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {Dimensions, StyleSheet, View} from 'react-native';
 import {
   PanGestureHandler,
   PanGestureHandlerGestureEvent,
+  ScrollView,
 } from 'react-native-gesture-handler';
 import Animated, {
   runOnJS,
@@ -28,7 +29,7 @@ import MapPlaceDetailReduced from './MapPlaceDetailReduced';
 const {height} = Dimensions.get('window');
 
 const BOTTOM_TAB_NAVIGATOR_HEIGHT = 56;
-const BOTTOM_TAB_HEIGHT = 128;
+const BOTTOM_TAB_HEIGHT = 120;
 const MAX_MARGIN_TOP = 50;
 
 interface MapPlaceDetailProps {
@@ -52,9 +53,10 @@ export default function MapPlaceDetail({
     BOTTOM_TAB_HEIGHT;
 
   const [showPlaceDetailExpanded, setShowPlaceDetailExpanded] = useState(false);
+  const [closeDetail, setCloseDetail] = useState(false);
   const [placeReducedInfo, setPlaceReducedInfo] = useState<IPlace>();
-  const position = useSharedValue(height);
   const [placeMedia, setPlaceMedia] = useState<IPlaceMedia[]>();
+  const position = useSharedValue(height);
 
   const importanceIcon = () => {
     switch (placeReducedInfo?.importance) {
@@ -82,13 +84,18 @@ export default function MapPlaceDetail({
     },
     onActive: (event, context) => {
       const newPosition = context.startY + event.translationY;
-      if (newPosition < 0) {
-        position.value = 0;
+      console.log(newPosition);
+      if (!showPlaceDetailExpanded) {
+        if (height - newPosition >= BOTTOM_TOTAL_TAB_HEIGHT) {
+          position.value = height - BOTTOM_TOTAL_TAB_HEIGHT;
+        } else {
+          position.value = newPosition;
+        }
       } else {
-        position.value = newPosition;
-        if (height - newPosition > BOTTOM_TOTAL_TAB_HEIGHT + 30) {
-          runOnJS(setShowPlaceDetailExpanded)(true);
-          runOnJS(setTabBarVisible)(false);
+        if (newPosition <= MAX_MARGIN_TOP) {
+          position.value = MAX_MARGIN_TOP;
+        } else {
+          position.value = newPosition;
         }
       }
     },
@@ -98,7 +105,8 @@ export default function MapPlaceDetail({
           position.value > height - BOTTOM_TOTAL_TAB_HEIGHT / 2 ||
           event.velocityY > 0
         ) {
-          runOnJS(setMarkerSelected)(null);
+          position.value = withTiming(height);
+          runOnJS(setCloseDetail)(true);
           runOnJS(setTabBarVisible)(true);
         } else {
           position.value = withTiming(height - BOTTOM_TOTAL_TAB_HEIGHT);
@@ -106,7 +114,7 @@ export default function MapPlaceDetail({
       } else {
         if (position.value > height / 2 || event.velocityY > 0) {
           position.value = withTiming(height);
-          runOnJS(setMarkerSelected)(null);
+          runOnJS(setCloseDetail)(true);
           runOnJS(setShowPlaceDetailExpanded)(false);
           runOnJS(setTabBarVisible)(true);
         } else {
@@ -116,6 +124,10 @@ export default function MapPlaceDetail({
     },
   });
   const animatedStyle = useAnimatedStyle(() => {
+    if (position.value === height && closeDetail === true) {
+      runOnJS(setMarkerSelected)(null);
+      runOnJS(setCloseDetail)(false);
+    }
     return {
       marginTop: position.value,
     };
@@ -140,7 +152,7 @@ export default function MapPlaceDetail({
       const placeMedia = {};
       if (placeReducedInfo) {
         setPlaceMedia(getPlaceMedia());
-        position.value = withTiming(MAX_MARGIN_TOP, {duration: 500});
+        position.value = withTiming(MAX_MARGIN_TOP, {duration: 300});
       }
     }
   }, [showPlaceDetailExpanded, placeReducedInfo]);

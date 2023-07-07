@@ -11,5 +11,8 @@
     "email": "Email",
     "footerText": "Xplorear S.L @2023",
     "access": "Acceder"
+  },
+  "placeDetailExpanded": {
+    "mediaIntro": "¿Qué vas a conocer?"
   }
 }

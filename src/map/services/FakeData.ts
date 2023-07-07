@@ -37,6 +37,8 @@ export function getPlaceReducedInfo(): IPlace {
   return {
     id: '1',
     name: 'La Sagrada Familia',
+    description:
+      'La Sagrada Familia es una basílica en Barcelona, España, diseñada por Antoni Gaudí. Es un hito arquitectónico en construcción desde 1882. Sus fachadas y torres esculpidas, junto con su estilo distintivo, la convierten en un símbolo reconocido internacionalmente.',
     rating: 4.3,
     importance: 5,
     address: {
@@ -53,6 +55,42 @@ export function getPlaceReducedInfo(): IPlace {
 
 export function getPlaceMedia(): IPlaceMedia[] {
   return [
+    {
+      id: '1',
+      duration: 200,
+      title: 'Historia de la sagrada família',
+      rating: 4.65,
+    },
+    {
+      id: '1',
+      duration: 200,
+      title: 'Historia de la sagrada família',
+      rating: 4.65,
+    },
+    {
+      id: '1',
+      duration: 200,
+      title: 'Historia de la sagrada família',
+      rating: 4.65,
+    },
+    {
+      id: '1',
+      duration: 200,
+      title: 'Historia de la sagrada família',
+      rating: 4.65,
+    },
+    {
+      id: '1',
+      duration: 200,
+      title: 'Historia de la sagrada família',
+      rating: 4.65,
+    },
+    {
+      id: '1',
+      duration: 200,
+      title: 'Historia de la sagrada família',
+      rating: 4.65,
+    },
     {
       id: '1',
       duration: 200,

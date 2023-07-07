@@ -1,6 +1,7 @@
 export interface IPlace {
   id: string;
   name: string;
+  description: string;
   rating: number;
   importance: number;
   address: {
