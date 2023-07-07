@@ -3,7 +3,6 @@ import {Dimensions, StyleSheet, View} from 'react-native';
 import {
   PanGestureHandler,
   PanGestureHandlerGestureEvent,
-  ScrollView,
 } from 'react-native-gesture-handler';
 import Animated, {
   runOnJS,

@@ -6,9 +6,10 @@ import {
   StyleSheet,
   Text,
   View,
-  ScrollView,
   NativeScrollEvent,
+  TouchableOpacity,
 } from 'react-native';
+import {ScrollView} from 'react-native-gesture-handler';
 import LinearGradient from 'react-native-linear-gradient';
 
 import place_detail_arrow_bottom_white from '../../../assets/images/icons/place_detail_arrow_bottom_white.png';
@@ -17,7 +18,6 @@ import place_detail_play_media from '../../../assets/images/icons/place_detail_p
 import {IPlace} from '../../domain/IPlace';
 import {IPlaceMedia} from '../../domain/IPlaceMedia';
 import ShowRatingStars from '../ShowRatingStars';
-import {TouchableOpacity} from 'react-native-gesture-handler';
 
 const BORDER_RADIUS = 24;
 
@@ -32,13 +32,8 @@ export default function MapPlaceDetailExpanded({
   importanceIcon,
   placeReducedInfo,
 }: MapPlaceDetailExpandedProps) {
-  const scrollRef = useRef<ScrollView>(null);
-  const handleScroll = ({contentOffset}: NativeScrollEvent) => {
-    console.log(contentOffset);
-    // scrollRef.current?.forceUpdate();
-  };
   return (
-    <View>
+    <View style={styles.container}>
       <View style={styles.imageContainer}>
         <Image
           source={{uri: placeReducedInfo.imageUrl}}
@@ -90,11 +85,9 @@ export default function MapPlaceDetailExpanded({
           </Text>
         </View>
         <ScrollView
-          ref={scrollRef}
-          showsVerticalScrollIndicator={true}
           scrollEventThrottle={16}
           style={{width: '100%'}}
-          onScroll={event => handleScroll(event.nativeEvent)}>
+          showsVerticalScrollIndicator={false}>
           {placeMedia?.map((media, i) => (
             <TouchableOpacity key={i}>
               <View style={styles.placeMediaPillContainer}>
@@ -150,15 +143,7 @@ export default function MapPlaceDetailExpanded({
 
 const styles = StyleSheet.create({
   container: {
-    borderTopLeftRadius: BORDER_RADIUS,
-    borderTopRightRadius: BORDER_RADIUS,
-    backgroundColor: 'white',
     flex: 1,
-    shadowColor: 'black',
-    shadowOffset: {width: 0, height: 2},
-    shadowOpacity: 0.5,
-    shadowRadius: 4,
-    elevation: 10,
   },
   imageContainer: {
     height: 200,
@@ -209,6 +194,7 @@ const styles = StyleSheet.create({
   descriptionContainer: {paddingBottom: 20},
   descriptionText: {color: '#032000', textAlign: 'justify'},
   placeMediaContainer: {
+    flex: 1,
     width: '100%',
     backgroundColor: '#ECF3EC',
     alignItems: 'center',
