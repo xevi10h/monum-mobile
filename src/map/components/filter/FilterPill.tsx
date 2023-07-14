@@ -33,7 +33,6 @@ export default function FilterPill({label, active, onPress}: FilterPillProps) {
 const styles = StyleSheet.create({
   filterPill: {
     borderRadius: 10,
-    paddingVertical: 5,
     height: 30,
     shadowColor: '#000',
     shadowOffset: {width: 0, height: 2},
@@ -42,9 +41,14 @@ const styles = StyleSheet.create({
     elevation: 20,
     marginHorizontal: 10,
     marginVertical: 30,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   filterPillText: {
     textAlign: 'center',
     marginHorizontal: 10,
+    fontFamily: 'Montserrat',
+    fontSize: 12,
+    fontWeight: '600',
   },
 });

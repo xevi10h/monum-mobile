@@ -1,14 +1,14 @@
-import React, {useRef, useState} from 'react';
+import React, {Dispatch, SetStateAction, useRef, useState} from 'react';
 import {NativeScrollEvent, ScrollView, StyleSheet} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import {IFilter} from 'src/map/domain/IFilter';
+import IFilter from 'src/map/domain/IFilter';
 
 import FilterArrow from './FilterArrow';
 import FilterPill from './FilterPill';
 
 interface FilterComponent {
   filters: IFilter[];
-  setFilters: (...args: any[]) => unknown;
+  setFilters: Dispatch<SetStateAction<IFilter[]>>;
 }
 
 export default function FilterComponent({

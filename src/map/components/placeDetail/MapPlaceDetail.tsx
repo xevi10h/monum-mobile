@@ -1,4 +1,10 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {
+  Dispatch,
+  SetStateAction,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import {Dimensions, StyleSheet, View} from 'react-native';
 import {
   PanGestureHandler,
@@ -18,9 +24,9 @@ import place_pre_detail_importance_2 from '../../../assets/images/icons/placeImp
 import place_pre_detail_importance_3 from '../../../assets/images/icons/placeImportance/place_pre_detail_importance_3.png';
 import place_pre_detail_importance_4 from '../../../assets/images/icons/placeImportance/place_pre_detail_importance_4.png';
 import place_pre_detail_importance_5 from '../../../assets/images/icons/placeImportance/place_pre_detail_importance_5.png';
-import {IPlace} from '../../domain/IPlace';
-import {IPlaceMedia} from '../../domain/IPlaceMedia';
-import {getPlaceMedia, getPlaceReducedInfo} from '../../services/FakeData';
+import IMedia from '../../domain/IMedia';
+import IPlace from '../../domain/IPlace';
+import {getPlaceInfo, getPlaceMedia} from '../../services/FakeData';
 
 import MapPlaceDetailExpanded from './MapPlaceDetailExpanded';
 import MapPlaceDetailReduced from './MapPlaceDetailReduced';
@@ -33,8 +39,11 @@ const MAX_MARGIN_TOP = 50;
 
 interface MapPlaceDetailProps {
   placeId: string | null;
-  setMarkerSelected: (...args: any[]) => unknown;
-  setTabBarVisible: (...args: any[]) => unknown;
+  setMarkerSelected: Dispatch<SetStateAction<string | null>>;
+  setTabBarVisible: Dispatch<SetStateAction<boolean>>;
+  setMedia: Dispatch<SetStateAction<IMedia | null>>;
+  place: IPlace | null;
+  setPlace: Dispatch<SetStateAction<IPlace | null>>;
 }
 
 type GestureContext = {
@@ -45,6 +54,9 @@ export default function MapPlaceDetail({
   placeId,
   setMarkerSelected,
   setTabBarVisible,
+  setMedia,
+  place,
+  setPlace,
 }: MapPlaceDetailProps) {
   const BOTTOM_TOTAL_TAB_HEIGHT =
     useSafeAreaInsets().bottom +
@@ -53,12 +65,11 @@ export default function MapPlaceDetail({
 
   const [showPlaceDetailExpanded, setShowPlaceDetailExpanded] = useState(false);
   const [closeDetail, setCloseDetail] = useState(false);
-  const [placeReducedInfo, setPlaceReducedInfo] = useState<IPlace>();
-  const [placeMedia, setPlaceMedia] = useState<IPlaceMedia[]>();
+  const [placeMedia, setPlaceMedia] = useState<IMedia[]>([]);
   const position = useSharedValue(height);
 
   const importanceIcon = () => {
-    switch (placeReducedInfo?.importance) {
+    switch (place?.importance) {
       case 1:
         return place_pre_detail_importance_1;
       case 2:
@@ -83,7 +94,6 @@ export default function MapPlaceDetail({
     },
     onActive: (event, context) => {
       const newPosition = context.startY + event.translationY;
-      console.log(newPosition);
       if (!showPlaceDetailExpanded) {
         if (height - newPosition >= BOTTOM_TOTAL_TAB_HEIGHT) {
           position.value = height - BOTTOM_TOTAL_TAB_HEIGHT;
@@ -135,9 +145,9 @@ export default function MapPlaceDetail({
   useEffect(() => {
     if (placeId) {
       // TO DO: Change it for a call to the API
-      const placeReducedInfo = {};
-      if (placeReducedInfo) {
-        setPlaceReducedInfo(getPlaceReducedInfo());
+      const placeInfo = {};
+      if (placeInfo) {
+        setPlace(getPlaceInfo());
         position.value = withTiming(height - BOTTOM_TOTAL_TAB_HEIGHT, {
           duration: 300,
         });
@@ -146,15 +156,15 @@ export default function MapPlaceDetail({
   }, [placeId]);
 
   useEffect(() => {
-    if (placeReducedInfo && showPlaceDetailExpanded) {
+    if (place && showPlaceDetailExpanded) {
       // TO DO: Change it for a call to the API
       const placeMedia = {};
-      if (placeReducedInfo) {
+      if (place) {
         setPlaceMedia(getPlaceMedia());
         position.value = withTiming(MAX_MARGIN_TOP, {duration: 300});
       }
     }
-  }, [showPlaceDetailExpanded, placeReducedInfo]);
+  }, [showPlaceDetailExpanded, place]);
 
   return placeId ? (
     <View
@@ -168,18 +178,20 @@ export default function MapPlaceDetail({
       ]}>
       <PanGestureHandler onGestureEvent={panGestureEvent}>
         <Animated.View style={[styles.animatedContainer, animatedStyle]}>
-          {showPlaceDetailExpanded && placeReducedInfo ? (
+          {showPlaceDetailExpanded && place ? (
             <MapPlaceDetailExpanded
               placeMedia={placeMedia}
               importanceIcon={importanceIcon()}
-              placeReducedInfo={placeReducedInfo}
+              place={place}
+              setMedia={setMedia}
+              setPlace={setPlace}
             />
           ) : (
             <MapPlaceDetailReduced
               importanceIcon={importanceIcon()}
               setTabBarVisible={setTabBarVisible}
               setShowPlaceDetailExpanded={setShowPlaceDetailExpanded}
-              placeReducedInfo={placeReducedInfo}
+              place={place}
             />
           )}
         </Animated.View>

@@ -1,12 +1,11 @@
 import {t} from 'i18next';
-import React, {RefObject, useRef, useState} from 'react';
+import React, {Dispatch, SetStateAction} from 'react';
 import {
   Image,
   ImageSourcePropType,
   StyleSheet,
   Text,
   View,
-  NativeScrollEvent,
   TouchableOpacity,
 } from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
@@ -15,28 +14,32 @@ import LinearGradient from 'react-native-linear-gradient';
 import place_detail_arrow_bottom_white from '../../../assets/images/icons/place_detail_arrow_bottom_white.png';
 import place_detail_media_rating_star from '../../../assets/images/icons/place_detail_media_rating_star.png';
 import place_detail_play_media from '../../../assets/images/icons/place_detail_play_media.png';
-import {IPlace} from '../../domain/IPlace';
-import {IPlaceMedia} from '../../domain/IPlaceMedia';
+import IMedia from '../../domain/IMedia';
+import IPlace from '../../domain/IPlace';
 import ShowRatingStars from '../ShowRatingStars';
 
 const BORDER_RADIUS = 24;
 
 interface MapPlaceDetailExpandedProps {
-  placeMedia: IPlaceMedia[] | undefined;
+  placeMedia: IMedia[];
   importanceIcon: ImageSourcePropType;
-  placeReducedInfo: IPlace;
+  place: IPlace;
+  setMedia: Dispatch<SetStateAction<IMedia | null>>;
+  setPlace: Dispatch<SetStateAction<IPlace | null>>;
 }
 
 export default function MapPlaceDetailExpanded({
   placeMedia,
   importanceIcon,
-  placeReducedInfo,
+  place,
+  setMedia,
+  setPlace,
 }: MapPlaceDetailExpandedProps) {
   return (
     <View style={styles.container}>
       <View style={styles.imageContainer}>
         <Image
-          source={{uri: placeReducedInfo.imageUrl}}
+          source={{uri: place.imageUrl}}
           resizeMode="cover"
           style={styles.image}
         />
@@ -57,12 +60,12 @@ export default function MapPlaceDetailExpanded({
       <View style={styles.infoContainer}>
         <View style={styles.basicInfoConatiner}>
           <View>
-            <Text style={styles.placeName}>{placeReducedInfo?.name}</Text>
+            <Text style={styles.placeName}>{place?.name}</Text>
             <Text
               style={
                 styles.placeAddress
-              }>{`${placeReducedInfo?.address.city}, ${placeReducedInfo?.address.country}`}</Text>
-            <ShowRatingStars rating={placeReducedInfo?.rating || 0} />
+              }>{`${place?.address.city}, ${place?.address.country}`}</Text>
+            <ShowRatingStars rating={place?.rating || 0} />
           </View>
           <View>
             <Image
@@ -73,9 +76,7 @@ export default function MapPlaceDetailExpanded({
           </View>
         </View>
         <View style={styles.descriptionContainer}>
-          <Text style={styles.descriptionText}>
-            {placeReducedInfo?.description}
-          </Text>
+          <Text style={styles.descriptionText}>{place?.description}</Text>
         </View>
       </View>
       <View style={styles.placeMediaContainer}>
@@ -89,7 +90,12 @@ export default function MapPlaceDetailExpanded({
           style={{width: '100%'}}
           showsVerticalScrollIndicator={false}>
           {placeMedia?.map((media, i) => (
-            <TouchableOpacity key={i}>
+            <TouchableOpacity
+              key={i}
+              onPress={() => {
+                setMedia(media);
+                setPlace(place);
+              }}>
               <View style={styles.placeMediaPillContainer}>
                 <View style={styles.placeMediaPill}>
                   <View>
@@ -108,26 +114,14 @@ export default function MapPlaceDetailExpanded({
                     />
                   </View>
                 </View>
-                <View
-                  style={{
-                    position: 'absolute',
-                    top: 0,
-                    left: 10,
-                    height: 20,
-                    width: 35,
-                    backgroundColor: '#3F713B',
-                    borderRadius: 6,
-                    alignItems: 'center',
-                    justifyContent: 'space-evenly',
-                    flexDirection: 'row',
-                  }}>
-                  <Text style={styles.placeMediaPillRating}>
+                <View style={styles.mediaPillRatingContainer}>
+                  <Text style={styles.mediaPillRatingText}>
                     {`${media.rating.toFixed(1)}`}
                   </Text>
                   <View>
                     <Image
                       source={place_detail_media_rating_star}
-                      style={{width: 8, height: 8}}
+                      style={styles.mediaPillRatingImage}
                       resizeMode="contain"
                     />
                   </View>
@@ -185,14 +179,26 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'row',
   },
-  placeName: {fontWeight: '600', fontSize: 16, color: '#032000'},
-  placeAddress: {
-    fontSize: 16,
+  placeName: {
+    fontWeight: '600',
+    fontSize: 14,
     color: '#032000',
+    fontFamily: 'Montserrat',
+  },
+  placeAddress: {
+    fontSize: 14,
+    color: '#032000',
+    fontFamily: 'Montserrat',
+    paddingVertical: 5,
   },
   importanceIcon: {width: 40, height: 40},
   descriptionContainer: {paddingBottom: 20},
-  descriptionText: {color: '#032000', textAlign: 'justify'},
+  descriptionText: {
+    color: '#032000',
+    textAlign: 'justify',
+    fontSize: 12,
+    fontFamily: 'Montserrat',
+  },
   placeMediaContainer: {
     flex: 1,
     width: '100%',
@@ -208,7 +214,8 @@ const styles = StyleSheet.create({
   placeMediaIntroText: {
     fontWeight: '600',
     color: '#3F713B',
-    fontSize: 14,
+    fontSize: 12,
+    fontFamily: 'Montserrat',
   },
   placeMediaPillContainer: {
     width: '100%',
@@ -231,11 +238,33 @@ const styles = StyleSheet.create({
     paddingBottom: 5,
     paddingTop: 10,
   },
-  placeMediaPillTitle: {fontSize: 14, color: '#3F713B'},
-  placeMediaPillDuration: {fontSize: 12, color: '#3F713B'},
-  placeMediaPillPlayIcon: {width: 24, height: 24},
-  placeMediaPillRating: {
-    fontSize: 10,
-    color: 'white',
+  placeMediaPillTitle: {
+    fontSize: 12,
+    color: '#3F713B',
+    fontFamily: 'Montserrat',
   },
+  placeMediaPillDuration: {
+    fontSize: 10,
+    color: '#3F713B',
+    fontFamily: 'Montserrat',
+  },
+  placeMediaPillPlayIcon: {width: 24, height: 24},
+  mediaPillRatingContainer: {
+    position: 'absolute',
+    top: 0,
+    left: 10,
+    height: 20,
+    width: 30,
+    backgroundColor: '#3F713B',
+    borderRadius: 6,
+    alignItems: 'center',
+    justifyContent: 'space-evenly',
+    flexDirection: 'row',
+  },
+  mediaPillRatingText: {
+    fontSize: 8,
+    color: 'white',
+    fontFamily: 'Montserrat',
+  },
+  mediaPillRatingImage: {width: 8, height: 8},
 });

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Dispatch, SetStateAction} from 'react';
 import {
   Image,
   ImageSourcePropType,
@@ -8,20 +8,20 @@ import {
   View,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import {IPlace} from 'src/map/domain/IPlace';
+import IPlace from 'src/map/domain/IPlace';
 
 import place_pre_detail_arrow_top from '../../../assets/images/icons/place_pre_detail_arrow_top.png';
 import ShowRatingStars from '../ShowRatingStars';
 
 interface MapPlaceDetailReducedProps {
-  placeReducedInfo: IPlace | undefined;
+  place: IPlace | null;
   importanceIcon: ImageSourcePropType;
-  setTabBarVisible: (...args: any[]) => unknown;
-  setShowPlaceDetailExpanded: (...args: any[]) => unknown;
+  setTabBarVisible: Dispatch<SetStateAction<boolean>>;
+  setShowPlaceDetailExpanded: Dispatch<SetStateAction<boolean>>;
 }
 
 export default function MapPlaceDetailReduced({
-  placeReducedInfo,
+  place,
   importanceIcon,
   setTabBarVisible,
   setShowPlaceDetailExpanded,
@@ -52,10 +52,10 @@ export default function MapPlaceDetailReduced({
           </View>
           <View style={styles.informationContainer}>
             <View style={styles.imageContainer}>
-              {placeReducedInfo?.imageUrl && (
+              {place?.imageUrl && (
                 <Image
                   source={{
-                    uri: placeReducedInfo?.imageUrl,
+                    uri: place?.imageUrl,
                   }}
                   style={styles.image}
                   resizeMode="cover"
@@ -63,12 +63,12 @@ export default function MapPlaceDetailReduced({
               )}
             </View>
             <View style={styles.textInformationContainer}>
-              <Text style={styles.textPlaceName}>{placeReducedInfo?.name}</Text>
+              <Text style={styles.textPlaceName}>{place?.name}</Text>
               <Text
                 style={
                   styles.textPlaceAddress
-                }>{`${placeReducedInfo?.address.city}, ${placeReducedInfo?.address.country}`}</Text>
-              <ShowRatingStars rating={placeReducedInfo?.rating || 0} />
+                }>{`${place?.address.city}, ${place?.address.country}`}</Text>
+              <ShowRatingStars rating={place?.rating || 0} />
             </View>
             <View style={styles.importanceIconContainer}>
               <Image
@@ -124,13 +124,15 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   textPlaceName: {
-    fontWeight: 'bold',
-    fontSize: 16,
+    fontWeight: '600',
+    fontSize: 14,
     color: '#032000',
+    fontFamily: 'Montserrat',
   },
   textPlaceAddress: {
-    fontSize: 16,
+    fontSize: 14,
     color: '#032000',
+    fontFamily: 'Montserrat',
   },
   importanceIconContainer: {flex: 1, marginHorizontal: '6%'},
   importanceIconImage: {width: 40, height: 40},

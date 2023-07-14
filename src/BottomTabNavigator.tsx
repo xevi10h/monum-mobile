@@ -1,6 +1,6 @@
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {NavigationContainer} from '@react-navigation/native';
-import React, {useState} from 'react';
+import React, {useRef, useState} from 'react';
 import {StyleSheet, Image, StatusBar} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
@@ -8,7 +8,11 @@ import bottom_bar_list_inactive from './assets/images/icons/bottom_bar_list_inac
 import bottom_bar_map_inactive from './assets/images/icons/bottom_bar_map_inactive.png';
 import bottom_bar_profile_inactive from './assets/images/icons/bottom_bar_profile_inactive.png';
 import MapScreen from './map/screens/MapScreen';
+
 import ProfileScreen from './profile/screens/ProfileScreen';
+import MediaComponent from './media/components/MediaComponent';
+import IPlace from './map/domain/IPlace';
+import IMedia from './map/domain/IMedia';
 
 const BOTTOM_TAB_NAVIGATOR_HEIGHT = 56;
 
@@ -29,6 +33,8 @@ const Tab = createBottomTabNavigator<RootBottomTabList>();
 
 function BottomTabNavigator() {
   const [isTabBarVisible, setTabBarVisible] = useState(true);
+  const [place, setPlace] = useState<IPlace | null>(null);
+  const [media, setMedia] = useState<IMedia | null>(null);
   const renderTabBarIcon = ({focused, name}: BottomTabBarIconProps) => {
     let source;
     switch (name) {
@@ -88,7 +94,14 @@ function BottomTabNavigator() {
           options={{
             tabBarIcon: ({focused}) => renderTabBarIcon({focused, name: 'Map'}),
           }}>
-          {() => <MapScreen setTabBarVisible={setTabBarVisible} />}
+          {() => (
+            <MapScreen
+              setTabBarVisible={setTabBarVisible}
+              setMedia={setMedia}
+              setPlace={setPlace}
+              place={place}
+            />
+          )}
         </Tab.Screen>
         <Tab.Screen
           name="Profile"
@@ -99,6 +112,14 @@ function BottomTabNavigator() {
           }}
         />
       </Tab.Navigator>
+      {media && place && (
+        <MediaComponent
+          place={place}
+          setPlace={setPlace}
+          media={media}
+          setMedia={setMedia}
+        />
+      )}
     </NavigationContainer>
   );
 }

@@ -1,7 +1,7 @@
 import {MarkerProps} from '../components/Marker';
-import {IFilter} from '../domain/IFilter';
-import {IPlace} from '../domain/IPlace';
-import {IPlaceMedia} from '../domain/IPlaceMedia';
+import IFilter from '../domain/IFilter';
+import IPlaceMedia from '../domain/IMedia';
+import IPlace from '../domain/IPlace';
 
 export function getAllMarkers(): MarkerProps[] {
   return [
@@ -33,7 +33,7 @@ export function getAllMarkers(): MarkerProps[] {
   ];
 }
 
-export function getPlaceReducedInfo(): IPlace {
+export function getPlaceInfo(): IPlace {
   return {
     id: '1',
     name: 'La Sagrada Familia',

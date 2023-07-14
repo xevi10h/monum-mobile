@@ -1,7 +1,7 @@
 {
   "authScreens": {
-    "loginWithGoogle": "Accede con Google",
-    "loginWithCredentials": "Accede con tus credenciales",
+    "loginWithGoogle": "Continuar con Google",
+    "loginWithCredentials": "Continuar con otro correo",
     "notRegistered": "¿Aún no tienes cuenta?",
     "register": "Regístrate",
     "emailOrUsername": "Email o nombre de usuario",

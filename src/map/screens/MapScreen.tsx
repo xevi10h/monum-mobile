@@ -1,24 +1,40 @@
 import Geolocation from '@react-native-community/geolocation';
 import Mapbox, {Camera} from '@rnmapbox/maps';
-import React, {useEffect, useRef, useState} from 'react';
+import React, {
+  Dispatch,
+  SetStateAction,
+  useEffect,
+  useRef,
+  useState,
+} from 'react';
 import {Dimensions, StyleSheet, View} from 'react-native';
 
 import CenterCoordinatesButton from '../components/CenterCoordinatesButton';
 import FilterComponent from '../components/filter/FilterComponent';
 import {MarkerComponent, MarkerProps} from '../components/Marker';
 import MapPlaceDetail from '../components/placeDetail/MapPlaceDetail';
-import {IFilter} from '../domain/IFilter';
+import IFilter from '../domain/IFilter';
 import {getAllFilters, getAllMarkers} from '../services/FakeData';
+import IPlace from '../domain/IPlace';
+import IMedia from '../domain/IMedia';
 
 Mapbox.setAccessToken(
   'pk.eyJ1IjoieHBsb3JlYXIiLCJhIjoiY2xqMmU0Z3NyMGFxeTNwbzByNW90dmdxcSJ9.cMT52Rc64Z05YUGPIutXFw',
 );
 
 interface MapScreenProps {
-  setTabBarVisible: (...args: any[]) => unknown;
+  setTabBarVisible: Dispatch<SetStateAction<boolean>>;
+  setMedia: Dispatch<SetStateAction<IMedia | null>>;
+  setPlace: Dispatch<SetStateAction<IPlace | null>>;
+  place: IPlace | null;
 }
 
-export default function MapScreen({setTabBarVisible}: MapScreenProps) {
+export default function MapScreen({
+  setTabBarVisible,
+  setMedia,
+  setPlace,
+  place,
+}: MapScreenProps) {
   const mapRef = useRef(null);
   const [filters, setFilters] = useState<IFilter[]>([]);
   const [centerCamera, setCenterCamera] = useState(false);
@@ -107,6 +123,9 @@ export default function MapScreen({setTabBarVisible}: MapScreenProps) {
           placeId={markerSelected}
           setMarkerSelected={setMarkerSelected}
           setTabBarVisible={setTabBarVisible}
+          setMedia={setMedia}
+          setPlace={setPlace}
+          place={place}
         />
       </View>
     </View>

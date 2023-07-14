@@ -1,4 +1,4 @@
-export interface IFilter {
+export default interface IFilter {
   id: string;
   label: string;
   order: number;

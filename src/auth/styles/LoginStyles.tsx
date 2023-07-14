@@ -46,8 +46,9 @@ export const styles = StyleSheet.create({
     marginVertical: 36,
   },
   primaryButtonText: {
-    fontSize: 16,
+    fontSize: 18,
     color: '#032000',
+    fontFamily: 'Montserrat',
   },
   secondaryButton: {
     borderColor: '#FFFFFF',
@@ -75,6 +76,7 @@ export const styles = StyleSheet.create({
   secondaryButtonText: {
     fontSize: 16,
     color: 'white',
+    fontFamily: 'Montserrat',
   },
   separatorContainer: {
     flexDirection: 'row',
@@ -108,6 +110,7 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     flexDirection: 'row',
     fontSize: 16,
+    fontFamily: 'Montserrat',
     backgroundColor: '#3F713B',
   },
   passwordContainer: {
@@ -128,10 +131,11 @@ export const styles = StyleSheet.create({
   },
   forgotPasswordText: {
     color: '#FFFFFF',
-    fontSize: 14,
+    fontSize: 12,
     textAlign: 'left',
     backgroundColor: '#3F713B',
     textDecorationLine: 'underline',
+    fontFamily: 'Montserrat',
   },
   bottomContainer: {
     flex: 1,
@@ -146,6 +150,7 @@ export const styles = StyleSheet.create({
     fontSize: 16,
     textAlign: 'center',
     backgroundColor: '#3F713B',
+    fontFamily: 'Montserrat',
   },
   registerButtonText: {
     color: '#FFF172',
@@ -153,15 +158,17 @@ export const styles = StyleSheet.create({
     textAlign: 'center',
     backgroundColor: '#3F713B',
     textDecorationLine: 'underline',
+    fontFamily: 'Montserrat',
   },
   companyContainer: {
     alignItems: 'center',
     marginTop: 6,
   },
   companyText: {
-    fontWeight: 'bold',
+    fontWeight: '600',
     color: '#FFFFFF',
-    fontSize: 14,
+    fontSize: 12,
     backgroundColor: '#3F713B',
+    fontFamily: 'Montserrat',
   },
 });

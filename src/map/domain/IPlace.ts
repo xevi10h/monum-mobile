@@ -1,4 +1,4 @@
-export interface IPlace {
+export default interface IPlace {
   id: string;
   name: string;
   description: string;

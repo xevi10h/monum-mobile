@@ -1,7 +1,7 @@
 {
   "authScreens": {
-    "loginWithGoogle": "Access with Google",
-    "loginWithCredentials": "Access with credentials",
+    "loginWithGoogle": "Continue with Google",
+    "loginWithCredentials": "Continue with another email",
     "notRegistered": "Not registered yet?",
     "register": "Register",
     "emailOrUsername": "Email or username",

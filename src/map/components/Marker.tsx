@@ -1,5 +1,5 @@
 import {MarkerView} from '@rnmapbox/maps';
-import {useState} from 'react';
+import {Dispatch, SetStateAction, useState} from 'react';
 import React, {useEffect} from 'react';
 import {Image, View} from 'react-native';
 import {Gesture, GestureDetector} from 'react-native-gesture-handler';
@@ -17,7 +17,7 @@ export interface MarkerProps {
   coordinates: [number, number];
   importance: number;
   selected?: boolean;
-  setMarkerSelected?: (...args: any[]) => unknown;
+  setMarkerSelected?: Dispatch<SetStateAction<string | null>>;
 }
 
 export function MarkerComponent({
