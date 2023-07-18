@@ -183,7 +183,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     fontSize: 14,
     color: '#032000',
-    fontFamily: 'Montserrat',
+    fontFamily: 'Montserrat-SemiBold',
   },
   placeAddress: {
     fontSize: 14,
@@ -215,7 +215,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     color: '#3F713B',
     fontSize: 12,
-    fontFamily: 'Montserrat',
+    fontFamily: 'Montserrat-SemiBold',
   },
   placeMediaPillContainer: {
     width: '100%',

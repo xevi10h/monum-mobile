@@ -173,7 +173,11 @@ export default function MediaBubble({
                 />
               </TouchableOpacity>
             </View>
-            <View style={styles.mediaBubbleSliderContainer}>
+            <View
+              style={[
+                styles.mediaBubbleSliderContainer,
+                {width: width * 0.65},
+              ]}>
               <Slider
                 maximumValue={1.2}
                 onSlidingComplete={seek}
@@ -225,7 +229,6 @@ const styles = StyleSheet.create({
   mediaBubbleImage: {width: 40, height: 40, borderRadius: 12},
   mediaBubbleInfoContainer: {
     flex: 230,
-    width: 230,
     height: 17,
     marginHorizontal: 5,
   },
@@ -251,8 +254,7 @@ const styles = StyleSheet.create({
   mediaBubbleLocationText: {color: '#3F713B', fontSize: 14},
   mediaBubblePlayerButtonsContainer: {
     flexDirection: 'row',
-    flex: 72,
-    width: 80,
+    flex: 80,
     alignItems: 'center',
     justifyContent: 'center',
     marginLeft: 5,
@@ -267,7 +269,6 @@ const styles = StyleSheet.create({
   mediaBubbleSliderContainer: {
     position: 'absolute',
     bottom: 10,
-    width: 250,
     height: 1,
     left: 10,
   },

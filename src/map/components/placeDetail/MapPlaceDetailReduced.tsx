@@ -127,7 +127,7 @@ const styles = StyleSheet.create({
     fontWeight: '600',
     fontSize: 14,
     color: '#032000',
-    fontFamily: 'Montserrat',
+    fontFamily: 'Montserrat-SemiBold',
   },
   textPlaceAddress: {
     fontSize: 14,

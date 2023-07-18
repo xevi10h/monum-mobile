@@ -1,4 +1,4 @@
-import {Dispatch, SetStateAction, useState} from 'react';
+import {Dispatch, SetStateAction, useEffect, useState} from 'react';
 
 import media_bubble_pause from '../../assets/images/icons/media_bubble_pause.png';
 import media_bubble_play from '../../assets/images/icons/media_bubble_play.png';
@@ -6,6 +6,14 @@ import MediaExpanded from './MediaExpanded';
 import MediaBubble from './MediaBubble';
 import IPlace from 'src/map/domain/IPlace';
 import IMedia from 'src/map/domain/IMedia';
+import Sound from 'react-native-sound';
+import RNFetchBlob from 'rn-fetch-blob';
+import AWS from 'aws-sdk';
+
+AWS.config.update({
+  accessKeyId: 'AKIAZYOQ5BTPGHPIH2PB',
+  secretAccessKey: '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',
+});
 
 interface MediaBubbleProps {
   place: IPlace;
@@ -24,6 +32,15 @@ export default function MediaComponent({
   const [currentPosition, setCurrentPosition] = useState(0);
   const [playIcon, setPlayIcon] = useState(media_bubble_pause);
   const [expandedDetail, setExpandedDetail] = useState(false);
+
+  useEffect(() => {
+    const s3 = new AWS.S3();
+    const audioS3 = s3.getObject({
+      Bucket: 'xplorearproves',
+      Key: 's3://xplorearproves/audio_prueba.mp3',
+    });
+    console.log(audioS3);
+  }, []);
 
   // useEffect(() => {
   //   const sound = new Sound('audio_prueba.mp3', Sound.MAIN_BUNDLE, error => {

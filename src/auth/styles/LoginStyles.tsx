@@ -169,6 +169,6 @@ export const styles = StyleSheet.create({
     color: '#FFFFFF',
     fontSize: 12,
     backgroundColor: '#3F713B',
-    fontFamily: 'Montserrat',
+    fontFamily: 'Montserrat-SemiBold',
   },
 });

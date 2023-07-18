@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
   filterPillText: {
     textAlign: 'center',
     marginHorizontal: 10,
-    fontFamily: 'Montserrat',
+    fontFamily: 'Montserrat-SemiBold',
     fontSize: 12,
     fontWeight: '600',
   },
