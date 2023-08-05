@@ -29,7 +29,7 @@ type Props = {
 };
 
 export default function LoginScreen({navigation}: Props) {
-  const [username, setUsername] = useState('');
+  const [emailOrUsername, setEmailOrUsername] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
 
@@ -56,8 +56,8 @@ export default function LoginScreen({navigation}: Props) {
               }
               placeholderTextColor="#FFFFFF"
               style={styles.inputButton}
-              value={username}
-              onChangeText={setUsername}
+              value={emailOrUsername}
+              onChangeText={setEmailOrUsername}
             />
             <View style={styles.passwordContainer}>
               <TextInput
@@ -94,8 +94,10 @@ export default function LoginScreen({navigation}: Props) {
             <PrimaryButton
               text={t('authScreens.access')}
               onPress={async () => {
-                if (await AuthServices.login(username, password)) {
+                if (await AuthServices.login(emailOrUsername, password)) {
                   navigation.navigate('BottomTabNavigator');
+                } else {
+                  console.log('ERROR AL HACER LOGIN');
                 }
               }}
             />

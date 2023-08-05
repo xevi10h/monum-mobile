@@ -12,6 +12,7 @@ import SeparatorComponent from '../components/SeparatorComponent';
 import {RootStackParamList} from '../navigator/AuthNavigator';
 import GoogleAuthService from '../services/GoogleAuthService';
 import {styles} from '../styles/LoginStyles';
+import AuthServices from '../services/AuthServices';
 
 type LoginScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -36,7 +37,7 @@ export default function LoginScreen({navigation}: Props) {
               imageSource={google_sign_in_logo}
               text={t('authScreens.loginWithGoogle')}
               onPress={async () => {
-                // await GoogleAuthService.signInWithGoogle()
+                await GoogleAuthService.signInWithGoogle();
                 navigation.navigate('BottomTabNavigator');
               }}
             />

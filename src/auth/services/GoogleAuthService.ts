@@ -22,7 +22,8 @@ class GoogleAuthService {
       if (!currentUser || !currentUser.idToken) {
         throw new Error('No se pudo obtener el usuario actual.');
       }
-      return AuthServices.loginWithGoogle(currentUser.idToken);
+      const {email, name, id, photo} = currentUser.user;
+      return AuthServices.loginWithGoogle({email, name, id, photo});
     } catch (error: any) {
       if (error?.code === statusCodes.SIGN_IN_CANCELLED) {
         console.log('El inicio de sesión con Google fue cancelado.');

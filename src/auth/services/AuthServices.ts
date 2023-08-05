@@ -1,5 +1,12 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+interface LoginGoogle {
+  email: string;
+  photo: string | null;
+  name: string | null;
+  id: string;
+}
+
 class AuthService {
   async setAuthToken(token: string) {
     try {
@@ -17,18 +24,15 @@ class AuthService {
     }
   }
 
-  public async login(username: string, password: string): Promise<boolean> {
+  public async signup(email: string, password: string): Promise<boolean> {
     try {
-      console.log('username', username);
-      console.log('password', password);
-      const response = await fetch('http://localhost:8080/users/login', {
+      const response = await fetch('http://127.0.0.1:8080/users/signup', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({username, password}),
+        body: JSON.stringify({email, password}),
       });
-      console.log(response);
       if (response.ok) {
         const data = await response.json();
         const authToken = data.token;
@@ -36,6 +40,36 @@ class AuthService {
         await this.setAuthToken(authToken);
         return true;
       } else {
+        const data = await response.json();
+        console.error('El usuario no pudo registrarse', data);
+        return false;
+      }
+    } catch (error) {
+      console.error('Error al realizar el registro:', error);
+      return false;
+    }
+  }
+
+  public async login(
+    emailOrUsername: string,
+    password: string,
+  ): Promise<boolean> {
+    try {
+      const response = await fetch('http://127.0.0.1:8080/users/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({emailOrUsername, password}),
+      });
+      if (response.ok) {
+        const data = await response.json();
+        const authToken = data.token;
+        await this.setAuthToken(authToken);
+        return true;
+      } else {
+        const data = await response.json();
+        console.error('No se pudo iniciar sesión:', data);
         return false;
       }
     } catch (error) {
@@ -44,15 +78,19 @@ class AuthService {
     }
   }
 
-  public async loginWithGoogle(token: string): Promise<boolean> {
+  public async loginWithGoogle({
+    email,
+    photo,
+    name,
+    id,
+  }: LoginGoogle): Promise<boolean> {
     try {
-      const response = await fetch('http://localhost:8001/user', {
+      const response = await fetch('http://localhost:8080/users/loginGoogle', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: 'Bearer ' + token,
         },
-        body: JSON.stringify({authType: 'Google'}),
+        body: JSON.stringify({email, photo, name, id}),
       });
       console.log('response', response);
       if (response.ok) {
