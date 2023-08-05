@@ -19,16 +19,20 @@ class AuthService {
 
   public async login(username: string, password: string): Promise<boolean> {
     try {
-      const response = await fetch('http://10.0.2.2:8080/auth/login', {
+      console.log('username', username);
+      console.log('password', password);
+      const response = await fetch('http://localhost:8080/users/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({username, password}),
       });
+      console.log(response);
       if (response.ok) {
         const data = await response.json();
         const authToken = data.token;
+        console.log('authtoken', authToken);
         await this.setAuthToken(authToken);
         return true;
       } else {
@@ -42,7 +46,7 @@ class AuthService {
 
   public async loginWithGoogle(token: string): Promise<boolean> {
     try {
-      const response = await fetch('http://10.0.2.2:8001/user', {
+      const response = await fetch('http://localhost:8001/user', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

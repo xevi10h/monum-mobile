@@ -18,6 +18,7 @@ import logo_white from '../../assets/images/logos/logo_white.png';
 import PrimaryButton from '../components/PrimaryButton';
 import {RootStackParamList} from '../navigator/AuthNavigator';
 import {styles} from '../styles/LoginStyles';
+import AuthServices from '../services/AuthServices';
 type LoginScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
   'Login'
@@ -28,6 +29,7 @@ type Props = {
 };
 
 export default function LoginScreen({navigation}: Props) {
+  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
 
@@ -54,6 +56,8 @@ export default function LoginScreen({navigation}: Props) {
               }
               placeholderTextColor="#FFFFFF"
               style={styles.inputButton}
+              value={username}
+              onChangeText={setUsername}
             />
             <View style={styles.passwordContainer}>
               <TextInput
@@ -89,8 +93,10 @@ export default function LoginScreen({navigation}: Props) {
             </TouchableOpacity>
             <PrimaryButton
               text={t('authScreens.access')}
-              onPress={() => {
-                navigation.navigate('LoginWithCredentials');
+              onPress={async () => {
+                if (await AuthServices.login(username, password)) {
+                  navigation.navigate('BottomTabNavigator');
+                }
               }}
             />
           </View>
