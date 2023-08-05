@@ -15,6 +15,7 @@ import {MarkerComponent, MarkerProps} from '../components/Marker';
 import MapPlaceDetail from '../components/placeDetail/MapPlaceDetail';
 import IFilter from '../domain/IFilter';
 import {getAllFilters, getAllMarkers} from '../services/FakeData';
+import MapServices from '../services/MapServices';
 import IPlace from '../domain/IPlace';
 import IMedia from '../domain/IMedia';
 
@@ -44,15 +45,19 @@ export default function MapScreen({
   const camera = useRef<Camera>(null);
 
   useEffect(() => {
-    // const places = await PlacesService.get(filters)
-    setMarkers(getAllMarkers());
+    const fetchMarkers = async () => {
+      const markersData = await MapServices.getAllMarkersMap();
+      console.log('MARKERS', markersData);
+      setMarkers(markersData);
+    };
+    fetchMarkers();
   }, [filters]);
 
   useEffect(() => {
     if (markerSelected) {
       camera.current?.setCamera({
         animationDuration: 1000,
-        zoomLevel: 7,
+        zoomLevel: 12,
         centerCoordinate:
           markers?.find(m => m.id === markerSelected)?.coordinates ||
           centerCoordinates,
