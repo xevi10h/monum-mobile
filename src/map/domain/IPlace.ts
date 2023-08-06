@@ -9,7 +9,10 @@ export default interface IPlace {
     province: string;
     country: string;
     street: string;
+    coordinates: {
+      lat: number;
+      lng: number;
+    };
   };
-  coordinates: [number, number];
-  imageUrl: string;
+  imageUrl?: string;
 }

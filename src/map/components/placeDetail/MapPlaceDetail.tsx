@@ -30,6 +30,7 @@ import {getPlaceInfo, getPlaceMedia} from '../../services/FakeData';
 
 import MapPlaceDetailExpanded from './MapPlaceDetailExpanded';
 import MapPlaceDetailReduced from './MapPlaceDetailReduced';
+import MapServices from '../../services/MapServices';
 
 const {height} = Dimensions.get('window');
 
@@ -147,7 +148,12 @@ export default function MapPlaceDetail({
       // TO DO: Change it for a call to the API
       const placeInfo = {};
       if (placeInfo) {
-        setPlace(getPlaceInfo());
+        const fetchPlace = async () => {
+          const placeData = await MapServices.getPlaceInfo(placeId);
+          console.log('placeData', placeData);
+          setPlace(placeData);
+        };
+        fetchPlace();
         position.value = withTiming(height - BOTTOM_TOTAL_TAB_HEIGHT, {
           duration: 300,
         });

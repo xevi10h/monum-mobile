@@ -14,7 +14,7 @@ import FilterComponent from '../components/filter/FilterComponent';
 import {MarkerComponent, MarkerProps} from '../components/Marker';
 import MapPlaceDetail from '../components/placeDetail/MapPlaceDetail';
 import IFilter from '../domain/IFilter';
-import {getAllFilters, getAllMarkers} from '../services/FakeData';
+import {getAllFilters} from '../services/FakeData';
 import MapServices from '../services/MapServices';
 import IPlace from '../domain/IPlace';
 import IMedia from '../domain/IMedia';
@@ -46,8 +46,7 @@ export default function MapScreen({
 
   useEffect(() => {
     const fetchMarkers = async () => {
-      const markersData = await MapServices.getAllMarkersMap();
-      console.log('MARKERS', markersData);
+      const markersData = await MapServices.getAllMarkers();
       setMarkers(markersData);
     };
     fetchMarkers();

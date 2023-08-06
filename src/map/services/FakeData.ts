@@ -46,8 +46,12 @@ export function getPlaceInfo(): IPlace {
       province: 'Barcelona',
       country: 'Spain',
       street: 'Carrer de Mallorca 401',
+      coordinates: {
+        lat: 2.1743558,
+        lng: 41.4036299,
+      },
     },
-    coordinates: [41.4036299, 2.1743558],
+
     imageUrl:
       'https://lh3.googleusercontent.com/p/AF1QipP3QmBuE3KmQBWw3DnRhUnvky-IJ53m6FvNwdbB=s680-w680-h510',
   };

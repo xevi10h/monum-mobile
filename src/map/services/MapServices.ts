@@ -1,6 +1,7 @@
 import {ApolloClient, InMemoryCache, gql, useQuery} from '@apollo/client';
 import {MarkerProps} from '../components/Marker';
 import IPlace from '../domain/IPlace';
+import {MarkerResponse} from './MapServicesInterfaces';
 const BASE_URL = 'http://127.0.0.1:4000';
 
 const client = new ApolloClient({
@@ -9,17 +10,7 @@ const client = new ApolloClient({
 });
 
 class MapServices {
-  public async getAllMarkersMap(): Promise<MarkerProps[]> {
-    interface marker {
-      id: string;
-      address: {
-        coordinates: {
-          lat: number;
-          lng: number;
-        };
-      };
-      importance: number;
-    }
+  public async getAllMarkers(): Promise<MarkerProps[]> {
     const GET_MARKERS = gql`
       query Places {
         places {
@@ -39,7 +30,7 @@ class MapServices {
         query: GET_MARKERS,
       });
       if (response.data && Array.isArray(response.data.places)) {
-        return response.data.places.map((place: marker) => ({
+        return response.data.places.map((place: MarkerResponse) => ({
           id: place.id,
           coordinates: [
             place.address.coordinates.lng,
@@ -50,8 +41,43 @@ class MapServices {
       }
       return [];
     } catch (error) {
-      console.error('Error al realizar el registro:', error);
+      console.error('Error trying to get markers:', error);
       return [];
+    }
+  }
+
+  public async getPlaceInfo(placeId: string): Promise<IPlace | null> {
+    const GET_PLACE_INFO = gql`
+      query Query($placeId: ID!) {
+        place(id: $placeId) {
+          address {
+            city
+            coordinates {
+              lat
+              lng
+            }
+            country
+            postalCode
+            province
+            street
+          }
+          description
+          id
+          importance
+          name
+          rating
+        }
+      }
+    `;
+    try {
+      const response = await client.query({
+        query: GET_PLACE_INFO,
+        variables: {placeId},
+      });
+      return response.data?.place || null;
+    } catch (error) {
+      console.error('Error trying to get place info:', error);
+      return null;
     }
   }
 }
