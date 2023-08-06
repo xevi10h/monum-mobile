@@ -26,6 +26,11 @@ export default function MapPlaceDetailReduced({
   setTabBarVisible,
   setShowPlaceDetailExpanded,
 }: MapPlaceDetailReducedProps) {
+  console.log(
+    place &&
+      Array.isArray(place.imagesUrl) &&
+      `${place.imagesUrl[0]}?auto=compress&cs=tinysrgb&dpr=2&h=${styles.image.height}&w=${styles.image.width}`,
+  );
   return (
     <View style={styles.container}>
       <LinearGradient
@@ -52,10 +57,12 @@ export default function MapPlaceDetailReduced({
           </View>
           <View style={styles.informationContainer}>
             <View style={styles.imageContainer}>
-              {place?.imageUrl && (
+              {place?.imagesUrl && (
                 <Image
                   source={{
-                    uri: place?.imageUrl,
+                    uri: Array.isArray(place.imagesUrl)
+                      ? `${place.imagesUrl[0]}?auto=compress&cs=tinysrgb&dpr=2&h=100&w=100`
+                      : '',
                   }}
                   style={styles.image}
                   resizeMode="cover"

@@ -39,7 +39,11 @@ export default function MapPlaceDetailExpanded({
     <View style={styles.container}>
       <View style={styles.imageContainer}>
         <Image
-          source={{uri: place.imageUrl}}
+          source={{
+            uri: Array.isArray(place.imagesUrl)
+              ? `${place.imagesUrl[0]}?auto=compress&cs=tinysrgb&dpr=2&h=500&w=500}`
+              : '',
+          }}
           resizeMode="cover"
           style={styles.image}
         />

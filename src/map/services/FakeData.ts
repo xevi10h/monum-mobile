@@ -51,9 +51,9 @@ export function getPlaceInfo(): IPlace {
         lng: 41.4036299,
       },
     },
-
-    imageUrl:
+    imagesUrl: [
       'https://lh3.googleusercontent.com/p/AF1QipP3QmBuE3KmQBWw3DnRhUnvky-IJ53m6FvNwdbB=s680-w680-h510',
+    ],
   };
 }
 

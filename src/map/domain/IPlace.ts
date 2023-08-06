@@ -14,5 +14,5 @@ export default interface IPlace {
       lng: number;
     };
   };
-  imageUrl?: string;
+  imagesUrl?: string[];
 }
