@@ -26,7 +26,6 @@ import place_pre_detail_importance_4 from '../../../assets/images/icons/placeImp
 import place_pre_detail_importance_5 from '../../../assets/images/icons/placeImportance/place_pre_detail_importance_5.png';
 import IMedia from '../../domain/IMedia';
 import IPlace from '../../domain/IPlace';
-import {getPlaceInfo, getPlaceMedia} from '../../services/FakeData';
 
 import MapPlaceDetailExpanded from './MapPlaceDetailExpanded';
 import MapPlaceDetailReduced from './MapPlaceDetailReduced';
@@ -70,6 +69,7 @@ export default function MapPlaceDetail({
   const position = useSharedValue(height);
 
   const importanceIcon = () => {
+    console.log(place);
     switch (place?.importance) {
       case 1:
         return place_pre_detail_importance_1;
@@ -138,8 +138,16 @@ export default function MapPlaceDetail({
       runOnJS(setMarkerSelected)(null);
       runOnJS(setCloseDetail)(false);
     }
+    if (showPlaceDetailExpanded) {
+      return {
+        marginTop: position.value,
+        top: 0,
+        height,
+      };
+    }
     return {
-      marginTop: position.value,
+      top: position.value,
+      height: height - position.value,
     };
   });
 
@@ -166,7 +174,12 @@ export default function MapPlaceDetail({
       // TO DO: Change it for a call to the API
       const placeMedia = {};
       if (place) {
-        setPlaceMedia(getPlaceMedia());
+        const fetchPlaceMedia = async () => {
+          const placeMedia = await MapServices.getPlaceMedia(place.id, 'en_US');
+          console.log('placeMedia', placeMedia);
+          setPlaceMedia(placeMedia);
+        };
+        fetchPlaceMedia();
         position.value = withTiming(MAX_MARGIN_TOP, {duration: 300});
       }
     }
@@ -210,8 +223,6 @@ const styles = StyleSheet.create({
   container: {
     position: 'absolute',
     width: '100%',
-    height: '100%',
-    top: 0,
   },
   animatedContainer: {
     borderTopLeftRadius: 24,

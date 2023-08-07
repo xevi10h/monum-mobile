@@ -17,6 +17,7 @@ import place_detail_play_media from '../../../assets/images/icons/place_detail_p
 import IMedia from '../../domain/IMedia';
 import IPlace from '../../domain/IPlace';
 import ShowRatingStars from '../ShowRatingStars';
+import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 const BORDER_RADIUS = 24;
 
@@ -91,7 +92,7 @@ export default function MapPlaceDetailExpanded({
         </View>
         <ScrollView
           scrollEventThrottle={16}
-          style={{width: '100%'}}
+          style={{width: '100%', marginBottom: useSafeAreaInsets().bottom + 30}}
           showsVerticalScrollIndicator={false}>
           {placeMedia?.map((media, i) => (
             <TouchableOpacity

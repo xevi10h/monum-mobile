@@ -17,7 +17,7 @@ export interface MarkerProps {
   coordinates: [number, number];
   importance: number;
   selected?: boolean;
-  setMarkerSelected?: Dispatch<SetStateAction<string | null>>;
+  setMarkerSelected: Dispatch<SetStateAction<string | null>>;
 }
 
 export function MarkerComponent({
@@ -69,7 +69,8 @@ export function MarkerComponent({
   const singleTap = Gesture.Tap()
     .maxDuration(250)
     .onStart(() => {
-      if (setMarkerSelected) runOnJS(setMarkerSelected)(id);
+      console.log('IDDDDDD', id);
+      runOnJS(setMarkerSelected)(id);
     });
 
   useEffect(() => {
@@ -77,18 +78,22 @@ export function MarkerComponent({
   }, [selected]);
 
   return (
-    <MarkerView
-      id={id}
-      key={id}
-      coordinate={coordinates}
-      style={{
-        shadowColor: '#000',
-        shadowOffset: {width: 0, height: 2},
-        shadowOpacity: 0.5,
-        shadowRadius: 4,
-        elevation: 10,
-      }}>
-      <GestureDetector gesture={Gesture.Exclusive(singleTap)}>
+    <GestureDetector
+      gesture={Gesture.Tap().onTouchesUp(() => {
+        console.log(id);
+        runOnJS(setMarkerSelected)(id);
+      })}>
+      <MarkerView
+        id={id}
+        key={id}
+        coordinate={coordinates}
+        style={{
+          shadowColor: '#000',
+          shadowOffset: {width: 0, height: 2},
+          shadowOpacity: 0.5,
+          shadowRadius: 4,
+          elevation: 10,
+        }}>
         <View
           style={{
             backgroundColor: backgroundColor,
@@ -105,7 +110,7 @@ export function MarkerComponent({
             resizeMode={'contain'}
           />
         </View>
-      </GestureDetector>
-    </MarkerView>
+      </MarkerView>
+    </GestureDetector>
   );
 }

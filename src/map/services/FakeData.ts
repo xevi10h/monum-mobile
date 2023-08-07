@@ -1,37 +1,6 @@
-import {MarkerProps} from '../components/Marker';
 import IFilter from '../domain/IFilter';
 import IPlaceMedia from '../domain/IMedia';
 import IPlace from '../domain/IPlace';
-
-export function getAllMarkers(): MarkerProps[] {
-  return [
-    {
-      id: '1',
-      coordinates: [-124.032, 38.7272],
-      importance: 5,
-    },
-    {
-      id: '2',
-      coordinates: [-125.032, 37.5272],
-      importance: 4,
-    },
-    {
-      id: '3',
-      coordinates: [-127.032, 38.7272],
-      importance: 3,
-    },
-    {
-      id: '4',
-      coordinates: [-128.032, 38.9272],
-      importance: 2,
-    },
-    {
-      id: '5',
-      coordinates: [-123.032, 36.9272],
-      importance: 1,
-    },
-  ];
-}
 
 export function getPlaceInfo(): IPlace {
   return {

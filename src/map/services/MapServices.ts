@@ -10,7 +10,7 @@ const client = new ApolloClient({
 });
 
 class MapServices {
-  public async getAllMarkers(): Promise<MarkerProps[]> {
+  public async getAllMarkers(): Promise<MarkerResponse[]> {
     const GET_MARKERS = gql`
       query Places {
         places {
@@ -29,17 +29,7 @@ class MapServices {
       const response = await client.query({
         query: GET_MARKERS,
       });
-      if (response.data && Array.isArray(response.data.places)) {
-        return response.data.places.map((place: MarkerResponse) => ({
-          id: place.id,
-          coordinates: [
-            place.address.coordinates.lng,
-            place.address.coordinates.lat,
-          ],
-          importance: place.importance,
-        }));
-      }
-      return [];
+      return response.data.places || [];
     } catch (error) {
       console.error('Error trying to get markers:', error);
       return [];
@@ -78,6 +68,30 @@ class MapServices {
       return response.data?.place || null;
     } catch (error) {
       console.error('Error trying to get place info:', error);
+      return null;
+    }
+  }
+
+  public async getPlaceMedia(placeId: string, lang?: string) {
+    const GET_PLACE_MEDIA = gql`
+      query MediaOfPlace($placeId: ID!, $lang: Language) {
+        mediaOfPlace(placeId: $placeId, lang: $lang) {
+          duration
+          id
+          title
+          rating
+        }
+      }
+    `;
+    console.log(placeId);
+    try {
+      const response = await client.query({
+        query: GET_PLACE_MEDIA,
+        variables: {placeId, lang},
+      });
+      return response.data?.mediaOfPlace || null;
+    } catch (error) {
+      console.error('Error trying to get place media:', error);
       return null;
     }
   }

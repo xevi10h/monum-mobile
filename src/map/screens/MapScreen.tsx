@@ -47,7 +47,18 @@ export default function MapScreen({
   useEffect(() => {
     const fetchMarkers = async () => {
       const markersData = await MapServices.getAllMarkers();
-      setMarkers(markersData);
+      setMarkers(
+        markersData.map(marker => ({
+          id: marker.id,
+          coordinates: [
+            marker.address.coordinates.lng,
+            marker.address.coordinates.lat,
+          ],
+          importance: marker.importance,
+          setMarkerSelected,
+          markerSelected,
+        })),
+      );
     };
     fetchMarkers();
   }, [filters]);
