@@ -1,4 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {ApolloClient, InMemoryCache, gql, useQuery} from '@apollo/client';
+import client from '../../graphql/connection';
+import {userSlice} from 'src/redux/states/user';
 
 interface LoginGoogle {
   email: string;
@@ -54,24 +57,23 @@ class AuthService {
     emailOrUsername: string,
     password: string,
   ): Promise<boolean> {
-    try {
-      const response = await fetch('http://127.0.0.1:8080/users/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({emailOrUsername, password}),
-      });
-      if (response.ok) {
-        const data = await response.json();
-        const authToken = data.token;
-        await this.setAuthToken(authToken);
-        return true;
-      } else {
-        const data = await response.json();
-        console.error('No se pudo iniciar sesión:', data);
-        return false;
+    console.log(emailOrUsername, password);
+    const LOGIN_USER = gql`
+      mutation Mutation($loginInput: LoginInput) {
+        loginUser(loginInput: $loginInput) {
+          token
+        }
       }
+    `;
+    try {
+      const response = await client.mutate({
+        mutation: LOGIN_USER,
+        variables: {loginInput: {emailOrUsername, password}},
+      });
+      console.log('response', response);
+      const authToken = response.data?.loginUser?.token || null;
+      userSlice.actions.setAuthToken(authToken);
+      return true;
     } catch (error) {
       console.error('Error al realizar el inicio de sesión:', error);
       return false;

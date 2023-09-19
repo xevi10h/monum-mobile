@@ -2,12 +2,7 @@ import {ApolloClient, InMemoryCache, gql, useQuery} from '@apollo/client';
 import {MarkerProps} from '../components/Marker';
 import IPlace from '../domain/IPlace';
 import {MarkerResponse} from './MapServicesInterfaces';
-const BASE_URL = 'http://127.0.0.1:4000';
-
-const client = new ApolloClient({
-  uri: BASE_URL,
-  cache: new InMemoryCache(),
-});
+import client from '../../graphql/connection';
 
 class MapServices {
   public async getAllMarkers(): Promise<MarkerResponse[]> {
@@ -83,7 +78,6 @@ class MapServices {
         }
       }
     `;
-    console.log(placeId);
     try {
       const response = await client.query({
         query: GET_PLACE_MEDIA,
