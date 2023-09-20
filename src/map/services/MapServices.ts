@@ -33,7 +33,7 @@ class MapServices {
 
   public async getPlaceInfo(placeId: string): Promise<IPlace | null> {
     const GET_PLACE_INFO = gql`
-      query Query($placeId: ID!) {
+      query Place($placeId: ID!) {
         place(id: $placeId) {
           address {
             city
@@ -67,11 +67,10 @@ class MapServices {
     }
   }
 
-  public async getPlaceMedia(placeId: string, lang?: string) {
+  public async getPlaceMedia(placeId: string, language?: string) {
     const GET_PLACE_MEDIA = gql`
-      query MediaOfPlace($placeId: ID!, $lang: Language) {
-        mediaOfPlace(placeId: $placeId, lang: $lang) {
-          duration
+      query Medias($placeId: ID!, $language: Language) {
+        medias(placeId: $placeId, language: $language) {
           id
           title
           rating
@@ -81,12 +80,12 @@ class MapServices {
     try {
       const response = await client.query({
         query: GET_PLACE_MEDIA,
-        variables: {placeId, lang},
+        variables: {placeId, language},
       });
-      return response.data?.mediaOfPlace || null;
+      return response.data?.medias || [];
     } catch (error) {
       console.error('Error trying to get place media:', error);
-      return null;
+      return [];
     }
   }
 }

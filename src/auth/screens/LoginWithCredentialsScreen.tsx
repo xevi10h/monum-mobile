@@ -19,6 +19,8 @@ import PrimaryButton from '../components/PrimaryButton';
 import {RootStackParamList} from '../navigator/AuthNavigator';
 import {styles} from '../styles/LoginStyles';
 import AuthServices from '../services/AuthServices';
+import {useDispatch} from 'react-redux';
+import {setAuthToken, setUser} from '../../redux/states/user';
 type LoginScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
   'Login'
@@ -36,6 +38,8 @@ export default function LoginScreen({navigation}: Props) {
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
+
+  const dispatch = useDispatch();
 
   return (
     <View style={styles.backgroundContainer}>
@@ -94,10 +98,16 @@ export default function LoginScreen({navigation}: Props) {
             <PrimaryButton
               text={t('authScreens.access')}
               onPress={async () => {
-                if (await AuthServices.login(emailOrUsername, password)) {
+                const response = await AuthServices.login(
+                  emailOrUsername,
+                  password,
+                );
+                if (response) {
+                  dispatch(setAuthToken(response.token || ''));
+                  dispatch(setUser(response || {}));
                   navigation.navigate('BottomTabNavigator');
                 } else {
-                  console.log('ERROR AL HACER LOGIN');
+                  console.log('ERROR WHEN LOGGING IN');
                 }
               }}
             />

@@ -108,7 +108,9 @@ export default function MapPlaceDetailExpanded({
                       {media.title}
                     </Text>
                     <Text style={styles.placeMediaPillDuration}>
-                      {`${(media.duration / 60).toFixed(0)} min`}
+                      {`${(media.duration ? media.duration / 60 : 0).toFixed(
+                        0,
+                      )} min`}
                     </Text>
                   </View>
                   <View>

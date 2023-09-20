@@ -69,7 +69,6 @@ export function MarkerComponent({
   const singleTap = Gesture.Tap()
     .maxDuration(250)
     .onStart(() => {
-      console.log('IDDDDDD', id);
       runOnJS(setMarkerSelected)(id);
     });
 
@@ -80,7 +79,6 @@ export function MarkerComponent({
   return (
     <GestureDetector
       gesture={Gesture.Tap().onTouchesUp(() => {
-        console.log(id);
         runOnJS(setMarkerSelected)(id);
       })}>
       <MarkerView

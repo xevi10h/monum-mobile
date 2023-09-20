@@ -18,6 +18,7 @@ import {getAllFilters} from '../services/FakeData';
 import MapServices from '../services/MapServices';
 import IPlace from '../domain/IPlace';
 import IMedia from '../domain/IMedia';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 Mapbox.setAccessToken(
   'pk.eyJ1IjoieHBsb3JlYXIiLCJhIjoiY2xqMmU0Z3NyMGFxeTNwbzByNW90dmdxcSJ9.cMT52Rc64Z05YUGPIutXFw',
@@ -80,12 +81,10 @@ export default function MapScreen({
       position => {
         const latitude = position.coords.latitude;
         const longitude = position.coords.longitude;
-        console.log('Latitud:', latitude);
-        console.log('Longitud:', longitude);
         setCenterCoordinates([longitude, latitude]);
       },
       error => {
-        console.log('Error al obtener la geolocalización:', error);
+        console.log('Error obtaining geolocation:', error);
         setCenterCoordinates([2.15, 41.38]);
       },
       {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},

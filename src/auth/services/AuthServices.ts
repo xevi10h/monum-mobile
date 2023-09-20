@@ -2,6 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {ApolloClient, InMemoryCache, gql, useQuery} from '@apollo/client';
 import client from '../../graphql/connection';
 import {userSlice} from 'src/redux/states/user';
+import {User} from '../../redux/store';
 
 interface LoginGoogle {
   email: string;
@@ -27,41 +28,51 @@ class AuthService {
     }
   }
 
-  public async signup(email: string, password: string): Promise<boolean> {
-    try {
-      const response = await fetch('http://127.0.0.1:8080/users/signup', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({email, password}),
-      });
-      if (response.ok) {
-        const data = await response.json();
-        const authToken = data.token;
-        console.log('authtoken', authToken);
-        await this.setAuthToken(authToken);
-        return true;
-      } else {
-        const data = await response.json();
-        console.error('El usuario no pudo registrarse', data);
-        return false;
+  public async signup(email: string, password: string): Promise<User | null> {
+    const REGISTER_USER = gql`
+      mutation RegisterUser($registerInput: RegisterInput!) {
+        registerUser(registerInput: $registerInput) {
+          id
+          email
+          username
+          createdAt
+          googleId
+          token
+          language
+          name
+          photo
+        }
       }
+    `;
+    try {
+      const response = await client.mutate({
+        mutation: REGISTER_USER,
+        variables: {registerInput: {email, password, language: 'en-US'}},
+      });
+      const user = response.data?.registerUser;
+      return user;
     } catch (error) {
-      console.error('Error al realizar el registro:', error);
-      return false;
+      console.error('Error al realizar el registro de usuario', error);
+      return null;
     }
   }
 
   public async login(
     emailOrUsername: string,
     password: string,
-  ): Promise<boolean> {
-    console.log(emailOrUsername, password);
+  ): Promise<User | null> {
     const LOGIN_USER = gql`
-      mutation Mutation($loginInput: LoginInput) {
+      mutation LoginUser($loginInput: LoginInput!) {
         loginUser(loginInput: $loginInput) {
+          id
+          email
+          username
+          createdAt
+          googleId
           token
+          language
+          name
+          photo
         }
       }
     `;
@@ -70,13 +81,11 @@ class AuthService {
         mutation: LOGIN_USER,
         variables: {loginInput: {emailOrUsername, password}},
       });
-      console.log('response', response);
-      const authToken = response.data?.loginUser?.token || null;
-      userSlice.actions.setAuthToken(authToken);
-      return true;
+      const user = response.data?.loginUser;
+      return user;
     } catch (error) {
       console.error('Error al realizar el inicio de sesión:', error);
-      return false;
+      return null;
     }
   }
 
@@ -85,27 +94,40 @@ class AuthService {
     photo,
     name,
     id,
-  }: LoginGoogle): Promise<boolean> {
-    try {
-      const response = await fetch('http://localhost:8080/users/loginGoogle', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({email, photo, name, id}),
-      });
-      console.log('response', response);
-      if (response.ok) {
-        const data = await response.json();
-        const authToken = data.token;
-        await this.setAuthToken(authToken);
-        return true;
-      } else {
-        return false;
+  }: LoginGoogle): Promise<User | null> {
+    const LOGIN_GOOGLE_USER = gql`
+      mutation LoginGoogleUser($loginGoogleInput: LoginGoogleInput!) {
+        loginGoogleUser(loginGoogleInput: $loginGoogleInput) {
+          id
+          email
+          username
+          createdAt
+          googleId
+          token
+          language
+          name
+          photo
+        }
       }
+    `;
+    try {
+      const response = await client.mutate({
+        mutation: LOGIN_GOOGLE_USER,
+        variables: {
+          loginGoogleInput: {
+            email,
+            googleId: id,
+            name,
+            photo,
+            language: 'en-US',
+          },
+        },
+      });
+      const user = response.data?.loginGoogleUser;
+      return user;
     } catch (error) {
       console.error('Error al realizar el inicio de sesión:', error);
-      return false;
+      return null;
     }
   }
 

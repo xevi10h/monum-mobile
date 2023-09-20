@@ -18,7 +18,6 @@ class GoogleAuthService {
       await GoogleSignin.hasPlayServices();
       await GoogleSignin.signIn();
       const currentUser = await GoogleSignin.getCurrentUser();
-      console.log('Usuario actual:', currentUser);
       if (!currentUser || !currentUser.idToken) {
         throw new Error('No se pudo obtener el usuario actual.');
       }
@@ -26,15 +25,13 @@ class GoogleAuthService {
       return AuthServices.loginWithGoogle({email, name, id, photo});
     } catch (error: any) {
       if (error?.code === statusCodes.SIGN_IN_CANCELLED) {
-        console.log('El inicio de sesión con Google fue cancelado.');
+        console.log('Google login was cancelled');
       } else if (error?.code === statusCodes.IN_PROGRESS) {
-        console.log('Ya hay una operación de inicio de sesión en curso.');
+        console.log('A login operation is already in progress');
       } else if (error?.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
-        console.log(
-          'Los servicios de Google Play no están disponibles o no están actualizados.',
-        );
+        console.log('Google Play services are unavailable or out of date');
       } else {
-        console.log('Error al iniciar sesión:', error);
+        console.log('Error logging in with Google:', error);
       }
     }
   }

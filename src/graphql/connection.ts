@@ -1,10 +1,7 @@
-import {
-  ApolloClient,
-  InMemoryCache,
-  createHttpLink,
-  ApolloLink,
-} from '@apollo/client';
+import {ApolloClient, InMemoryCache, createHttpLink} from '@apollo/client';
+import {setContext} from '@apollo/client/link/context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {store} from '../redux/store';
 
 const BASE_URL = 'http://127.0.0.1:4000';
 
@@ -12,27 +9,27 @@ const httpLink = createHttpLink({
   uri: BASE_URL,
 });
 
-const authMiddleware = new ApolloLink((operation, forward) => {
-  // Añade el token de autorización al header, si está disponible
-  const token = AsyncStorage.getItem('authToken');
-  console.log(token);
+const authLink = setContext(async (_, {headers}) => {
+  // Get the authentication token from AsyncStorage if it exists
+  const asyncToken = await AsyncStorage.getItem('authToken');
 
-  operation.setContext({
+  // If there is no token in AsyncStorage, try to get it from Redux
+  const reduxToken = store.getState().user.token;
+
+  // If there is no token in AsyncStorage or Redux, token will be null.
+  const token = asyncToken || reduxToken;
+
+  // Eeturn the headers to the context so httpLink can read them
+  return {
     headers: {
-      authorization: token ? `Bearer ${token}` : '',
-      // Puedes añadir otros headers aquí si es necesario
+      ...headers,
+      authorization: token || '',
     },
-  });
-
-  return forward(operation);
+  };
 });
-
-// Aplica el middleware al enlace HTTP
-const link = authMiddleware.concat(httpLink);
 
 const client = new ApolloClient({
-  link: link,
+  link: authLink.concat(httpLink),
   cache: new InMemoryCache(),
 });
-
 export default client;

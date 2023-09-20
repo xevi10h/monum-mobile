@@ -1,17 +1,20 @@
 import React, {useEffect} from 'react';
 import {StyleSheet, View} from 'react-native';
-
+import {store} from './src/redux/store';
 import AuthNavigator from './src/auth/navigator/AuthNavigator';
 import GoogleAuthService from './src/auth/services/GoogleAuthService';
+import {Provider} from 'react-redux';
 
 function App() {
   useEffect(() => {
     GoogleAuthService.configureGoogleSignIn();
   }, []);
   return (
-    <View style={styles.container}>
-      <AuthNavigator />
-    </View>
+    <Provider store={store}>
+      <View style={styles.container}>
+        <AuthNavigator />
+      </View>
+    </Provider>
   );
 }
 

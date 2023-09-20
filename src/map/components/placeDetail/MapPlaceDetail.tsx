@@ -30,6 +30,9 @@ import IPlace from '../../domain/IPlace';
 import MapPlaceDetailExpanded from './MapPlaceDetailExpanded';
 import MapPlaceDetailReduced from './MapPlaceDetailReduced';
 import MapServices from '../../services/MapServices';
+import {useSelector} from 'react-redux';
+import {RootState} from '../../../redux/store';
+import user from 'src/redux/states/user';
 
 const {height} = Dimensions.get('window');
 
@@ -68,8 +71,10 @@ export default function MapPlaceDetail({
   const [placeMedia, setPlaceMedia] = useState<IMedia[]>([]);
   const position = useSharedValue(height);
 
+  const userLanguage =
+    useSelector((state: RootState) => state.user.language) || 'en_US';
+
   const importanceIcon = () => {
-    console.log(place);
     switch (place?.importance) {
       case 1:
         return place_pre_detail_importance_1;
@@ -158,7 +163,6 @@ export default function MapPlaceDetail({
       if (placeInfo) {
         const fetchPlace = async () => {
           const placeData = await MapServices.getPlaceInfo(placeId);
-          console.log('placeData', placeData);
           setPlace(placeData);
         };
         fetchPlace();
@@ -171,17 +175,15 @@ export default function MapPlaceDetail({
 
   useEffect(() => {
     if (place && showPlaceDetailExpanded) {
-      // TO DO: Change it for a call to the API
-      const placeMedia = {};
-      if (place) {
-        const fetchPlaceMedia = async () => {
-          const placeMedia = await MapServices.getPlaceMedia(place.id, 'en_US');
-          console.log('placeMedia', placeMedia);
-          setPlaceMedia(placeMedia);
-        };
-        fetchPlaceMedia();
-        position.value = withTiming(MAX_MARGIN_TOP, {duration: 300});
-      }
+      const fetchPlaceMedia = async () => {
+        const placeMedia = await MapServices.getPlaceMedia(
+          place.id,
+          userLanguage,
+        );
+        setPlaceMedia(placeMedia);
+      };
+      fetchPlaceMedia();
+      position.value = withTiming(MAX_MARGIN_TOP, {duration: 300});
     }
   }, [showPlaceDetailExpanded, place]);
 

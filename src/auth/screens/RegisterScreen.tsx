@@ -19,6 +19,8 @@ import {styles} from '../styles/LoginStyles';
 import PrimaryButton from '../components/PrimaryButton';
 import AuthServices from '../services/AuthServices';
 import {Text} from 'react-native';
+import {setAuthToken, setUser} from '../../redux/states/user';
+import {useDispatch} from 'react-redux';
 
 type RegisterScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -43,6 +45,7 @@ export default function RegisterScreen({navigation}: Props) {
   const toggleConfirmedPasswordVisibility = () => {
     setShowConfirmedPassword(!showConfirmedPassword);
   };
+  const dispatch = useDispatch();
   return (
     <View style={styles.backgroundContainer}>
       <View style={styles.backgroundColor} />
@@ -122,10 +125,13 @@ export default function RegisterScreen({navigation}: Props) {
             <PrimaryButton
               text={t('authScreens.signup')}
               onPress={async () => {
-                if (await AuthServices.signup(email, password)) {
+                const response = await AuthServices.signup(email, password);
+                if (response) {
+                  dispatch(setAuthToken(response.token || ''));
+                  dispatch(setUser(response || {}));
                   navigation.navigate('BottomTabNavigator');
                 } else {
-                  console.log('ERROR AL REGISTRARSE');
+                  console.log('ERROR WHEN REGISTERING');
                 }
               }}
             />

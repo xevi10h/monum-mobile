@@ -75,7 +75,6 @@ export default function MediaBubble({
     },
     onActive: (event, context) => {
       const newPosition = context.startX + event.translationX;
-      // console.log(newPosition);
       position.value = newPosition;
     },
     onEnd: event => {
