@@ -1,0 +1,33 @@
+{
+  "authScreens": {
+    "loginWithGoogle": "Continuar con Google",
+    "loginWithCredentials": "Continuar con otro correo",
+    "notRegistered": "¿Aún no tienes cuenta?",
+    "register": "Regístrate",
+    "signup": "Regístrarse",
+    "emailOrUsername": "Email o nombre de usuario",
+    "password": "Contraseña",
+    "confirmedPassword": "Confirmar contraseña",
+    "forgotPassword": "¿Has olvidado tu contraseña?",
+    "username": "Nombre de usuario",
+    "email": "Email",
+    "footerText": "Xplorear S.L @2023",
+    "access": "Acceder"
+  },
+  "placeDetailExpanded": {
+    "mediaIntro": "¿Qué vas a conocer?"
+  },
+  "profile": {
+    "language": "Idioma",
+    "logout": "Cerrar sesión",
+    "update": "Actualizar",
+    "createdAt": "Creado el",
+    "errorUpdating": "Error al actualizar el perfil",
+    "errorGetting": "Error al obtener el perfil"
+  },
+  "languages": {
+    "en_US": "Inglés (EE.UU.)",
+    "es_ES": "Español (España)",
+    "fr_FR": "Francés (Francia)"
+  }
+}
