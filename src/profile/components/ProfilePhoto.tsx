@@ -1,19 +1,35 @@
 import {Image, Text, TouchableOpacity, View} from 'react-native';
-import React, {useState} from 'react';
+import React from 'react';
+import ImagePicker from 'react-native-image-crop-picker';
 
 interface ProfilePhotoComponentProps {
   url: string | undefined;
   username: string;
+  setNewPhoto: (photo: string) => void;
 }
 export default function ProfilePhotoComponent({
   url,
   username,
+  setNewPhoto,
 }: ProfilePhotoComponentProps) {
-  const [imageSource, setImageSource] = useState<string | undefined>('');
-  console.log(imageSource);
+  console.log('url', url);
+  const pickImage = async () => {
+    const image = (await ImagePicker.openPicker({
+      width: 400,
+      height: 400,
+      cropping: true,
+      multiple: false,
+      includeBase64: true,
+    })) as any;
+    // Ahora, la imagen en base64 estará en image.data
+    if (image.data) {
+      const base64Image = `data:${image.mime};base64,${image.data}`;
+      setNewPhoto(base64Image);
+    }
+  };
 
   return (
-    <TouchableOpacity>
+    <TouchableOpacity onPress={pickImage}>
       <View
         style={{
           width: 105,

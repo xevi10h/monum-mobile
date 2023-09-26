@@ -506,6 +506,15 @@ PODS:
   - RNGoogleSignin (9.1.0):
     - GoogleSignIn (~> 6.2)
     - React-Core
+  - RNImageCropPicker (0.40.0):
+    - React-Core
+    - React-RCTImage
+    - RNImageCropPicker/QBImagePickerController (= 0.40.0)
+    - TOCropViewController
+  - RNImageCropPicker/QBImagePickerController (0.40.0):
+    - React-Core
+    - React-RCTImage
+    - TOCropViewController
   - RNLocalize (1.4.3):
     - React-Core
   - rnmapbox-maps (10.0.15):
@@ -559,6 +568,7 @@ PODS:
   - RNVectorIcons (9.2.0):
     - React-Core
   - SocketRocket (0.6.1)
+  - TOCropViewController (2.6.1)
   - Turf (2.7.0)
   - Yoga (1.14.0)
 
@@ -614,6 +624,7 @@ DEPENDENCIES:
   - "RNFBAuth (from `../node_modules/@react-native-firebase/auth`)"
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - "RNGoogleSignin (from `../node_modules/@react-native-google-signin/google-signin`)"
+  - RNImageCropPicker (from `../node_modules/react-native-image-crop-picker`)
   - RNLocalize (from `../node_modules/react-native-localize`)
   - "rnmapbox-maps (from `../node_modules/@rnmapbox/maps`)"
   - RNReanimated (from `../node_modules/react-native-reanimated`)
@@ -641,6 +652,7 @@ SPEC REPOS:
     - MapboxMobileEvents
     - PromisesObjC
     - SocketRocket
+    - TOCropViewController
     - Turf
 
 EXTERNAL SOURCES:
@@ -743,6 +755,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-gesture-handler"
   RNGoogleSignin:
     :path: "../node_modules/@react-native-google-signin/google-signin"
+  RNImageCropPicker:
+    :path: "../node_modules/react-native-image-crop-picker"
   RNLocalize:
     :path: "../node_modules/react-native-localize"
   rnmapbox-maps:
@@ -824,6 +838,7 @@ SPEC CHECKSUMS:
   RNFBAuth: 54e598bb1358a0cf6c0a187f43161cd1bde90455
   RNGestureHandler: 38aa38413896620338948fbb5c90579a7b1c3fde
   RNGoogleSignin: c15bdaa7e8a9e190b6169d9c96a4e8380a740f22
+  RNImageCropPicker: 486e2f7e2b0461ce24321f751410dce1b3b49e6d
   RNLocalize: 7c7aeda16c01db7a0918981c14875c0a53be9b79
   rnmapbox-maps: b6219b7432508ae2cea169365116a811f822612e
   RNReanimated: ab2e96c6d5591c3dfbb38a464f54c8d17fb34a87
@@ -831,9 +846,10 @@ SPEC CHECKSUMS:
   RNSound: 6c156f925295bdc83e8e422e7d8b38d33bc71852
   RNVectorIcons: fcc2f6cb32f5735b586e66d14103a74ce6ad61f8
   SocketRocket: f32cd54efbe0f095c4d7594881e52619cfe80b17
+  TOCropViewController: edfd4f25713d56905ad1e0b9f5be3fbe0f59c863
   Turf: 13d1a92d969ca0311bbc26e8356cca178ce95da2
   Yoga: 86fed2e4d425ee4c6eab3813ba1791101ee153c6
 
-PODFILE CHECKSUM: e7a6db5324a758e64a9034959d274db536323b09
+PODFILE CHECKSUM: a1d217744a41263952910aa913224ac85f7b7f41
 
 COCOAPODS: 1.13.0

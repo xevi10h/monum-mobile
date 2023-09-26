@@ -48,6 +48,21 @@ export default function ProfileScreen({navigationToLogin}: Props) {
     refetchQueries: [{query: GET_USER_BY_ID, variables: {id: user.id}}],
   });
 
+  // Actualizar el usuario si cambia la foto de perfil
+  useEffect(() => {
+    if (provisionalUser.photo !== user.photo) {
+      // Solo ejecuta si la foto es diferente
+      updateUser({
+        variables: {
+          updateUserInput: {
+            id: provisionalUser.id,
+            photo: provisionalUser.photo,
+          },
+        },
+      });
+    }
+  }, [provisionalUser.photo]);
+
   useEffect(() => {
     if (data && data.user) {
       // Guardar el usuario en el estado global si obtenemos data desde GraphQL
@@ -118,8 +133,11 @@ export default function ProfileScreen({navigationToLogin}: Props) {
     <View style={styles.page}>
       <View style={{paddingTop: 100, paddingBottom: 50}}>
         <ProfilePhotoComponent
-          url={undefined}
+          url={user.photo}
           username={provisionalUser.username}
+          setNewPhoto={photo =>
+            setProvisionalUser(prevUser => ({...prevUser, photo}))
+          }
         />
       </View>
       <View style={{width: '100%', zIndex: 10}}>

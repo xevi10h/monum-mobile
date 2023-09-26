@@ -68,5 +68,7 @@
 		<string>Montserrat-SemiBold.ttf</string>
 		<string>Montserrat-VariableFont_wght.ttf</string>
 	</array>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Take some pictures of the phone.</string>
 </dict>
 </plist>
