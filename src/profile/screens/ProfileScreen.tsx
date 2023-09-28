@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {StyleSheet, Text, View, SafeAreaView} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {RootState, User} from '../../redux/store';
 import {useMutation, useQuery} from '@apollo/client';
@@ -11,11 +11,12 @@ import LanguageSelector from '../components/LanguageSelector';
 import NameInput from '../components/NameInput';
 import UpdateButton from '../components/UpdateButton';
 import LogoutButton from '../components/LogoutButton';
-import LoadingSpinner from '../components/LoadingSpinner';
-import ErrorComponent from '../components/ErrorComponent';
+import LoadingSpinner from '../../shared/components/LoadingSpinner';
+import ErrorComponent from '../../shared/components/ErrorComponent';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RootStackParamList} from '../../auth/navigator/AuthNavigator';
+import {Language} from '../../shared/types/Language';
 
 const BOTTOM_TAB_NAVIGATOR_HEIGHT = 56;
 
@@ -29,12 +30,13 @@ type Props = {
 };
 
 export default function ProfileScreen({navigationToLogin}: Props) {
-  console.log(navigationToLogin);
   const dispatch = useDispatch();
   // Acceder al estado global para ver si 'user' ya existe
   const user = useSelector((state: RootState) => state.user);
 
   const [provisionalUser, setProvisionalUser] = useState<User>(user);
+
+  const [photoBase64, setPhotoBase64] = useState<string | undefined>(undefined);
 
   // Realizar la consulta GraphQL si 'user' no existe
   const {data, loading, error} = useQuery(GET_USER_BY_ID, {
@@ -44,40 +46,40 @@ export default function ProfileScreen({navigationToLogin}: Props) {
   const [
     updateUser,
     {data: dataUpdated, loading: loadingUpdated, error: errorUpdated},
-  ] = useMutation(UPDATE_USER, {
-    refetchQueries: [{query: GET_USER_BY_ID, variables: {id: user.id}}],
-  });
+  ] = useMutation(UPDATE_USER);
 
   // Actualizar el usuario si cambia la foto de perfil
   useEffect(() => {
-    if (provisionalUser.photo !== user.photo) {
-      // Solo ejecuta si la foto es diferente
+    if (photoBase64) {
       updateUser({
         variables: {
           updateUserInput: {
             id: provisionalUser.id,
-            photo: provisionalUser.photo,
+            photoBase64,
           },
         },
       });
     }
-  }, [provisionalUser.photo]);
+  }, [photoBase64]);
+
+  useEffect(() => {
+    if (user) {
+      setProvisionalUser(user);
+    }
+  }, [user]);
 
   useEffect(() => {
     if (data && data.user) {
       // Guardar el usuario en el estado global si obtenemos data desde GraphQL
       dispatch(setUser(data.user));
-      setProvisionalUser(data.user);
-      console.log('dataUser', data.user);
     }
   }, [data, dispatch, setProvisionalUser]);
 
   useEffect(() => {
-    if (dataUpdated && dataUpdated.user) {
+    if (dataUpdated && dataUpdated.updateUser) {
+      setProvisionalUser(user);
       // Guardar el usuario en el estado global si obtenemos data desde GraphQL
-      dispatch(setUser(dataUpdated.user));
-      setProvisionalUser(dataUpdated.user);
-      console.log('dataUpdatedUser', dataUpdated.user);
+      dispatch(setUser(dataUpdated.updateUser));
     }
   }, [dataUpdated, dispatch, setProvisionalUser]);
 
@@ -85,8 +87,11 @@ export default function ProfileScreen({navigationToLogin}: Props) {
     setProvisionalUser(prevUser => ({...prevUser, username: newUsername}));
   };
 
-  const handleUpdateLanguage = (newLanguage: string) => {
-    setProvisionalUser(prevUser => ({...prevUser, language: newLanguage}));
+  const handleUpdateLanguage = (newLanguage: Language) => {
+    setProvisionalUser(prevUser => ({
+      ...prevUser,
+      language: newLanguage,
+    }));
   };
 
   const labelText = (userParam: string) => {
@@ -121,7 +126,6 @@ export default function ProfileScreen({navigationToLogin}: Props) {
                 id: provisionalUser.id,
                 username: provisionalUser.username,
                 language: provisionalUser.language,
-                photo: provisionalUser.photo,
               },
             },
           })
@@ -130,57 +134,44 @@ export default function ProfileScreen({navigationToLogin}: Props) {
     );
 
   return (
-    <View style={styles.page}>
-      <View style={{paddingTop: 100, paddingBottom: 50}}>
+    <SafeAreaView style={styles.page}>
+      <View style={styles.profilePhotoContainer}>
         <ProfilePhotoComponent
           url={user.photo}
           username={provisionalUser.username}
-          setNewPhoto={photo =>
-            setProvisionalUser(prevUser => ({...prevUser, photo}))
-          }
+          setNewPhoto={photoBase64 => setPhotoBase64(photoBase64)}
         />
       </View>
-      <View style={{width: '100%', zIndex: 10}}>
+      <View style={styles.inputsContainer}>
         <NameInput
           labelText={labelText('username')}
           value={provisionalUser.username}
           setValue={handleUpdateUsername}
         />
         <LanguageSelector
-          language={provisionalUser.language}
+          language={user.language}
           setLanguage={handleUpdateLanguage}
         />
       </View>
-      <View
-        style={{
-          width: '100%',
-          paddingHorizontal: 30,
-        }}>
+      <View style={styles.updateButtonContainer}>
         <UpdateButton
           text={t('profile.update')}
-          onPress={async () =>
-            await updateUser({
+          onPress={async () => {
+            return await updateUser({
               variables: {
                 updateUserInput: {
                   id: provisionalUser.id,
                   username: provisionalUser.username,
                   language: provisionalUser.language,
-                  photo: provisionalUser.photo,
                 },
               },
-            })
-          }
+            });
+          }}
         />
-        <Text
-          style={{
-            fontSize: 16,
-            color: '#3F713B',
-            fontFamily: 'Montserrat',
-            textAlign: 'center',
-          }}>{`${t('profile.createdAt')} ${new Date(
-          provisionalUser.createdAt,
-        ).toLocaleDateString(
-          provisionalUser.language?.replace('_', '-') || 'en-US',
+        <Text style={styles.textCreatedAt}>{`${t(
+          'profile.createdAt',
+        )} ${new Date(provisionalUser.createdAt).toLocaleDateString(
+          user?.language?.replace('_', '-') || 'en-US',
           {
             day: 'numeric',
             month: 'short',
@@ -189,12 +180,13 @@ export default function ProfileScreen({navigationToLogin}: Props) {
         )}`}</Text>
       </View>
       <View
-        style={{
-          position: 'absolute',
-          bottom: useSafeAreaInsets().bottom + BOTTOM_TAB_NAVIGATOR_HEIGHT + 50,
-          width: '100%',
-          paddingHorizontal: 30,
-        }}>
+        style={[
+          styles.logoutButtonContainer,
+          {
+            bottom:
+              useSafeAreaInsets().bottom + BOTTOM_TAB_NAVIGATOR_HEIGHT + 20,
+          },
+        ]}>
         <LogoutButton
           text={t('profile.logout')}
           onPress={() => {
@@ -207,7 +199,7 @@ export default function ProfileScreen({navigationToLogin}: Props) {
           }}
         />
       </View>
-    </View>
+    </SafeAreaView>
   );
 }
 
@@ -217,5 +209,23 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     elevation: 0,
     backgroundColor: 'white',
+  },
+  profilePhotoContainer: {paddingVertical: '10%'},
+  inputsContainer: {width: '100%', zIndex: 10},
+  updateButtonContainer: {
+    width: '100%',
+    paddingHorizontal: 30,
+  },
+  textCreatedAt: {
+    fontSize: 16,
+    color: '#3F713B',
+    fontFamily: 'Montserrat',
+    textAlign: 'center',
+  },
+  logoutButtonContainer: {
+    position: 'absolute',
+
+    width: '100%',
+    paddingHorizontal: 30,
   },
 });

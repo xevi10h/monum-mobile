@@ -1,95 +1,121 @@
 import {t} from 'i18next';
-import {useState} from 'react';
-import {Text, View} from 'react-native';
+import {useEffect, useState} from 'react';
+import {StyleSheet, Text, View} from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
+import {Language} from '../../shared/types/Language';
 
 interface LanguageSelectorProps {
-  language: string;
-  setLanguage: (string: string) => void;
+  language: Language;
+  setLanguage: (string: Language) => void;
+}
+
+interface LanguageSelectorPill {
+  label: string;
+  value: Language;
 }
 
 export default function LanguageSelector({
   language,
   setLanguage,
 }: LanguageSelectorProps) {
+  useEffect(() => {
+    setAvailableLanguages([
+      {label: t('languages.en_US'), value: 'en_US'},
+      {label: t('languages.es_ES'), value: 'es_ES'},
+      {label: t('languages.fr_FR'), value: 'fr_FR'},
+    ]);
+    setValue(language);
+  }, [language]);
   const [open, setOpen] = useState(false);
-  const [value, setValue] = useState(language || 'en_US');
+  const [value, setValue] = useState(language);
 
   // TO DO: Get languages from API
-  const [languages, setLanguages] = useState([
+  const [availableLanguages, setAvailableLanguages] = useState<
+    LanguageSelectorPill[]
+  >([
     {label: t('languages.en_US'), value: 'en_US'},
     {label: t('languages.es_ES'), value: 'es_ES'},
     {label: t('languages.fr_FR'), value: 'fr_FR'},
   ]);
 
   return (
-    <View
-      style={{
-        width: '100%',
-        alignItems: 'center',
-        justifyContent: 'center',
-        paddingHorizontal: 15,
-        marginVertical: 10,
-        zIndex: 10,
-        position: 'relative',
-      }}>
-      <View
-        style={{
-          width: '100%',
-          alignItems: 'flex-start',
-          justifyContent: 'flex-start',
-        }}>
-        <Text
-          style={{
-            fontSize: 16,
-            color: '#3F713B',
-            fontFamily: 'Montserrat',
-          }}>
-          {t('profile.language')}
-        </Text>
+    <View style={styles.container}>
+      <View style={styles.labelContainer}>
+        <Text style={styles.labelText}>{t('profile.language')}</Text>
         <DropDownPicker
           open={open}
           value={value}
-          items={languages}
+          items={availableLanguages}
           setOpen={setOpen}
           setValue={setValue}
-          setItems={setLanguages}
-          textStyle={{
-            fontSize: 16,
-            color: '#3F713B',
-            fontFamily: 'Montserrat',
-            fontWeight: '400',
+          onChangeValue={selectedValue => {
+            setLanguage(selectedValue as Language);
           }}
+          setItems={setAvailableLanguages}
+          style={styles.dropDown}
+          dropDownContainerStyle={styles.dropDownContainer}
+          textStyle={styles.dropDownText}
           disableBorderRadius={true}
-          placeholder={t(`languages.${value}`) || ''}
-          labelStyle={{
-            fontSize: 16,
-            color: '#3F713B',
-            fontFamily: 'Montserrat',
-            fontWeight: '600',
-          }}
-          selectedItemLabelStyle={{
-            fontWeight: '600',
-          }}
-          listItemLabelStyle={{
-            fontWeight: '400',
-          }}
-          style={{
-            paddingHorizontal: 15,
-            borderColor: '#3F713B3D',
-            borderWidth: 2,
-            borderRadius: 12,
-            height: 48,
-            marginVertical: 10,
-          }}
-          dropDownContainerStyle={{
-            paddingHorizontal: 5,
-            borderColor: '#3F713B3D',
-            marginVertical: 10,
-          }}
+          placeholder={t(`languages.${language}`) || ''}
+          labelStyle={styles.dropDownLabel}
+          selectedItemLabelStyle={styles.dropDownSelectedItemLabel}
+          listItemLabelStyle={styles.dropDownListItemLabel}
         />
       </View>
-      <View style={{alignItems: 'center', width: '100%'}}></View>
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    width: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: 15,
+    marginTop: '5%',
+    zIndex: 10,
+    position: 'relative',
+  },
+  labelContainer: {
+    width: '100%',
+    alignItems: 'flex-start',
+    justifyContent: 'flex-start',
+  },
+  labelText: {
+    fontSize: 16,
+    color: '#3F713B',
+    fontFamily: 'Montserrat',
+  },
+  dropDownContainer: {
+    paddingHorizontal: 5,
+    borderColor: '#3F713B3D',
+    marginVertical: 10,
+  },
+  dropDown: {
+    paddingHorizontal: 15,
+    borderColor: '#3F713B3D',
+    borderWidth: 2,
+    borderRadius: 12,
+    height: 48,
+    marginVertical: 10,
+  },
+
+  dropDownText: {
+    fontSize: 16,
+    color: '#3F713B',
+    fontFamily: 'Montserrat',
+    fontWeight: '400',
+  },
+  dropDownLabel: {
+    fontSize: 16,
+    color: '#3F713B',
+    fontFamily: 'Montserrat',
+    fontWeight: '600',
+  },
+  dropDownSelectedItemLabel: {
+    fontWeight: '600',
+  },
+  dropDownListItemLabel: {
+    fontWeight: '400',
+  },
+});

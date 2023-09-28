@@ -1,4 +1,4 @@
-import {Text, View} from 'react-native';
+import {StyleSheet, Text, View} from 'react-native';
 import {TextInput} from 'react-native-gesture-handler';
 
 interface NameInputProps {
@@ -13,52 +13,52 @@ export default function NameInput({
   setValue,
 }: NameInputProps) {
   return (
-    <View
-      style={{
-        width: '100%',
-        alignItems: 'center',
-        justifyContent: 'center',
-        paddingHorizontal: 15,
-        marginVertical: 10,
-      }}>
-      <View
-        style={{
-          width: '100%',
-          alignItems: 'flex-start',
-          justifyContent: 'flex-start',
-        }}>
-        <Text
-          style={{
-            fontSize: 16,
-            color: '#3F713B',
-            fontFamily: 'Montserrat',
-          }}>
-          {labelText}
-        </Text>
+    <View style={styles.container}>
+      <View style={styles.labelContainer}>
+        <Text style={styles.labelText}>{labelText}</Text>
       </View>
-      <View style={{alignItems: 'center', width: '100%'}}>
+      <View style={styles.inputContainer}>
         <TextInput
-          placeholder={'Password'}
-          placeholderTextColor="#FFFFFF"
           value={value}
-          style={{
-            paddingHorizontal: 15,
-            borderColor: '#3F713B3D',
-            color: '#3F713B',
-            borderWidth: 2,
-            borderRadius: 12,
-            height: 48,
-            width: '100%',
-            marginVertical: 10,
-            alignItems: 'center',
-            justifyContent: 'center',
-            fontSize: 16,
-            fontFamily: 'Montserrat',
-            fontWeight: '600',
-          }}
+          style={styles.inputText}
           onChangeText={setValue}
         />
       </View>
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    width: '100%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingHorizontal: 15,
+  },
+  labelContainer: {
+    width: '100%',
+    alignItems: 'flex-start',
+    justifyContent: 'flex-start',
+  },
+  labelText: {
+    fontSize: 16,
+    color: '#3F713B',
+    fontFamily: 'Montserrat',
+  },
+  inputContainer: {alignItems: 'center', width: '100%'},
+  inputText: {
+    paddingHorizontal: 15,
+    borderColor: '#3F713B3D',
+    color: '#3F713B',
+    borderWidth: 2,
+    borderRadius: 12,
+    height: 48,
+    width: '100%',
+    marginVertical: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    fontSize: 16,
+    fontFamily: 'Montserrat',
+    fontWeight: '600',
+  },
+});

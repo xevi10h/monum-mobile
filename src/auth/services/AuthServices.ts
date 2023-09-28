@@ -1,7 +1,5 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import {ApolloClient, InMemoryCache, gql, useQuery} from '@apollo/client';
 import client from '../../graphql/connection';
-import {userSlice} from 'src/redux/states/user';
 import {User} from '../../redux/store';
 import {
   LOGIN_GOOGLE_USER,

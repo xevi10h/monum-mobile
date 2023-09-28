@@ -84,6 +84,7 @@ export default function MapPlaceDetailExpanded({
   useEffect(() => {
     position.value = withTiming(0, {duration: 300});
   }, []);
+
   return (
     <View style={styles.container}>
       <PanGestureHandler onGestureEvent={panGestureEvent}>
@@ -91,7 +92,9 @@ export default function MapPlaceDetailExpanded({
           <View style={{flex: 1}}>
             <View style={[styles.imageContainer, {height: height * 0.65}]}>
               <Image
-                source={{uri: place.imageUrl}}
+                source={{
+                  uri: Array.isArray(place.imagesUrl) ? place.imagesUrl[0] : '',
+                }}
                 resizeMode="cover"
                 style={styles.image}
               />

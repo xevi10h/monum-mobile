@@ -29,5 +29,9 @@
     "en_US": "Inglés (EE.UU.)",
     "es_ES": "Español (España)",
     "fr_FR": "Francés (Francia)"
+  },
+  "routes": {
+    "search": "Buscar",
+    "errorGettingAvailableCities": "Error al obtener las ciudades disponibles"
   }
 }

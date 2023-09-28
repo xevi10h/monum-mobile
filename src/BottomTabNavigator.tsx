@@ -15,12 +15,13 @@ import IPlace from './map/domain/IPlace';
 import IMedia from './map/domain/IMedia';
 import {RootStackParamList} from './auth/navigator/AuthNavigator';
 import {StackNavigationProp} from '@react-navigation/stack';
+import RouteScreen from './routes/screens/CitiesScreen';
 
 const BOTTOM_TAB_NAVIGATOR_HEIGHT = 56;
 
 // Define un tipo para las rutas
 export type RootBottomTabList = {
-  List: undefined;
+  Routes: undefined;
   Map: undefined;
   Profile: undefined;
 };
@@ -49,7 +50,7 @@ function BottomTabNavigator({navigation}: Props) {
   const renderTabBarIcon = ({focused, name}: BottomTabBarIconProps) => {
     let source;
     switch (name) {
-      case 'List':
+      case 'Routes':
         source = bottom_bar_list_inactive;
         break;
       case 'Map':
@@ -93,13 +94,13 @@ function BottomTabNavigator({navigation}: Props) {
           headerShown: false,
         }}>
         <Tab.Screen
-          name="List"
-          component={() => <ProfileScreen navigationToLogin={navigation} />}
+          name="Routes"
           options={{
             tabBarIcon: ({focused}) =>
-              renderTabBarIcon({focused, name: 'List'}),
-          }}
-        />
+              renderTabBarIcon({focused, name: 'Routes'}),
+          }}>
+          {() => <RouteScreen />}
+        </Tab.Screen>
         <Tab.Screen
           name="Map"
           options={{
@@ -116,12 +117,12 @@ function BottomTabNavigator({navigation}: Props) {
         </Tab.Screen>
         <Tab.Screen
           name="Profile"
-          component={() => <ProfileScreen navigationToLogin={navigation} />}
           options={{
             tabBarIcon: ({focused}) =>
               renderTabBarIcon({focused, name: 'Profile'}),
-          }}
-        />
+          }}>
+          {() => <ProfileScreen navigationToLogin={navigation} />}
+        </Tab.Screen>
       </Tab.Navigator>
       {media && place && (
         <MediaComponent

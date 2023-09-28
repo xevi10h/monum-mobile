@@ -39,7 +39,6 @@ export default function MediaComponent({
       Bucket: 'xplorearproves',
       Key: 's3://xplorearproves/audio_prueba.mp3',
     });
-    console.log(audioS3);
   }, []);
 
   // useEffect(() => {

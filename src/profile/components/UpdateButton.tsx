@@ -31,7 +31,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.5,
     shadowRadius: 4,
     elevation: 10,
-    marginVertical: 36,
+    marginVertical: '5%',
   },
   buttonText: {
     fontSize: 18,

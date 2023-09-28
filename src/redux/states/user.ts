@@ -1,6 +1,7 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {createSlice} from '@reduxjs/toolkit';
 import {User} from '../store';
+import i18n from 'i18next';
 
 const initialState: User = {
   id: '',
@@ -38,6 +39,7 @@ export const userSlice = createSlice({
         action.payload?.hashedPassword || initialState.hashedPassword;
       state.googleId = action.payload?.googleId || initialState.googleId;
       state.language = action.payload?.language || initialState.language;
+      i18n.changeLanguage(state.language);
     },
   },
 });

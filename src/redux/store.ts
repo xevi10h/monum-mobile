@@ -1,5 +1,6 @@
 import {configureStore} from '@reduxjs/toolkit';
 import userSlice from './states/user';
+import {Language} from '../shared/types/Language';
 export interface User {
   id?: string;
   email: string;
@@ -10,7 +11,7 @@ export interface User {
   hashedPassword?: string;
   googleId?: string;
   token?: string;
-  language: string;
+  language: Language;
 }
 
 export interface AppStore {

@@ -27,7 +27,11 @@
   },
   "languages": {
     "en_US": "English (United States)",
-    "es_ES": "Español (España)",
-    "fr_FR": "Français (France)"
+    "es_ES": "Spanish (Spain)",
+    "fr_FR": "French (France)"
+  },
+  "routes": {
+    "search": "Search",
+    "errorGettingAvailableCities": "Error getting available cities"
   }
 }

@@ -10,7 +10,6 @@ import {
 } from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import LinearGradient from 'react-native-linear-gradient';
-
 import place_detail_arrow_bottom_white from '../../../assets/images/icons/place_detail_arrow_bottom_white.png';
 import place_detail_media_rating_star from '../../../assets/images/icons/place_detail_media_rating_star.png';
 import place_detail_play_media from '../../../assets/images/icons/place_detail_play_media.png';
