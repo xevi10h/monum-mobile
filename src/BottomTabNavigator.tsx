@@ -11,11 +11,11 @@ import MapScreen from './map/screens/MapScreen';
 
 import ProfileScreen from './profile/screens/ProfileScreen';
 import MediaComponent from './media/components/MediaComponent';
-import IPlace from './map/domain/IPlace';
-import IMedia from './map/domain/IMedia';
+import IPlace from './shared/interfaces/IPlace';
+import IMedia from './shared/interfaces/IMedia';
 import {RootStackParamList} from './auth/navigator/AuthNavigator';
 import {StackNavigationProp} from '@react-navigation/stack';
-import RouteScreen from './routes/screens/CitiesScreen';
+import RoutesNavigator from './routes/navigator/RoutesNavigator';
 
 const BOTTOM_TAB_NAVIGATOR_HEIGHT = 56;
 
@@ -99,7 +99,7 @@ function BottomTabNavigator({navigation}: Props) {
             tabBarIcon: ({focused}) =>
               renderTabBarIcon({focused, name: 'Routes'}),
           }}>
-          {() => <RouteScreen />}
+          {() => <RoutesNavigator />}
         </Tab.Screen>
         <Tab.Screen
           name="Map"

@@ -1,7 +1,6 @@
 import {View, Image, TextInput, StyleSheet} from 'react-native';
 import routes_text_search from '../../assets/images/icons/routes_text_search.png';
 import {t} from 'i18next';
-import {Style} from '@rnmapbox/maps';
 
 interface TextSearchProps {
   textSearch: string | undefined;

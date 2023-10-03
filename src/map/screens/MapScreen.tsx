@@ -16,8 +16,8 @@ import MapPlaceDetail from '../components/placeDetail/MapPlaceDetail';
 import IFilter from '../domain/IFilter';
 import {getAllFilters} from '../services/FakeData';
 import MapServices from '../services/MapServices';
-import IPlace from '../domain/IPlace';
-import IMedia from '../domain/IMedia';
+import IPlace from '../../shared/interfaces/IPlace';
+import IMedia from '../../shared/interfaces/IMedia';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 Mapbox.setAccessToken(
@@ -81,7 +81,8 @@ export default function MapScreen({
       position => {
         const latitude = position.coords.latitude;
         const longitude = position.coords.longitude;
-        setCenterCoordinates([longitude, latitude]);
+        // setCenterCoordinates([longitude, latitude]);
+        setCenterCoordinates([2.15, 41.38]); // Barcelona
       },
       error => {
         console.log('Error obtaining geolocation:', error);

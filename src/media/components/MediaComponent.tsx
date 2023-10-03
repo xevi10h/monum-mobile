@@ -4,16 +4,10 @@ import media_bubble_pause from '../../assets/images/icons/media_bubble_pause.png
 import media_bubble_play from '../../assets/images/icons/media_bubble_play.png';
 import MediaExpanded from './MediaExpanded';
 import MediaBubble from './MediaBubble';
-import IPlace from 'src/map/domain/IPlace';
-import IMedia from 'src/map/domain/IMedia';
-import Sound from 'react-native-sound';
-import RNFetchBlob from 'rn-fetch-blob';
-import AWS from 'aws-sdk';
-
-AWS.config.update({
-  accessKeyId: 'AKIAZYOQ5BTPGHPIH2PB',
-  secretAccessKey: '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',
-});
+import IPlace from '../../shared/interfaces/IPlace';
+import IMedia from '../../shared/interfaces/IMedia';
+import TrackPlayer, {RepeatMode, State} from 'react-native-track-player';
+import {addTracks, setupPlayer} from '../../track-player/service';
 
 interface MediaBubbleProps {
   place: IPlace;
@@ -33,50 +27,57 @@ export default function MediaComponent({
   const [playIcon, setPlayIcon] = useState(media_bubble_pause);
   const [expandedDetail, setExpandedDetail] = useState(false);
 
+  const [isPlayerReady, setIsPlayerReady] = useState(false);
+
   useEffect(() => {
-    const s3 = new AWS.S3();
-    const audioS3 = s3.getObject({
-      Bucket: 'xplorearproves',
-      Key: 's3://xplorearproves/audio_prueba.mp3',
-    });
+    async function setup() {
+      let isSetup = await setupPlayer();
+      console.log('isSetup', isSetup);
+
+      const queue = await TrackPlayer.getQueue();
+      console.log('queue', queue);
+      if (isSetup && queue.length <= 0) {
+        await TrackPlayer.add([
+          {
+            id: media.id,
+            url: media.audioUrl,
+            title: media.title,
+            artist: 'Xplorear',
+          },
+        ]);
+        await TrackPlayer.setRepeatMode(RepeatMode.Queue);
+        const queue2 = await TrackPlayer.getQueue();
+        console.log('queue2', queue2);
+        TrackPlayer.play();
+      }
+      setIsPlayerReady(isSetup);
+    }
+    setup();
   }, []);
 
-  // useEffect(() => {
-  //   const sound = new Sound('audio_prueba.mp3', Sound.MAIN_BUNDLE, error => {
-  //     if (error) {
-  //       console.log('Error loading sound: ', error);
-  //     } else {
-  //       sound.play(success => {
-  //         if (success) {
-  //           console.log('Audio has finished playing');
-  //         } else {
-  //           console.log('Audio playback failed');
-  //         }
-  //       });
-  //     }
-  //   });
-  //   setMedia({...media, audio: sound});
-  // }, []);
-
-  const togglePlaying = () => {
-    if (media.audio?.isPlaying()) {
-      media.audio?.pause();
-      setPlayIcon(media_bubble_play);
-    } else {
-      media.audio?.play();
+  const togglePlaying = async () => {
+    const currentTrack = await TrackPlayer.getCurrentTrack();
+    if (currentTrack == null) {
+      await TrackPlayer.reset();
+      await TrackPlayer.add([
+        {
+          id: media.id,
+          url: media.audioUrl,
+          title: media.title,
+          artist: 'Xplorear',
+        },
+      ]);
+      await TrackPlayer.play();
       setPlayIcon(media_bubble_pause);
+    } else {
+      if ((await TrackPlayer.getState()) === State.Paused) {
+        await TrackPlayer.play();
+        setPlayIcon(media_bubble_pause);
+      } else {
+        await TrackPlayer.pause();
+        setPlayIcon(media_bubble_play);
+      }
     }
-  };
-
-  const play = () => {
-    media.audio?.getCurrentTime(seconds => setCurrentPosition(seconds));
-  };
-
-  const seek = (time: number) => {
-    time = Math.round(time);
-    media.audio?.setCurrentTime(time);
-    setCurrentPosition(time);
-    play();
   };
 
   return expandedDetail ? (
@@ -96,7 +97,7 @@ export default function MediaComponent({
       setCurrentPosition={setCurrentPosition}
       setExpandedDetail={setExpandedDetail}
       playIcon={playIcon}
-      seek={seek}
+      // seek={seek}
       togglePlaying={togglePlaying}
     />
   );

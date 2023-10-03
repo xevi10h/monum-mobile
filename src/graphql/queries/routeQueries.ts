@@ -14,3 +14,22 @@ export const GET_CITIES = gql`
     }
   }
 `;
+
+export const GET_ROUTES_OF_CITY = gql`
+  query Routes($cityId: ID!, $language: String, $textSearch: String) {
+    routes(cityId: $cityId, language: $language, textSearch: $textSearch) {
+      id
+      title
+      description
+      rating
+      stops {
+        media {
+          id
+        }
+      }
+      cityId
+      language
+      stopsCount
+    }
+  }
+`;

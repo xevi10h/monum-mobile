@@ -7,10 +7,15 @@ import GoogleAuthService from './src/auth/services/GoogleAuthService';
 import {Provider} from 'react-redux';
 import {ApolloProvider} from '@apollo/client';
 import client from './src/graphql/connection';
+import TrackPlayer from 'react-native-track-player';
 
 function App() {
   useEffect(() => {
     GoogleAuthService.configureGoogleSignIn();
+    const startPlayer = async () => {
+      await TrackPlayer.setupPlayer();
+    };
+    startPlayer();
   }, []);
   return (
     <Provider store={store}>

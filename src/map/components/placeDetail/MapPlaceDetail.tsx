@@ -24,8 +24,8 @@ import place_pre_detail_importance_2 from '../../../assets/images/icons/placeImp
 import place_pre_detail_importance_3 from '../../../assets/images/icons/placeImportance/place_pre_detail_importance_3.png';
 import place_pre_detail_importance_4 from '../../../assets/images/icons/placeImportance/place_pre_detail_importance_4.png';
 import place_pre_detail_importance_5 from '../../../assets/images/icons/placeImportance/place_pre_detail_importance_5.png';
-import IMedia from '../../domain/IMedia';
-import IPlace from '../../domain/IPlace';
+import IMedia from '../../../shared/interfaces/IMedia';
+import IPlace from '../../../shared/interfaces/IPlace';
 
 import MapPlaceDetailExpanded from './MapPlaceDetailExpanded';
 import MapPlaceDetailReduced from './MapPlaceDetailReduced';
@@ -180,6 +180,7 @@ export default function MapPlaceDetail({
           place.id,
           userLanguage,
         );
+        console.log('placeMedia', placeMedia);
         setPlaceMedia(placeMedia);
       };
       fetchPlaceMedia();
@@ -199,7 +200,7 @@ export default function MapPlaceDetail({
       ]}>
       <PanGestureHandler onGestureEvent={panGestureEvent}>
         <Animated.View style={[styles.animatedContainer, animatedStyle]}>
-          {showPlaceDetailExpanded && place ? (
+          {showPlaceDetailExpanded && place && placeMedia ? (
             <MapPlaceDetailExpanded
               placeMedia={placeMedia}
               importanceIcon={importanceIcon()}

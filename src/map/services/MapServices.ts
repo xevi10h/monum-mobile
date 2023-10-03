@@ -1,4 +1,4 @@
-import IPlace from '../domain/IPlace';
+import IPlace from '../../shared/interfaces/IPlace';
 import {MarkerResponse} from './MapServicesInterfaces';
 import client from '../../graphql/connection';
 import {GET_MARKERS, GET_PLACE_INFO} from '../../graphql/queries/placeQueries';

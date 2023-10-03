@@ -7,12 +7,23 @@ import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {GET_CITIES} from '../../graphql/queries/routeQueries';
 import LoadingSpinner from '../../shared/components/LoadingSpinner';
 import ErrorComponent from '../../shared/components/ErrorComponent';
-import ICity from '../domain/ICity';
-import CityPill from '../components/CityPill';
+import ICity from '../../shared/interfaces/ICity';
 import {useSelector} from 'react-redux';
 import {RootState} from 'src/redux/store';
+import {StackNavigationProp} from '@react-navigation/stack';
+import {RoutesStackParamList} from '../navigator/RoutesNavigator';
+import ListCityPill from '../components/ListCityPill';
 
-export default function CitiesScreen() {
+type ListCitiesScreenNavigationProp = StackNavigationProp<
+  RoutesStackParamList,
+  'ListCities'
+>;
+
+type Props = {
+  navigation: ListCitiesScreenNavigationProp;
+};
+
+export default function ListCitiesScreen({navigation}: Props) {
   const user = useSelector((state: RootState) => state.user);
   const [textSearch, setTextSearch] = useState<string | undefined>(undefined);
   const [cities, setCities] = useState<ICity[]>([]);
@@ -48,9 +59,9 @@ export default function CitiesScreen() {
             }}
             showsVerticalScrollIndicator={false}>
             {cities.map((city, i) => (
-              <CityPill
+              <ListCityPill
                 key={i}
-                onPress={() => 'sss'}
+                onPress={() => navigation.navigate('ListRoutes', {city})}
                 cityName={city.translations[user.language] || ''}
                 imageUrl={city.imageUrl}
               />

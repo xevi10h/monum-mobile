@@ -32,6 +32,7 @@
   },
   "routes": {
     "search": "Search",
-    "errorGettingAvailableCities": "Error getting available cities"
+    "errorGettingAvailableCities": "Error getting available cities",
+    "stops": "stops"
   }
 }

@@ -32,6 +32,7 @@
   },
   "routes": {
     "search": "Buscar",
-    "errorGettingAvailableCities": "Error al obtener las ciudades disponibles"
+    "errorGettingAvailableCities": "Error al obtener las ciudades disponibles",
+    "stops": "paradas"
   }
 }

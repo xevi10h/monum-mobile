@@ -1,13 +1,17 @@
 import {Image, StyleSheet, Text, TouchableOpacity} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 
-interface CityPillProps {
+interface ListCityPillProps {
   cityName: string;
   onPress: (string: string) => void;
   imageUrl: string;
 }
 
-export default function CityPill({cityName, onPress, imageUrl}: CityPillProps) {
+export default function ListCityPill({
+  cityName,
+  onPress,
+  imageUrl,
+}: ListCityPillProps) {
   return (
     <TouchableOpacity
       style={styles.container}
@@ -37,6 +41,11 @@ const styles = StyleSheet.create({
     height: 60,
     marginBottom: 15,
     justifyContent: 'center',
+    shadowColor: '#000',
+    shadowOffset: {width: 0, height: 4},
+    shadowOpacity: 0.25,
+    shadowRadius: 4,
+    elevation: 5,
   },
   image: {
     position: 'absolute',

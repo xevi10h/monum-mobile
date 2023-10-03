@@ -23,14 +23,11 @@ import Animated, {
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import place_detail_arrow_bottom_white from '../../assets/images/icons/place_detail_arrow_bottom_white.png';
 import place_detail_media_rating_star from '../../assets/images/icons/place_detail_media_rating_star.png';
-import media_expanded_thumb_circle from '../../assets/images/icons/media_expanded_thumb_circle.png';
-import media_expanded_track from '../../assets/images/icons/media_expanded_track.png';
 import media_expanded_back from '../../assets/images/icons/media_expanded_back.png';
 import media_expanded_forward from '../../assets/images/icons/media_expanded_forward.png';
-import media_bubble_pause from '../../assets/images/icons/media_bubble_pause.png';
 import media_expanded_play from '../../assets/images/icons/media_expanded_play.png';
-import IMedia from 'src/map/domain/IMedia';
-import IPlace from 'src/map/domain/IPlace';
+import IPlace from '../../shared/interfaces/IPlace';
+import IMedia from '../../shared/interfaces/IMedia';
 import {Slider} from '@rneui/themed';
 
 const {height} = Dimensions.get('window');

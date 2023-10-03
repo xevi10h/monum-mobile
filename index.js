@@ -6,6 +6,8 @@ import i18n from 'i18next';
 import {setI18nConfig} from './src/i18n'; // Archivo de configuración de i18next
 import {getLocales} from 'react-native-localize';
 import './src/polyfill'; // Importa el archivo polyfill.js antes de i18next
+import { PlaybackService } from './src/track-player/service';
+import TrackPlayer from 'react-native-track-player';
 
 // Configuración de i18next
 i18n.use(initReactI18next).init(setI18nConfig());
@@ -15,3 +17,5 @@ const {languageTag} = getLocales()[0];
 i18n.changeLanguage(languageTag);
 
 AppRegistry.registerComponent(appName, () => App);
+
+TrackPlayer.registerPlaybackService(() => PlaybackService);

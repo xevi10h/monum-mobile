@@ -32,6 +32,7 @@
   },
   "routes": {
     "search": "Cerca",
-    "errorGettingAvailableCities": "Error al obtenir les ciutats disponibles"
+    "errorGettingAvailableCities": "Error al obtenir les ciutats disponibles",
+    "stops": "aturades"
   }
 }

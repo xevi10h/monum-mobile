@@ -8,7 +8,7 @@ import {
   View,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-import IPlace from 'src/map/domain/IPlace';
+import IPlace from '../../../shared/interfaces/IPlace';
 
 import place_pre_detail_arrow_top from '../../../assets/images/icons/place_pre_detail_arrow_top.png';
 import ShowRatingStars from '../ShowRatingStars';

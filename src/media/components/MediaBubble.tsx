@@ -25,8 +25,8 @@ import {
   PanGestureHandler,
   PanGestureHandlerGestureEvent,
 } from 'react-native-gesture-handler';
-import IPlace from 'src/map/domain/IPlace';
-import IMedia from 'src/map/domain/IMedia';
+import IPlace from '../../shared/interfaces/IPlace';
+import IMedia from '../../shared/interfaces/IMedia';
 import {Slider} from '@rneui/themed';
 
 const BOTTOM_TAB_NAVIGATOR_HEIGHT = 56;
@@ -47,8 +47,8 @@ interface MediaBubbleProps {
   setCurrentPosition: Dispatch<SetStateAction<number>>;
   setExpandedDetail: Dispatch<SetStateAction<boolean>>;
   playIcon: number;
-  seek: (value: number) => void;
-  togglePlaying: () => void;
+  seek?: (value: number) => void;
+  togglePlaying?: () => void;
 }
 
 export default function MediaBubble({
@@ -125,7 +125,9 @@ export default function MediaBubble({
           <View style={styles.mediaBubbleContainer}>
             <View style={styles.mediaBubbleImageContainer}>
               <Image
-                source={{uri: place.imageUrl}}
+                source={{
+                  uri: Array.isArray(place.imagesUrl) ? place.imagesUrl[0] : '',
+                }}
                 style={styles.mediaBubbleImage}
                 resizeMode="cover"
               />
@@ -156,7 +158,7 @@ export default function MediaBubble({
               </TouchableOpacity>
               <TouchableOpacity
                 style={styles.mediaBubblePlayerButtonsImageContainer}
-                onPress={() => togglePlaying()}>
+                onPress={togglePlaying}>
                 <Image
                   source={playIcon}
                   style={styles.mediaBubblePlayerButtonsImagePlay}
