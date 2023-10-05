@@ -1,7 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import {StyleSheet, Text, View, SafeAreaView} from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
-import {RootState, User} from '../../redux/store';
+import {RootState} from '../../redux/store';
+import IUser from '../../shared/interfaces/IUser';
 import {useMutation, useQuery} from '@apollo/client';
 import {removeAuthToken, setUser} from '../../redux/states/user';
 import {GET_USER_BY_ID, UPDATE_USER} from '../../graphql/queries/userQueries';
@@ -34,7 +35,7 @@ export default function ProfileScreen({navigationToLogin}: Props) {
   // Acceder al estado global para ver si 'user' ya existe
   const user = useSelector((state: RootState) => state.user);
 
-  const [provisionalUser, setProvisionalUser] = useState<User>(user);
+  const [provisionalUser, setProvisionalUser] = useState<IUser>(user);
 
   const [photoBase64, setPhotoBase64] = useState<string | undefined>(undefined);
 

@@ -1,6 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import client from '../../graphql/connection';
-import {User} from '../../redux/store';
+import IUser from '../../shared/interfaces/IUser';
 import {
   LOGIN_GOOGLE_USER,
   LOGIN_USER,
@@ -31,7 +31,7 @@ class AuthService {
     }
   }
 
-  public async signup(email: string, password: string): Promise<User | null> {
+  public async signup(email: string, password: string): Promise<IUser | null> {
     try {
       const response = await client.mutate({
         mutation: REGISTER_USER,
@@ -48,7 +48,7 @@ class AuthService {
   public async login(
     emailOrUsername: string,
     password: string,
-  ): Promise<User | null> {
+  ): Promise<IUser | null> {
     try {
       const response = await client.mutate({
         mutation: LOGIN_USER,
@@ -67,7 +67,7 @@ class AuthService {
     photo,
     name,
     id,
-  }: LoginGoogle): Promise<User | null> {
+  }: LoginGoogle): Promise<IUser | null> {
     try {
       const response = await client.mutate({
         mutation: LOGIN_GOOGLE_USER,

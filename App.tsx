@@ -12,10 +12,6 @@ import TrackPlayer from 'react-native-track-player';
 function App() {
   useEffect(() => {
     GoogleAuthService.configureGoogleSignIn();
-    const startPlayer = async () => {
-      await TrackPlayer.setupPlayer();
-    };
-    startPlayer();
   }, []);
   return (
     <Provider store={store}>

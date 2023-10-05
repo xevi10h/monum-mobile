@@ -1,12 +1,16 @@
 import {NavigationContainer} from '@react-navigation/native';
 import {createStackNavigator} from '@react-navigation/stack';
-import React from 'react';
+import React, {useEffect} from 'react';
 import {StatusBar} from 'react-native';
 
 import BottomTabNavigator from '../../BottomTabNavigator';
 import LoginScreen from '../screens/LoginScreen';
 import LoginWithCredentialsScreen from '../screens/LoginWithCredentialsScreen';
 import RegisterScreen from '../screens/RegisterScreen';
+import {useDispatch} from 'react-redux';
+import {setupPlayer, updatePlayerState} from '../../redux/states/medias';
+import {AppDispatch} from 'src/redux/store';
+import TrackPlayer, {Event} from 'react-native-track-player';
 
 // Define un tipo para las rutas
 export type RootStackParamList = {
@@ -20,6 +24,21 @@ export type RootStackParamList = {
 const Stack = createStackNavigator<RootStackParamList>();
 
 function AuthNavigator() {
+  const dispatch = useDispatch<AppDispatch>();
+
+  useEffect(() => {
+    dispatch(setupPlayer());
+    const onStateChange = TrackPlayer.addEventListener(
+      Event.PlaybackState,
+      async data => {
+        dispatch(updatePlayerState(data.state));
+      },
+    );
+    return () => {
+      onStateChange.remove();
+    };
+  }, [dispatch]);
+
   return (
     <NavigationContainer>
       <StatusBar

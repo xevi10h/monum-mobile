@@ -1,9 +1,9 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {createSlice} from '@reduxjs/toolkit';
-import {User} from '../store';
 import i18n from 'i18next';
+import IUser from '../../shared/interfaces/IUser';
 
-const initialState: User = {
+const initialState: IUser = {
   id: '',
   email: '',
   username: '',

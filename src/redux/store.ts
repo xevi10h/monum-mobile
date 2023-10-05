@@ -1,29 +1,30 @@
-import {configureStore} from '@reduxjs/toolkit';
+import {Action, configureStore} from '@reduxjs/toolkit';
+import thunk, {ThunkAction} from 'redux-thunk';
 import userSlice from './states/user';
-import {Language} from '../shared/types/Language';
-export interface User {
-  id?: string;
-  email: string;
-  username: string;
-  createdAt: string;
-  name?: string;
-  photo?: string;
-  hashedPassword?: string;
-  googleId?: string;
-  token?: string;
-  language: Language;
-}
+import mediasSlice from './states/medias';
+import IUser from '../shared/interfaces/IUser';
+import IMedias from '../shared/interfaces/IMedias';
 
 export interface AppStore {
-  user: User;
+  user: IUser;
+  medias: IMedias;
 }
 export const store = configureStore<AppStore>({
   reducer: {
     user: userSlice,
+    medias: mediasSlice,
   },
+  middleware: [thunk],
 });
 
 // Infer the `RootState` and `AppDispatch` types from the store itself
 export type RootState = ReturnType<typeof store.getState>;
 // Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
 export type AppDispatch = typeof store.dispatch;
+
+export type AppThunk<ReturnType = void> = ThunkAction<
+  ReturnType,
+  RootState,
+  unknown,
+  Action<string>
+>;

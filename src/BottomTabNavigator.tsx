@@ -16,6 +16,8 @@ import IMedia from './shared/interfaces/IMedia';
 import {RootStackParamList} from './auth/navigator/AuthNavigator';
 import {StackNavigationProp} from '@react-navigation/stack';
 import RoutesNavigator from './routes/navigator/RoutesNavigator';
+import {useDispatch, useSelector} from 'react-redux';
+import {RootState} from './redux/store';
 
 const BOTTOM_TAB_NAVIGATOR_HEIGHT = 56;
 
@@ -46,7 +48,9 @@ const Tab = createBottomTabNavigator<RootBottomTabList>();
 function BottomTabNavigator({navigation}: Props) {
   const [isTabBarVisible, setTabBarVisible] = useState(true);
   const [place, setPlace] = useState<IPlace | null>(null);
-  const [media, setMedia] = useState<IMedia | null>(null);
+  const {currentMedia, mediaList} = useSelector(
+    (state: RootState) => state.medias,
+  );
   const renderTabBarIcon = ({focused, name}: BottomTabBarIconProps) => {
     let source;
     switch (name) {
@@ -109,7 +113,6 @@ function BottomTabNavigator({navigation}: Props) {
           {() => (
             <MapScreen
               setTabBarVisible={setTabBarVisible}
-              setMedia={setMedia}
               setPlace={setPlace}
               place={place}
             />
@@ -124,13 +127,8 @@ function BottomTabNavigator({navigation}: Props) {
           {() => <ProfileScreen navigationToLogin={navigation} />}
         </Tab.Screen>
       </Tab.Navigator>
-      {media && place && (
-        <MediaComponent
-          place={place}
-          setPlace={setPlace}
-          media={media}
-          setMedia={setMedia}
-        />
+      {typeof currentMedia === 'number' && mediaList.length > 0 && place && (
+        <MediaComponent place={place} setPlace={setPlace} />
       )}
     </NavigationContainer>
   );

@@ -44,7 +44,6 @@ interface MapPlaceDetailProps {
   placeId: string | null;
   setMarkerSelected: Dispatch<SetStateAction<string | null>>;
   setTabBarVisible: Dispatch<SetStateAction<boolean>>;
-  setMedia: Dispatch<SetStateAction<IMedia | null>>;
   place: IPlace | null;
   setPlace: Dispatch<SetStateAction<IPlace | null>>;
 }
@@ -57,7 +56,6 @@ export default function MapPlaceDetail({
   placeId,
   setMarkerSelected,
   setTabBarVisible,
-  setMedia,
   place,
   setPlace,
 }: MapPlaceDetailProps) {
@@ -68,7 +66,7 @@ export default function MapPlaceDetail({
 
   const [showPlaceDetailExpanded, setShowPlaceDetailExpanded] = useState(false);
   const [closeDetail, setCloseDetail] = useState(false);
-  const [placeMedia, setPlaceMedia] = useState<IMedia[]>([]);
+  const [placeMedia, setPlaceMedia] = useState<IMedia[] | undefined>(undefined);
   const position = useSharedValue(height);
 
   const userLanguage =
@@ -200,12 +198,11 @@ export default function MapPlaceDetail({
       ]}>
       <PanGestureHandler onGestureEvent={panGestureEvent}>
         <Animated.View style={[styles.animatedContainer, animatedStyle]}>
-          {showPlaceDetailExpanded && place && placeMedia ? (
+          {showPlaceDetailExpanded && place && Array.isArray(placeMedia) ? (
             <MapPlaceDetailExpanded
               placeMedia={placeMedia}
               importanceIcon={importanceIcon()}
               place={place}
-              setMedia={setMedia}
               setPlace={setPlace}
             />
           ) : (

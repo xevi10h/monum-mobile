@@ -27,15 +27,29 @@ import media_expanded_back from '../../assets/images/icons/media_expanded_back.p
 import media_expanded_forward from '../../assets/images/icons/media_expanded_forward.png';
 import media_expanded_play from '../../assets/images/icons/media_expanded_play.png';
 import IPlace from '../../shared/interfaces/IPlace';
-import IMedia from '../../shared/interfaces/IMedia';
 import {Slider} from '@rneui/themed';
+import {AppDispatch, RootState} from '../../redux/store';
+import {useDispatch, useSelector} from 'react-redux';
+import {skipToNext, skipToPrev, togglePlaying} from '../../redux/states/medias';
+import TrackPlayer from 'react-native-track-player';
+
+export function secondsToMinutes(seconds: number) {
+  const minutes = Math.floor(seconds / 60);
+  const remainingSeconds = seconds % 60;
+  const paddedMinutes = String(minutes);
+  const paddedSeconds = String(remainingSeconds.toFixed(0)).padStart(2, '0');
+
+  return `${paddedMinutes}.${paddedSeconds}`;
+}
 
 const {height} = Dimensions.get('window');
 
 interface MapPlaceDetailExpandedProps {
   place: IPlace;
-  media: IMedia;
   setExpandedDetail: Dispatch<SetStateAction<boolean>>;
+  trackPosition: number;
+  trackDuration: number;
+  setTrackPosition: Dispatch<SetStateAction<number>>;
 }
 
 type GestureContext = {
@@ -44,9 +58,15 @@ type GestureContext = {
 
 export default function MapPlaceDetailExpanded({
   place,
-  media,
   setExpandedDetail,
+  trackPosition,
+  trackDuration,
+  setTrackPosition,
 }: MapPlaceDetailExpandedProps) {
+  const dispatch = useDispatch<AppDispatch>();
+  const {currentMedia, mediaList} = useSelector(
+    (state: RootState) => state.medias,
+  );
   const position = useSharedValue(height);
   const panGestureEvent = useAnimatedGestureHandler<
     PanGestureHandlerGestureEvent,
@@ -83,107 +103,133 @@ export default function MapPlaceDetailExpanded({
   }, []);
 
   return (
-    <View style={styles.container}>
-      <PanGestureHandler onGestureEvent={panGestureEvent}>
-        <Animated.View style={[styles.animatedContainer, animatedStyle]}>
-          <View style={{flex: 1}}>
-            <View style={[styles.imageContainer, {height: height * 0.65}]}>
-              <Image
-                source={{
-                  uri: Array.isArray(place.imagesUrl) ? place.imagesUrl[0] : '',
-                }}
-                resizeMode="cover"
-                style={styles.image}
-              />
-              <View style={styles.arrowContainer}>
-                <LinearGradient
-                  start={{x: 0, y: 0}}
-                  end={{x: 0, y: 1}}
-                  colors={['rgba(3, 32, 0, 1)', 'rgba(3, 32, 0, 0)']}
-                  style={styles.linearGradient}
-                />
+    typeof currentMedia === 'number' && (
+      <View style={styles.container}>
+        <PanGestureHandler onGestureEvent={panGestureEvent}>
+          <Animated.View style={[styles.animatedContainer, animatedStyle]}>
+            <View style={{flex: 1}}>
+              <View style={[styles.imageContainer, {height: height * 0.65}]}>
                 <Image
-                  source={place_detail_arrow_bottom_white}
-                  style={[
-                    styles.arrowIcon,
-                    {top: 10 + useSafeAreaInsets().top},
-                  ]}
-                  resizeMode="contain"
+                  source={{
+                    uri: Array.isArray(place.imagesUrl)
+                      ? place.imagesUrl[0]
+                      : '',
+                  }}
+                  resizeMode="cover"
+                  style={styles.image}
                 />
-              </View>
-              <View style={styles.mediaPillRatingContainer}>
-                <Text style={styles.mediaPillRating}>
-                  {`${media.rating.toFixed(1)}`}
-                </Text>
-                <View>
+                <View style={styles.arrowContainer}>
+                  <LinearGradient
+                    start={{x: 0, y: 0}}
+                    end={{x: 0, y: 1}}
+                    colors={['rgba(3, 32, 0, 1)', 'rgba(3, 32, 0, 0)']}
+                    style={styles.linearGradient}
+                  />
                   <Image
-                    source={place_detail_media_rating_star}
-                    style={{width: 10, height: 10}}
+                    source={place_detail_arrow_bottom_white}
+                    style={[
+                      styles.arrowIcon,
+                      {top: 10 + useSafeAreaInsets().top},
+                    ]}
                     resizeMode="contain"
                   />
                 </View>
+                <View style={styles.mediaPillRatingContainer}>
+                  <Text style={styles.mediaPillRating}>
+                    {`${mediaList[currentMedia].rating.toFixed(1)}`}
+                  </Text>
+                  <View>
+                    <Image
+                      source={place_detail_media_rating_star}
+                      style={{width: 10, height: 10}}
+                      resizeMode="contain"
+                    />
+                  </View>
+                </View>
+              </View>
+              <View style={styles.infoContainer}>
+                <View style={styles.basicInfoConatiner}>
+                  <Text style={styles.mediaTitle}>
+                    {mediaList[currentMedia].title}
+                  </Text>
+                  <Text style={styles.placeName}>{place.name}</Text>
+                </View>
+              </View>
+              <View style={styles.mediaPlayerContainer}>
+                <Slider
+                  onSlidingComplete={value => {
+                    TrackPlayer.seekTo(value * trackDuration);
+                    setTrackPosition(value * trackDuration);
+                  }}
+                  value={
+                    trackDuration === 0 ? 0 : trackPosition / trackDuration
+                  }
+                  style={{
+                    height: 16,
+                    width: '100%',
+                  }}
+                  minimumValue={0}
+                  maximumTrackTintColor="grey"
+                  minimumTrackTintColor="#3F713B"
+                  thumbStyle={{width: 16, height: 16}}
+                  trackStyle={{height: 8}}
+                  thumbTintColor="#3F713B"
+                />
+                <View style={styles.mediaPlayerButtonsContainer}>
+                  <TouchableOpacity
+                    style={styles.mediaPlayerButtons}
+                    onPress={() => {
+                      dispatch(skipToPrev());
+                      setTrackPosition(0);
+                    }}>
+                    <Image
+                      source={media_expanded_back}
+                      style={styles.mediaPlayerButtonsImage}
+                      resizeMode="contain"
+                    />
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    style={styles.mediaPlayerButtons}
+                    onPress={() => dispatch(togglePlaying())}>
+                    <Image
+                      source={media_expanded_play}
+                      style={styles.mediaPlayerButtonsPlayImage}
+                      resizeMode="contain"
+                    />
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    style={styles.mediaPlayerButtons}
+                    onPress={() => {
+                      dispatch(skipToNext());
+                      setTrackPosition(0);
+                    }}>
+                    <Image
+                      source={media_expanded_forward}
+                      style={styles.mediaPlayerButtonsImage}
+                      resizeMode="contain"
+                    />
+                  </TouchableOpacity>
+                </View>
+                <View style={styles.durationMediaContainer}>
+                  <Text style={styles.durationMediaText}>
+                    {secondsToMinutes(trackPosition)}
+                  </Text>
+                  <Text style={styles.durationMediaText}>
+                    -{secondsToMinutes(trackDuration - trackPosition)}
+                  </Text>
+                </View>
+              </View>
+              <View style={styles.placeMediaIntroContainer}>
+                <Text style={styles.placeMediaIntroText}>
+                  {t('placeDetailExpanded.mediaIntro')}
+                </Text>
+                <Text style={styles.descriptionText}>{place.description}</Text>
               </View>
             </View>
-            <View style={styles.infoContainer}>
-              <View style={styles.basicInfoConatiner}>
-                <Text style={styles.mediaTitle}>{media.title}</Text>
-                <Text style={styles.placeName}>{place.name}</Text>
-              </View>
-            </View>
-            <View style={styles.mediaPlayerContainer}>
-              <Slider
-                maximumValue={1.2}
-                value={1}
-                style={{
-                  height: 16,
-                  width: '100%',
-                }}
-                minimumValue={0}
-                maximumTrackTintColor="grey"
-                minimumTrackTintColor="#3F713B"
-                thumbStyle={{width: 16, height: 16}}
-                trackStyle={{height: 8}}
-                thumbTintColor="#3F713B"
-              />
-              <View style={styles.mediaPlayerButtonsContainer}>
-                <TouchableOpacity style={styles.mediaPlayerButtons}>
-                  <Image
-                    source={media_expanded_back}
-                    style={styles.mediaPlayerButtonsImage}
-                    resizeMode="contain"
-                  />
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.mediaPlayerButtons}>
-                  <Image
-                    source={media_expanded_play}
-                    style={styles.mediaPlayerButtonsPlayImage}
-                    resizeMode="contain"
-                  />
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.mediaPlayerButtons}>
-                  <Image
-                    source={media_expanded_forward}
-                    style={styles.mediaPlayerButtonsImage}
-                    resizeMode="contain"
-                  />
-                </TouchableOpacity>
-              </View>
-              <View style={styles.durationMediaContainer}>
-                <Text style={styles.durationMediaText}>1:23</Text>
-                <Text style={styles.durationMediaText}>-0.20</Text>
-              </View>
-            </View>
-
-            <View style={styles.placeMediaIntroContainer}>
-              <Text style={styles.placeMediaIntroText}>
-                {t('placeDetailExpanded.mediaIntro')}
-              </Text>
-              <Text style={styles.descriptionText}>{place.description}</Text>
-            </View>
-          </View>
-        </Animated.View>
-      </PanGestureHandler>
-    </View>
+          </Animated.View>
+        </PanGestureHandler>
+      </View>
+    )
   );
 }
 

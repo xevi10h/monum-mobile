@@ -1,11 +1,10 @@
 import TrackPlayer, {
   AppKilledPlaybackBehavior,
   Capability,
-  RepeatMode,
   Event,
 } from 'react-native-track-player';
 
-export async function setupPlayer() {
+export async function setupPlayerService() {
   let isSetup = false;
   try {
     await TrackPlayer.getCurrentTrack();
@@ -38,21 +37,7 @@ export async function setupPlayer() {
   }
 }
 
-export async function addTracks(url: string) {
-  console.log('url', url);
-  await TrackPlayer.add([
-    {
-      id: '1',
-      url: url,
-      title: 'Fluidity',
-      artist: 'tobylane',
-      duration: 60,
-    },
-  ]);
-  await TrackPlayer.setRepeatMode(RepeatMode.Queue);
-}
 export const PlaybackService = async function () {
   TrackPlayer.addEventListener(Event.RemotePlay, () => TrackPlayer.play());
-
   TrackPlayer.addEventListener(Event.RemotePause, () => TrackPlayer.pause());
 };

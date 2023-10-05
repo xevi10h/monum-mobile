@@ -1,13 +1,6 @@
 import {t} from 'i18next';
 import React, {Dispatch, SetStateAction} from 'react';
-import {
-  Image,
-  ImageSourcePropType,
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity,
-} from 'react-native';
+import {Image, ImageSourcePropType, StyleSheet, Text, View} from 'react-native';
 import {ScrollView} from 'react-native-gesture-handler';
 import LinearGradient from 'react-native-linear-gradient';
 import place_detail_arrow_bottom_white from '../../../assets/images/icons/place_detail_arrow_bottom_white.png';
@@ -23,7 +16,6 @@ interface MapPlaceDetailExpandedProps {
   placeMedia: IMedia[];
   importanceIcon: ImageSourcePropType;
   place: IPlace;
-  setMedia: Dispatch<SetStateAction<IMedia | null>>;
   setPlace: Dispatch<SetStateAction<IPlace | null>>;
 }
 
@@ -31,7 +23,6 @@ export default function MapPlaceDetailExpanded({
   placeMedia,
   importanceIcon,
   place,
-  setMedia,
   setPlace,
 }: MapPlaceDetailExpandedProps) {
   return (
@@ -97,8 +88,8 @@ export default function MapPlaceDetailExpanded({
               key={i}
               media={media}
               place={place}
-              setMedia={setMedia}
               setPlace={setPlace}
+              placeMedia={placeMedia}
             />
           ))}
         </ScrollView>

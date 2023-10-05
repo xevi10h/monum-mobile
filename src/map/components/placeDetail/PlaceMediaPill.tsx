@@ -4,25 +4,34 @@ import IPlace from '../../../shared/interfaces/IPlace';
 import {Image} from 'react-native';
 import place_detail_media_rating_star from '../../../assets/images/icons/place_detail_media_rating_star.png';
 import place_detail_play_media from '../../../assets/images/icons/place_detail_play_media.png';
+import {useDispatch} from 'react-redux';
+import {setNewCurrentMedia} from '../../../redux/states/medias';
+import {AppDispatch} from '../../../redux/store';
 
 interface PlaceMediaPillProps {
   media: IMedia;
   place: IPlace;
-  setMedia: (media: IMedia) => void;
+  placeMedia: IMedia[];
   setPlace: (place: IPlace) => void;
 }
 
 export default function PlaceMediaPill({
   media,
   place,
-  setMedia,
+  placeMedia,
   setPlace,
 }: PlaceMediaPillProps) {
+  const dispatch = useDispatch<AppDispatch>();
   return (
     <TouchableOpacity
       onPress={() => {
-        setMedia(media);
         setPlace(place);
+        dispatch(
+          setNewCurrentMedia({
+            medias: placeMedia,
+            position: placeMedia.indexOf(media),
+          }),
+        );
       }}>
       <View style={styles.placeMediaPillContainer}>
         <View style={styles.placeMediaPill}>

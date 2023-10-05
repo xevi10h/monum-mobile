@@ -7,6 +7,7 @@ export const GET_PLACE_MEDIA = gql`
       title
       rating
       audioUrl
+      duration
     }
   }
 `;

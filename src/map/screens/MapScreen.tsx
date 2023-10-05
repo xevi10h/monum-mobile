@@ -26,14 +26,12 @@ Mapbox.setAccessToken(
 
 interface MapScreenProps {
   setTabBarVisible: Dispatch<SetStateAction<boolean>>;
-  setMedia: Dispatch<SetStateAction<IMedia | null>>;
   setPlace: Dispatch<SetStateAction<IPlace | null>>;
   place: IPlace | null;
 }
 
 export default function MapScreen({
   setTabBarVisible,
-  setMedia,
   setPlace,
   place,
 }: MapScreenProps) {
@@ -138,7 +136,6 @@ export default function MapScreen({
           placeId={markerSelected}
           setMarkerSelected={setMarkerSelected}
           setTabBarVisible={setTabBarVisible}
-          setMedia={setMedia}
           setPlace={setPlace}
           place={place}
         />
