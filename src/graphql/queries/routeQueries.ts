@@ -33,3 +33,52 @@ export const GET_ROUTES_OF_CITY = gql`
     }
   }
 `;
+
+export const GET_ROUTE_DETAIL = gql`
+  query Route($routeId: ID!) {
+    route(id: $routeId) {
+      id
+      title
+      description
+      rating
+      duration
+      optimizedDuration
+      distance
+      optimizedDistance
+      stops {
+        media {
+          id
+          place {
+            id
+            name
+            address {
+              coordinates {
+                lat
+                lng
+              }
+              street
+              city
+              postalCode
+              province
+              country
+            }
+            description
+            importance
+            rating
+            imagesUrl
+          }
+          title
+          language
+          rating
+          audioUrl
+          duration
+        }
+        order
+        optimizedOrder
+      }
+      stopsCount
+      cityId
+      language
+    }
+  }
+`;

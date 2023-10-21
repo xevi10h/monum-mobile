@@ -8,11 +8,12 @@ import {t} from 'i18next';
 
 interface ListRoutePillProps {
   route: IRouteOfCity;
+  onPress?: () => void;
 }
 
-export default function ListRoutePill({route}: ListRoutePillProps) {
+export default function ListRoutePill({route, onPress}: ListRoutePillProps) {
   return (
-    <TouchableOpacity>
+    <TouchableOpacity onPress={onPress}>
       <View style={styles.placeMediaPillContainer}>
         <View style={styles.placeMediaPill}>
           <Text style={styles.placeMediaPillTitle}>{route.title}</Text>

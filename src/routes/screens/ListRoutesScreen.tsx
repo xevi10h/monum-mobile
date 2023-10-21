@@ -60,8 +60,11 @@ export default function ListRoutesScreen({
             }}
             showsVerticalScrollIndicator={false}>
             {routes.map((route, i) => (
-              <ListRoutePill route={route} key={i} />
-              // onPress={() => navigation.navigate('RouteDetail', {route})}>
+              <ListRoutePill
+                route={route}
+                key={i}
+                onPress={() => navigation.navigate('RouteDetail', {route})}
+              />
             ))}
           </ScrollView>
         )}

@@ -1,0 +1,448 @@
+# flyctl launch added from .gitignore
+# OSX
+#
+**/.DS_Store
+
+# Xcode
+#
+**/build
+**/*.pbxuser
+!**/default.pbxuser
+**/*.mode1v3
+!**/default.mode1v3
+**/*.mode2v3
+!**/default.mode2v3
+**/*.perspectivev3
+!**/default.perspectivev3
+**/xcuserdata
+**/*.xccheckout
+**/*.moved-aside
+**/DerivedData
+**/*.hmap
+**/*.ipa
+**/*.xcuserstate
+**/ios/.xcode.env.local
+
+# Android/IntelliJ
+#
+**/build
+**/.idea
+**/.gradle
+**/local.properties
+**/*.iml
+**/*.hprof
+**/.cxx
+**/*.keystore
+!**/debug.keystore
+
+# node.js
+#
+**/node_modules
+**/npm-debug.log
+**/yarn-error.log
+
+# fastlane
+#
+# It is recommended to not store the screenshots in the git repo. Instead, use fastlane to re-generate the
+# screenshots whenever they are needed.
+# For more information about the recommended setup visit:
+# https://docs.fastlane.tools/best-practices/source-control/
+
+**/**/fastlane/report.xml
+**/**/fastlane/Preview.html
+**/**/fastlane/screenshots
+**/**/fastlane/test_output
+
+# Bundle artifact
+**/*.jsbundle
+
+# Ruby / CocoaPods
+ios/Pods
+vendor/bundle
+
+# Temporary files created by Metro to check the health of the file watcher
+**/.metro-health-check*
+
+# testing
+coverage
+
+# flyctl launch added from node_modules/@react-native-community/geolocation/.gitignore
+
+# OSX
+node_modules/@react-native-community/geolocation/**/.DS_Store
+
+# vscode
+node_modules/@react-native-community/geolocation/**/.vscode
+
+# Xcode
+node_modules/@react-native-community/geolocation/**/build
+node_modules/@react-native-community/geolocation/**/*.pbxuser
+!node_modules/@react-native-community/geolocation/**/default.pbxuser
+node_modules/@react-native-community/geolocation/**/*.mode1v3
+!node_modules/@react-native-community/geolocation/**/default.mode1v3
+node_modules/@react-native-community/geolocation/**/*.mode2v3
+!node_modules/@react-native-community/geolocation/**/default.mode2v3
+node_modules/@react-native-community/geolocation/**/*.perspectivev3
+!node_modules/@react-native-community/geolocation/**/default.perspectivev3
+node_modules/@react-native-community/geolocation/**/xcuserdata
+node_modules/@react-native-community/geolocation/**/*.xccheckout
+node_modules/@react-native-community/geolocation/**/*.moved-aside
+node_modules/@react-native-community/geolocation/**/DerivedData
+node_modules/@react-native-community/geolocation/**/*.hmap
+node_modules/@react-native-community/geolocation/**/*.ipa
+node_modules/@react-native-community/geolocation/**/*.xcuserstate
+
+# Android/IntelliJ
+node_modules/@react-native-community/geolocation/**/build
+node_modules/@react-native-community/geolocation/**/.idea
+node_modules/@react-native-community/geolocation/**/.gradle
+node_modules/@react-native-community/geolocation/**/local.properties
+node_modules/@react-native-community/geolocation/**/*.iml
+node_modules/@react-native-community/geolocation/**/.cxx
+
+# Build
+node_modules/@react-native-community/geolocation/**/lib
+
+# CocoaPods
+node_modules/@react-native-community/geolocation/**/example/ios/Pods
+
+# node.js
+node_modules/@react-native-community/geolocation/**/**/node_modules
+node_modules/@react-native-community/geolocation/**/npm-debug.log
+node_modules/@react-native-community/geolocation/**/yarn-debug.log
+node_modules/@react-native-community/geolocation/**/yarn-error.log
+
+# BUCK
+node_modules/@react-native-community/geolocation/**/buck-out
+node_modules/@react-native-community/geolocation/**/\.buckd
+node_modules/@react-native-community/geolocation/**/android/app/libs
+node_modules/@react-native-community/geolocation/**/android/keystores/debug.keystore
+
+# flyctl launch added from node_modules/@rneui/base-edge/.gitignore
+node_modules/@rneui/base-edge/**/node_modules
+node_modules/@rneui/base-edge/**/.DS_Store
+node_modules/@rneui/base-edge/**/*.log
+node_modules/@rneui/base-edge/**/site
+node_modules/@rneui/base-edge/**/coverage
+node_modules/@rneui/base-edge/**/jsconfig.json
+node_modules/@rneui/base-edge/**/.vscode
+node_modules/@rneui/base-edge/**/.idea
+node_modules/@rneui/base-edge/**/package-lock.json
+node_modules/@rneui/base-edge/**/build
+node_modules/@rneui/base-edge/**/*.orig
+node_modules/@rneui/base-edge/**/.docgen
+
+# flyctl launch added from node_modules/@rneui/themed-edge/.gitignore
+node_modules/@rneui/themed-edge/**/node_modules
+node_modules/@rneui/themed-edge/**/.DS_Store
+node_modules/@rneui/themed-edge/**/*.log
+node_modules/@rneui/themed-edge/**/site
+node_modules/@rneui/themed-edge/**/coverage
+node_modules/@rneui/themed-edge/**/jsconfig.json
+node_modules/@rneui/themed-edge/**/.vscode
+node_modules/@rneui/themed-edge/**/.idea
+node_modules/@rneui/themed-edge/**/package-lock.json
+node_modules/@rneui/themed-edge/**/build
+node_modules/@rneui/themed-edge/**/*.orig
+node_modules/@rneui/themed-edge/**/.docgen
+
+# flyctl launch added from node_modules/@rnmapbox/maps/android/.gitignore
+node_modules/@rnmapbox/maps/android/**/*.iml
+node_modules/@rnmapbox/maps/android/**/.gradle
+node_modules/@rnmapbox/maps/android/local.properties
+node_modules/@rnmapbox/maps/android/.idea/workspace.xml
+node_modules/@rnmapbox/maps/android/.idea/libraries
+node_modules/@rnmapbox/maps/android/**/.DS_Store
+node_modules/@rnmapbox/maps/android/build
+node_modules/@rnmapbox/maps/android/captures
+node_modules/@rnmapbox/maps/android/**/.externalNativeBuild
+
+# flyctl launch added from vendor/bundle/ruby/2.6.0/gems/atomos-0.1.3/.gitignore
+vendor/bundle/ruby/2.6.0/gems/atomos-0.1.3/.bundle
+vendor/bundle/ruby/2.6.0/gems/atomos-0.1.3/.yardoc
+vendor/bundle/ruby/2.6.0/gems/atomos-0.1.3/_yardoc
+vendor/bundle/ruby/2.6.0/gems/atomos-0.1.3/coverage
+vendor/bundle/ruby/2.6.0/gems/atomos-0.1.3/doc
+vendor/bundle/ruby/2.6.0/gems/atomos-0.1.3/pkg
+vendor/bundle/ruby/2.6.0/gems/atomos-0.1.3/spec/reports
+vendor/bundle/ruby/2.6.0/gems/atomos-0.1.3/tmp
+
+# rspec failure tracking
+vendor/bundle/ruby/2.6.0/gems/atomos-0.1.3/**/.rspec_status
+
+# flyctl launch added from vendor/bundle/ruby/2.6.0/gems/claide-1.1.0/.gitignore
+vendor/bundle/ruby/2.6.0/gems/claide-1.1.0/**/*.gem
+vendor/bundle/ruby/2.6.0/gems/claide-1.1.0/**/*.rbc
+vendor/bundle/ruby/2.6.0/gems/claide-1.1.0/**/.bundle
+vendor/bundle/ruby/2.6.0/gems/claide-1.1.0/**/.config
+vendor/bundle/ruby/2.6.0/gems/claide-1.1.0/**/.yardoc
+vendor/bundle/ruby/2.6.0/gems/claide-1.1.0/**/InstalledFiles
+vendor/bundle/ruby/2.6.0/gems/claide-1.1.0/**/_yardoc
+vendor/bundle/ruby/2.6.0/gems/claide-1.1.0/**/coverage
+vendor/bundle/ruby/2.6.0/gems/claide-1.1.0/**/doc
+vendor/bundle/ruby/2.6.0/gems/claide-1.1.0/**/lib/bundler/man
+vendor/bundle/ruby/2.6.0/gems/claide-1.1.0/**/pkg
+vendor/bundle/ruby/2.6.0/gems/claide-1.1.0/**/rdoc
+vendor/bundle/ruby/2.6.0/gems/claide-1.1.0/**/spec/reports
+vendor/bundle/ruby/2.6.0/gems/claide-1.1.0/**/test/tmp
+vendor/bundle/ruby/2.6.0/gems/claide-1.1.0/**/test/version_tmp
+vendor/bundle/ruby/2.6.0/gems/claide-1.1.0/**/tmp
+vendor/bundle/ruby/2.6.0/gems/claide-1.1.0/**/.idea
+
+# flyctl launch added from vendor/bundle/ruby/2.6.0/gems/cocoapods-plugins-1.0.0/.gitignore
+vendor/bundle/ruby/2.6.0/gems/cocoapods-plugins-1.0.0/**/*.gem
+vendor/bundle/ruby/2.6.0/gems/cocoapods-plugins-1.0.0/**/*.rbc
+vendor/bundle/ruby/2.6.0/gems/cocoapods-plugins-1.0.0/.config
+vendor/bundle/ruby/2.6.0/gems/cocoapods-plugins-1.0.0/coverage
+vendor/bundle/ruby/2.6.0/gems/cocoapods-plugins-1.0.0/InstalledFiles
+vendor/bundle/ruby/2.6.0/gems/cocoapods-plugins-1.0.0/pkg
+vendor/bundle/ruby/2.6.0/gems/cocoapods-plugins-1.0.0/spec/reports
+vendor/bundle/ruby/2.6.0/gems/cocoapods-plugins-1.0.0/test/tmp
+vendor/bundle/ruby/2.6.0/gems/cocoapods-plugins-1.0.0/test/version_tmp
+vendor/bundle/ruby/2.6.0/gems/cocoapods-plugins-1.0.0/tmp
+
+## Specific to RubyMotion:
+vendor/bundle/ruby/2.6.0/gems/cocoapods-plugins-1.0.0/**/.dat*
+vendor/bundle/ruby/2.6.0/gems/cocoapods-plugins-1.0.0/**/.repl_history
+vendor/bundle/ruby/2.6.0/gems/cocoapods-plugins-1.0.0/**/build
+
+## Documentation cache and generated files:
+vendor/bundle/ruby/2.6.0/gems/cocoapods-plugins-1.0.0/.yardoc
+vendor/bundle/ruby/2.6.0/gems/cocoapods-plugins-1.0.0/_yardoc
+vendor/bundle/ruby/2.6.0/gems/cocoapods-plugins-1.0.0/doc
+vendor/bundle/ruby/2.6.0/gems/cocoapods-plugins-1.0.0/rdoc
+
+## Environment normalisation:
+vendor/bundle/ruby/2.6.0/gems/cocoapods-plugins-1.0.0/.bundle
+vendor/bundle/ruby/2.6.0/gems/cocoapods-plugins-1.0.0/lib/bundler/man
+
+# for a library or gem, you might want to ignore these files since the code is
+# intended to run in multiple environments; otherwise, check them in:
+# Gemfile.lock
+# .ruby-version
+# .ruby-gemset
+
+# unless supporting rvm < 1.11.0 or doing something fancy, ignore this:
+vendor/bundle/ruby/2.6.0/gems/cocoapods-plugins-1.0.0/**/.rvmrc
+
+vendor/bundle/ruby/2.6.0/gems/cocoapods-plugins-1.0.0/coverage
+
+# RubyMine Editor
+vendor/bundle/ruby/2.6.0/gems/cocoapods-plugins-1.0.0/**/.idea
+
+
+# flyctl launch added from vendor/bundle/ruby/2.6.0/gems/cocoapods-search-1.0.1/.gitignore
+vendor/bundle/ruby/2.6.0/gems/cocoapods-search-1.0.1/**/*.gem
+vendor/bundle/ruby/2.6.0/gems/cocoapods-search-1.0.1/**/*.rbc
+vendor/bundle/ruby/2.6.0/gems/cocoapods-search-1.0.1/.config
+vendor/bundle/ruby/2.6.0/gems/cocoapods-search-1.0.1/coverage
+vendor/bundle/ruby/2.6.0/gems/cocoapods-search-1.0.1/InstalledFiles
+vendor/bundle/ruby/2.6.0/gems/cocoapods-search-1.0.1/pkg
+vendor/bundle/ruby/2.6.0/gems/cocoapods-search-1.0.1/spec/reports
+vendor/bundle/ruby/2.6.0/gems/cocoapods-search-1.0.1/test/tmp
+vendor/bundle/ruby/2.6.0/gems/cocoapods-search-1.0.1/test/version_tmp
+vendor/bundle/ruby/2.6.0/gems/cocoapods-search-1.0.1/tmp
+
+## Specific to RubyMotion:
+vendor/bundle/ruby/2.6.0/gems/cocoapods-search-1.0.1/**/.dat*
+vendor/bundle/ruby/2.6.0/gems/cocoapods-search-1.0.1/**/.repl_history
+vendor/bundle/ruby/2.6.0/gems/cocoapods-search-1.0.1/**/build
+
+## Documentation cache and generated files:
+vendor/bundle/ruby/2.6.0/gems/cocoapods-search-1.0.1/.yardoc
+vendor/bundle/ruby/2.6.0/gems/cocoapods-search-1.0.1/_yardoc
+vendor/bundle/ruby/2.6.0/gems/cocoapods-search-1.0.1/doc
+vendor/bundle/ruby/2.6.0/gems/cocoapods-search-1.0.1/rdoc
+
+## Environment normalisation:
+vendor/bundle/ruby/2.6.0/gems/cocoapods-search-1.0.1/.bundle
+vendor/bundle/ruby/2.6.0/gems/cocoapods-search-1.0.1/lib/bundler/man
+
+# for a library or gem, you might want to ignore these files since the code is
+# intended to run in multiple environments; otherwise, check them in:
+# Gemfile.lock
+# .ruby-version
+# .ruby-gemset
+
+# unless supporting rvm < 1.11.0 or doing something fancy, ignore this:
+vendor/bundle/ruby/2.6.0/gems/cocoapods-search-1.0.1/**/.rvmrc
+
+vendor/bundle/ruby/2.6.0/gems/cocoapods-search-1.0.1/coverage
+
+# RubyMine Editor
+vendor/bundle/ruby/2.6.0/gems/cocoapods-search-1.0.1/**/.idea
+
+# flyctl launch added from vendor/bundle/ruby/2.6.0/gems/cocoapods-trunk-1.6.0/.gitignore
+vendor/bundle/ruby/2.6.0/gems/cocoapods-trunk-1.6.0/**/*.gem
+vendor/bundle/ruby/2.6.0/gems/cocoapods-trunk-1.6.0/**/*.rbc
+vendor/bundle/ruby/2.6.0/gems/cocoapods-trunk-1.6.0/**/.bundle
+vendor/bundle/ruby/2.6.0/gems/cocoapods-trunk-1.6.0/**/.config
+vendor/bundle/ruby/2.6.0/gems/cocoapods-trunk-1.6.0/**/.yardoc
+vendor/bundle/ruby/2.6.0/gems/cocoapods-trunk-1.6.0/**/InstalledFiles
+vendor/bundle/ruby/2.6.0/gems/cocoapods-trunk-1.6.0/**/_yardoc
+vendor/bundle/ruby/2.6.0/gems/cocoapods-trunk-1.6.0/**/coverage
+vendor/bundle/ruby/2.6.0/gems/cocoapods-trunk-1.6.0/**/doc
+vendor/bundle/ruby/2.6.0/gems/cocoapods-trunk-1.6.0/**/lib/bundler/man
+vendor/bundle/ruby/2.6.0/gems/cocoapods-trunk-1.6.0/**/pkg
+vendor/bundle/ruby/2.6.0/gems/cocoapods-trunk-1.6.0/**/rdoc
+vendor/bundle/ruby/2.6.0/gems/cocoapods-trunk-1.6.0/**/spec/reports
+vendor/bundle/ruby/2.6.0/gems/cocoapods-trunk-1.6.0/**/test/tmp
+vendor/bundle/ruby/2.6.0/gems/cocoapods-trunk-1.6.0/**/test/version_tmp
+vendor/bundle/ruby/2.6.0/gems/cocoapods-trunk-1.6.0/**/tmp
+vendor/bundle/ruby/2.6.0/gems/cocoapods-trunk-1.6.0/**/.idea
+
+# flyctl launch added from vendor/bundle/ruby/2.6.0/gems/cocoapods-try-1.2.0/.gitignore
+vendor/bundle/ruby/2.6.0/gems/cocoapods-try-1.2.0/**/*.gem
+vendor/bundle/ruby/2.6.0/gems/cocoapods-try-1.2.0/**/*.rbc
+vendor/bundle/ruby/2.6.0/gems/cocoapods-try-1.2.0/**/.bundle
+vendor/bundle/ruby/2.6.0/gems/cocoapods-try-1.2.0/**/.config
+vendor/bundle/ruby/2.6.0/gems/cocoapods-try-1.2.0/**/.yardoc
+vendor/bundle/ruby/2.6.0/gems/cocoapods-try-1.2.0/**/InstalledFiles
+vendor/bundle/ruby/2.6.0/gems/cocoapods-try-1.2.0/**/_yardoc
+vendor/bundle/ruby/2.6.0/gems/cocoapods-try-1.2.0/**/coverage
+vendor/bundle/ruby/2.6.0/gems/cocoapods-try-1.2.0/**/doc
+vendor/bundle/ruby/2.6.0/gems/cocoapods-try-1.2.0/**/lib/bundler/man
+vendor/bundle/ruby/2.6.0/gems/cocoapods-try-1.2.0/**/pkg
+vendor/bundle/ruby/2.6.0/gems/cocoapods-try-1.2.0/**/rdoc
+vendor/bundle/ruby/2.6.0/gems/cocoapods-try-1.2.0/**/spec/reports
+vendor/bundle/ruby/2.6.0/gems/cocoapods-try-1.2.0/**/test/tmp
+vendor/bundle/ruby/2.6.0/gems/cocoapods-try-1.2.0/**/test/version_tmp
+vendor/bundle/ruby/2.6.0/gems/cocoapods-try-1.2.0/**/tmp
+vendor/bundle/ruby/2.6.0/gems/cocoapods-try-1.2.0/**/.idea
+
+# flyctl launch added from vendor/bundle/ruby/2.6.0/gems/ethon-0.16.0/.gitignore
+vendor/bundle/ruby/2.6.0/gems/ethon-0.16.0/**/*.gem
+vendor/bundle/ruby/2.6.0/gems/ethon-0.16.0/**/.bundle
+vendor/bundle/ruby/2.6.0/gems/ethon-0.16.0/**/Gemfile.lock
+vendor/bundle/ruby/2.6.0/gems/ethon-0.16.0/**/.DS_Store
+vendor/bundle/ruby/2.6.0/gems/ethon-0.16.0/**/.yardoc
+vendor/bundle/ruby/2.6.0/gems/ethon-0.16.0/**/doc
+vendor/bundle/ruby/2.6.0/gems/ethon-0.16.0/**/coverage
+vendor/bundle/ruby/2.6.0/gems/ethon-0.16.0/**/.idea
+
+# flyctl launch added from vendor/bundle/ruby/2.6.0/gems/ffi-1.16.2/ext/ffi_c/libffi/.gitignore
+vendor/bundle/ruby/2.6.0/gems/ffi-1.16.2/ext/ffi_c/libffi/**/.libs
+vendor/bundle/ruby/2.6.0/gems/ffi-1.16.2/ext/ffi_c/libffi/**/.deps
+vendor/bundle/ruby/2.6.0/gems/ffi-1.16.2/ext/ffi_c/libffi/**/*.o
+vendor/bundle/ruby/2.6.0/gems/ffi-1.16.2/ext/ffi_c/libffi/**/*.lo
+vendor/bundle/ruby/2.6.0/gems/ffi-1.16.2/ext/ffi_c/libffi/**/*.wasm
+vendor/bundle/ruby/2.6.0/gems/ffi-1.16.2/ext/ffi_c/libffi/**/*.js
+vendor/bundle/ruby/2.6.0/gems/ffi-1.16.2/ext/ffi_c/libffi/**/*.test
+vendor/bundle/ruby/2.6.0/gems/ffi-1.16.2/ext/ffi_c/libffi/**/*.log
+vendor/bundle/ruby/2.6.0/gems/ffi-1.16.2/ext/ffi_c/libffi/**/.dirstamp
+vendor/bundle/ruby/2.6.0/gems/ffi-1.16.2/ext/ffi_c/libffi/**/*.la
+vendor/bundle/ruby/2.6.0/gems/ffi-1.16.2/ext/ffi_c/libffi/**/Makefile
+!vendor/bundle/ruby/2.6.0/gems/ffi-1.16.2/ext/ffi_c/libffi/**/testsuite/libffi.bhaible/Makefile
+vendor/bundle/ruby/2.6.0/gems/ffi-1.16.2/ext/ffi_c/libffi/**/Makefile.in
+vendor/bundle/ruby/2.6.0/gems/ffi-1.16.2/ext/ffi_c/libffi/**/aclocal.m4
+vendor/bundle/ruby/2.6.0/gems/ffi-1.16.2/ext/ffi_c/libffi/**/compile
+!vendor/bundle/ruby/2.6.0/gems/ffi-1.16.2/ext/ffi_c/libffi/**/.ci/compile
+vendor/bundle/ruby/2.6.0/gems/ffi-1.16.2/ext/ffi_c/libffi/**/configure
+vendor/bundle/ruby/2.6.0/gems/ffi-1.16.2/ext/ffi_c/libffi/**/depcomp
+vendor/bundle/ruby/2.6.0/gems/ffi-1.16.2/ext/ffi_c/libffi/**/doc/libffi.info
+vendor/bundle/ruby/2.6.0/gems/ffi-1.16.2/ext/ffi_c/libffi/**/*~
+vendor/bundle/ruby/2.6.0/gems/ffi-1.16.2/ext/ffi_c/libffi/**/fficonfig.h.in
+vendor/bundle/ruby/2.6.0/gems/ffi-1.16.2/ext/ffi_c/libffi/**/fficonfig.h
+vendor/bundle/ruby/2.6.0/gems/ffi-1.16.2/ext/ffi_c/libffi/**/include/ffi.h
+vendor/bundle/ruby/2.6.0/gems/ffi-1.16.2/ext/ffi_c/libffi/**/include/ffitarget.h
+vendor/bundle/ruby/2.6.0/gems/ffi-1.16.2/ext/ffi_c/libffi/**/install-sh
+vendor/bundle/ruby/2.6.0/gems/ffi-1.16.2/ext/ffi_c/libffi/**/libffi.pc
+vendor/bundle/ruby/2.6.0/gems/ffi-1.16.2/ext/ffi_c/libffi/**/libtool
+vendor/bundle/ruby/2.6.0/gems/ffi-1.16.2/ext/ffi_c/libffi/**/ltmain.sh
+vendor/bundle/ruby/2.6.0/gems/ffi-1.16.2/ext/ffi_c/libffi/**/m4/libtool.m4
+vendor/bundle/ruby/2.6.0/gems/ffi-1.16.2/ext/ffi_c/libffi/**/m4/lt*.m4
+vendor/bundle/ruby/2.6.0/gems/ffi-1.16.2/ext/ffi_c/libffi/**/mdate-sh
+vendor/bundle/ruby/2.6.0/gems/ffi-1.16.2/ext/ffi_c/libffi/**/missing
+vendor/bundle/ruby/2.6.0/gems/ffi-1.16.2/ext/ffi_c/libffi/**/stamp-h1
+vendor/bundle/ruby/2.6.0/gems/ffi-1.16.2/ext/ffi_c/libffi/**/libffi*gz
+vendor/bundle/ruby/2.6.0/gems/ffi-1.16.2/ext/ffi_c/libffi/**/autom4te.cache
+vendor/bundle/ruby/2.6.0/gems/ffi-1.16.2/ext/ffi_c/libffi/**/libffi.xcodeproj/xcuserdata
+vendor/bundle/ruby/2.6.0/gems/ffi-1.16.2/ext/ffi_c/libffi/**/libffi.xcodeproj/project.xcworkspace
+vendor/bundle/ruby/2.6.0/gems/ffi-1.16.2/ext/ffi_c/libffi/**/build_*
+vendor/bundle/ruby/2.6.0/gems/ffi-1.16.2/ext/ffi_c/libffi/**/darwin_*
+vendor/bundle/ruby/2.6.0/gems/ffi-1.16.2/ext/ffi_c/libffi/**/src/arm/trampoline.S
+vendor/bundle/ruby/2.6.0/gems/ffi-1.16.2/ext/ffi_c/libffi/**/**/texinfo.tex
+vendor/bundle/ruby/2.6.0/gems/ffi-1.16.2/ext/ffi_c/libffi/**/target
+vendor/bundle/ruby/2.6.0/gems/ffi-1.16.2/ext/ffi_c/libffi/**/__pycache__
+vendor/bundle/ruby/2.6.0/gems/ffi-1.16.2/ext/ffi_c/libffi/**/.docker_home
+vendor/bundle/ruby/2.6.0/gems/ffi-1.16.2/ext/ffi_c/libffi/**/emsdk
+vendor/bundle/ruby/2.6.0/gems/ffi-1.16.2/ext/ffi_c/libffi/**/test-results
+
+# flyctl launch added from vendor/bundle/ruby/2.6.0/gems/fourflusher-2.3.1/.gitignore
+vendor/bundle/ruby/2.6.0/gems/fourflusher-2.3.1/.bundle
+vendor/bundle/ruby/2.6.0/gems/fourflusher-2.3.1/.yardoc
+vendor/bundle/ruby/2.6.0/gems/fourflusher-2.3.1/_yardoc
+vendor/bundle/ruby/2.6.0/gems/fourflusher-2.3.1/coverage
+vendor/bundle/ruby/2.6.0/gems/fourflusher-2.3.1/doc
+vendor/bundle/ruby/2.6.0/gems/fourflusher-2.3.1/pkg
+vendor/bundle/ruby/2.6.0/gems/fourflusher-2.3.1/spec/reports
+vendor/bundle/ruby/2.6.0/gems/fourflusher-2.3.1/tmp
+
+# flyctl launch added from vendor/bundle/ruby/2.6.0/gems/fuzzy_match-2.0.4/.gitignore
+## MAC OS
+vendor/bundle/ruby/2.6.0/gems/fuzzy_match-2.0.4/**/.DS_Store
+
+## TEXTMATE
+vendor/bundle/ruby/2.6.0/gems/fuzzy_match-2.0.4/**/*.tmproj
+vendor/bundle/ruby/2.6.0/gems/fuzzy_match-2.0.4/**/tmtags
+
+## EMACS
+vendor/bundle/ruby/2.6.0/gems/fuzzy_match-2.0.4/**/*~
+vendor/bundle/ruby/2.6.0/gems/fuzzy_match-2.0.4/**/\#*
+vendor/bundle/ruby/2.6.0/gems/fuzzy_match-2.0.4/**/.\#*
+
+## VIM
+vendor/bundle/ruby/2.6.0/gems/fuzzy_match-2.0.4/**/*.swp
+
+## PROJECT::GENERAL
+vendor/bundle/ruby/2.6.0/gems/fuzzy_match-2.0.4/**/coverage
+vendor/bundle/ruby/2.6.0/gems/fuzzy_match-2.0.4/**/doc
+vendor/bundle/ruby/2.6.0/gems/fuzzy_match-2.0.4/**/.yardoc
+vendor/bundle/ruby/2.6.0/gems/fuzzy_match-2.0.4/**/pkg
+
+## PROJECT::SPECIFIC
+vendor/bundle/ruby/2.6.0/gems/fuzzy_match-2.0.4/**/Gemfile.lock
+vendor/bundle/ruby/2.6.0/gems/fuzzy_match-2.0.4/**/*.gem
+
+# flyctl launch added from vendor/bundle/ruby/2.6.0/gems/gh_inspector-1.1.3/.gitignore
+vendor/bundle/ruby/2.6.0/gems/gh_inspector-1.1.3/.bundle
+vendor/bundle/ruby/2.6.0/gems/gh_inspector-1.1.3/.yardoc
+vendor/bundle/ruby/2.6.0/gems/gh_inspector-1.1.3/Gemfile.lock
+vendor/bundle/ruby/2.6.0/gems/gh_inspector-1.1.3/_yardoc
+vendor/bundle/ruby/2.6.0/gems/gh_inspector-1.1.3/coverage
+vendor/bundle/ruby/2.6.0/gems/gh_inspector-1.1.3/doc
+vendor/bundle/ruby/2.6.0/gems/gh_inspector-1.1.3/pkg
+vendor/bundle/ruby/2.6.0/gems/gh_inspector-1.1.3/spec/reports
+vendor/bundle/ruby/2.6.0/gems/gh_inspector-1.1.3/tmp
+vendor/bundle/ruby/2.6.0/gems/gh_inspector-1.1.3/.idea
+
+# flyctl launch added from vendor/bundle/ruby/2.6.0/gems/nanaimo-0.3.0/.gitignore
+vendor/bundle/ruby/2.6.0/gems/nanaimo-0.3.0/.bundle
+vendor/bundle/ruby/2.6.0/gems/nanaimo-0.3.0/.yardoc
+vendor/bundle/ruby/2.6.0/gems/nanaimo-0.3.0/_yardoc
+vendor/bundle/ruby/2.6.0/gems/nanaimo-0.3.0/coverage
+vendor/bundle/ruby/2.6.0/gems/nanaimo-0.3.0/doc
+vendor/bundle/ruby/2.6.0/gems/nanaimo-0.3.0/pkg
+vendor/bundle/ruby/2.6.0/gems/nanaimo-0.3.0/spec/reports
+vendor/bundle/ruby/2.6.0/gems/nanaimo-0.3.0/tmp
+
+# flyctl launch added from vendor/bundle/ruby/2.6.0/gems/public_suffix-4.0.7/.gitignore
+# Bundler
+vendor/bundle/ruby/2.6.0/gems/public_suffix-4.0.7/.bundle
+vendor/bundle/ruby/2.6.0/gems/public_suffix-4.0.7/Gemfile.lock
+vendor/bundle/ruby/2.6.0/gems/public_suffix-4.0.7/pkg/*
+
+# YARD
+vendor/bundle/ruby/2.6.0/gems/public_suffix-4.0.7/.yardoc
+vendor/bundle/ruby/2.6.0/gems/public_suffix-4.0.7/yardoc
+
+# flyctl launch added from vendor/bundle/ruby/2.6.0/gems/typhoeus-1.4.0/.gitignore
+vendor/bundle/ruby/2.6.0/gems/typhoeus-1.4.0/**/*.gem
+vendor/bundle/ruby/2.6.0/gems/typhoeus-1.4.0/**/Gemfile.lock
+vendor/bundle/ruby/2.6.0/gems/typhoeus-1.4.0/**/doc
+vendor/bundle/ruby/2.6.0/gems/typhoeus-1.4.0/**/.yardoc
+vendor/bundle/ruby/2.6.0/gems/typhoeus-1.4.0/**/.rvmrc
+vendor/bundle/ruby/2.6.0/gems/typhoeus-1.4.0/**/coverage
+vendor/bundle/ruby/2.6.0/gems/typhoeus-1.4.0/**/check.sh
+vendor/bundle/ruby/2.6.0/gems/typhoeus-1.4.0/**/tags
+fly.toml
