@@ -178,7 +178,6 @@ export default function MapPlaceDetail({
           place.id,
           userLanguage,
         );
-        console.log('placeMedia', placeMedia);
         setPlaceMedia(placeMedia);
       };
       fetchPlaceMedia();

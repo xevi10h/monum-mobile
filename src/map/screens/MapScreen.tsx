@@ -11,7 +11,7 @@ import {Dimensions, StyleSheet, View} from 'react-native';
 
 import CenterCoordinatesButton from '../components/CenterCoordinatesButton';
 import FilterComponent from '../components/filter/FilterComponent';
-import {MarkerComponent, MarkerProps} from '../components/Marker';
+import {MarkerComponent} from '../components/Marker';
 import MapPlaceDetail from '../components/placeDetail/MapPlaceDetail';
 import IFilter from '../domain/IFilter';
 import {getAllFilters} from '../services/FakeData';
@@ -19,6 +19,7 @@ import MapServices from '../services/MapServices';
 import IPlace from '../../shared/interfaces/IPlace';
 import IMedia from '../../shared/interfaces/IMedia';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {IMarker} from 'src/shared/interfaces/IMarker';
 
 Mapbox.setAccessToken(
   'pk.eyJ1IjoieHBsb3JlYXIiLCJhIjoiY2xqMmU0Z3NyMGFxeTNwbzByNW90dmdxcSJ9.cMT52Rc64Z05YUGPIutXFw',
@@ -39,7 +40,7 @@ export default function MapScreen({
   const [filters, setFilters] = useState<IFilter[]>([]);
   const [centerCamera, setCenterCamera] = useState(false);
   const [centerCoordinates, setCenterCoordinates] = useState([0, 0]);
-  const [markers, setMarkers] = useState<MarkerProps[]>([]);
+  const [markers, setMarkers] = useState<IMarker[]>([]);
   const [markerSelected, setMarkerSelected] = useState<string | null>(null);
   const camera = useRef<Camera>(null);
 

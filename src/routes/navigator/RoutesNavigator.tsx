@@ -5,7 +5,7 @@ import ListCitiesScreen from '../screens/ListCitiesScreen';
 import ListRoutesScreen from '../screens/ListRoutesScreen';
 import ICity from '../../shared/interfaces/ICity';
 import {ParamListBase, RouteProp} from '@react-navigation/native';
-import IRouteComplete from '../../shared/interfaces/IRoute';
+import IRouteComplete from '../../shared/interfaces/IFullRoute';
 import RouteDetailScreen from '../screens/RouteDetailScreen';
 
 export type RoutesStackParamList = {

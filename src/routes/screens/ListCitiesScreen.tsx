@@ -56,6 +56,7 @@ export default function ListCitiesScreen({navigation}: Props) {
             style={{
               width: '100%',
               marginBottom: useSafeAreaInsets().bottom + 30,
+              marginTop: 15,
             }}
             showsVerticalScrollIndicator={false}>
             {cities.map((city, i) => (
@@ -80,7 +81,7 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     flex: 1,
-    paddingHorizontal: 15,
+    marginHorizontal: 15,
     alignItems: 'center',
   },
 });

@@ -33,6 +33,7 @@ export default function ListRoutesScreen({
   });
 
   useEffect(() => {
+    console.log('data', data);
     setRoutes(data?.routes || []);
   }, [data, setRoutes]);
   return (
@@ -57,6 +58,7 @@ export default function ListRoutesScreen({
             style={{
               width: '100%',
               marginBottom: useSafeAreaInsets().bottom + 30,
+              marginTop: 15,
             }}
             showsVerticalScrollIndicator={false}>
             {routes.map((route, i) => (
@@ -82,5 +84,7 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 15,
     alignItems: 'center',
+    backgroundColor: 'white',
+    width: '100%',
   },
 });

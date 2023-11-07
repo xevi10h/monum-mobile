@@ -22,11 +22,6 @@ export const GET_ROUTES_OF_CITY = gql`
       title
       description
       rating
-      stops {
-        media {
-          id
-        }
-      }
       cityId
       language
       stopsCount

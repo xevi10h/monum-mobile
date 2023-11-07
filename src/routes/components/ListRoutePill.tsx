@@ -1,10 +1,11 @@
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
-import IRoute from '../../shared/interfaces/IRoute';
+import IRoute from '../../shared/interfaces/IFullRoute';
 import {Image} from 'react-native';
 import place_detail_media_rating_star from '../../assets/images/icons/place_detail_media_rating_star.png';
 import place_detail_play_media from '../../assets/images/icons/place_detail_play_media.png';
 import IRouteOfCity from 'src/shared/interfaces/IRouteOfCity';
 import {t} from 'i18next';
+import RatingPill from './RatingPill';
 
 interface ListRoutePillProps {
   route: IRouteOfCity;
@@ -21,18 +22,10 @@ export default function ListRoutePill({route, onPress}: ListRoutePillProps) {
             {`${route.stopsCount} ${t('stops')}`}
           </Text>
         </View>
-        <View style={styles.mediaPillRatingContainer}>
-          <Text style={styles.mediaPillRatingText}>
-            {`${route?.rating?.toFixed(1) || '0'} `}
-          </Text>
-          <View>
-            <Image
-              source={place_detail_media_rating_star}
-              style={styles.mediaPillRatingImage}
-              resizeMode="contain"
-            />
-          </View>
-        </View>
+        <RatingPill
+          number={route.rating || 0}
+          additionalStyle={{position: 'absolute', top: 0, left: 10}}
+        />
       </View>
     </TouchableOpacity>
   );
@@ -68,23 +61,4 @@ const styles = StyleSheet.create({
     color: '#032000',
     fontFamily: 'Montserrat',
   },
-  placeMediaPillPlayIcon: {width: 24, height: 24},
-  mediaPillRatingContainer: {
-    position: 'absolute',
-    top: 0,
-    left: 10,
-    height: 20,
-    width: 30,
-    backgroundColor: '#3F713B',
-    borderRadius: 6,
-    alignItems: 'center',
-    justifyContent: 'space-evenly',
-    flexDirection: 'row',
-  },
-  mediaPillRatingText: {
-    fontSize: 8,
-    color: 'white',
-    fontFamily: 'Montserrat',
-  },
-  mediaPillRatingImage: {width: 8, height: 8},
 });

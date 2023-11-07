@@ -33,6 +33,8 @@
   "routes": {
     "search": "Cerca",
     "errorGettingAvailableCities": "Error al obtenir les ciutats disponibles",
-    "stops": "aturades"
+    "stops": "aturades",
+    "audio": "audio",
+    "audios": "audios"
   }
 }

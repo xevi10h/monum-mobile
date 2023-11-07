@@ -11,14 +11,7 @@ import map_marker_importance_3 from '../../assets/images/icons/map_marker_import
 import map_marker_importance_4 from '../../assets/images/icons/map_marker_importance_4.png';
 import map_marker_importance_5 from '../../assets/images/icons/map_marker_importance_5.png';
 import map_marker_importance_selected from '../../assets/images/icons/map_marker_importance_selected.png';
-
-export interface MarkerProps {
-  id: string;
-  coordinates: [number, number];
-  importance: number;
-  selected?: boolean;
-  setMarkerSelected: Dispatch<SetStateAction<string | null>>;
-}
+import {IMarker} from 'src/shared/interfaces/IMarker';
 
 export function MarkerComponent({
   id,
@@ -26,7 +19,7 @@ export function MarkerComponent({
   importance,
   selected,
   setMarkerSelected,
-}: MarkerProps) {
+}: IMarker) {
   const [icon, setIcon] = useState(map_marker_importance_1);
   const [dimensions, setDimensions] = useState(30);
   const [backgroundColor, setBackgroundColor] = useState('white');

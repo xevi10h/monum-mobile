@@ -33,6 +33,8 @@
   "routes": {
     "search": "Search",
     "errorGettingAvailableCities": "Error getting available cities",
-    "stops": "stops"
+    "stops": "stops",
+    "audio": "audio",
+    "audios": "audios"
   }
 }
