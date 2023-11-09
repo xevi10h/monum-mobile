@@ -33,7 +33,6 @@ export default function ListRoutesScreen({
   });
 
   useEffect(() => {
-    console.log('data', data);
     setRoutes(data?.routes || []);
   }, [data, setRoutes]);
   return (

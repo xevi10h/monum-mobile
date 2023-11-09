@@ -22,6 +22,7 @@ type PlaceFromRoutePillProps = IPlaceFromRoute & {
 
 // Aquí definimos el tipo de la referencia, si tienes métodos específicos que quieres exponer, los añades aquí
 export type PlaceFromRoutePillRef = {
+  isExpanded: boolean;
   expandPill: () => void;
   highlightPill: () => void;
   reducePill: () => void;
@@ -38,6 +39,7 @@ const PlaceFromRoutePill = forwardRef<
   const [mediasToTry, setMediasToTry] = useState<IMedia[]>([]);
 
   useImperativeHandle(ref, () => ({
+    isExpanded: expandedPill,
     expandPill: () => {
       expandPill();
     },
@@ -63,11 +65,7 @@ const PlaceFromRoutePill = forwardRef<
   }, [medias]);
 
   const toggleExpanded = () => {
-    animationValue.value = withTiming(expandedPill ? 0 : 1, {
-      duration: 300,
-      easing: Easing.bezier(0.5, 0.01, 0, 1),
-    });
-    setExpandedPill(!expandedPill);
+    expandedPill ? reducePill() : expandPill();
   };
 
   const expandPill = () => {

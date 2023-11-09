@@ -145,20 +145,17 @@ export default function RouteDetailScreen({
 
   useEffect(() => {
     if (markerSelected) {
-      console.log('markerSelected', markerSelected);
-      console.log(
-        'place',
-        placesFromRoute?.find(
-          placeFromRoute => placeFromRoute.place.id === markerSelected,
-        )?.place,
-      );
       pillRefs.get(markerSelected)?.current?.expandPill();
       pillRefs.get(markerSelected)?.current?.highlightPill();
+      let height = 0;
+      for (const marker of markers) {
+        if (marker.id === markerSelected) break;
+        const pillRef = pillRefs.get(marker.id)?.current;
+        height += pillRef?.isExpanded ? 230 : 80;
+      }
       scrollViewRef.current?.scrollTo({
         x: 0,
-        y:
-          pillRefs.get(markerSelected)?.current?.getLayout().height ||
-          0 - useSafeAreaInsets().top,
+        y: height,
         animated: true,
       });
     }
