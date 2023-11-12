@@ -1,12 +1,12 @@
 import React from 'react';
 import {Text, TouchableOpacity, StyleSheet, View} from 'react-native';
 
-interface UpdateButtonProps {
+interface PrimaryButtonProps {
   text: string;
   onPress: () => void;
 }
 
-export default function UpdateButton({text, onPress}: UpdateButtonProps) {
+export default function PrimaryButton({text, onPress}: PrimaryButtonProps) {
   return (
     <TouchableOpacity
       activeOpacity={0.2}

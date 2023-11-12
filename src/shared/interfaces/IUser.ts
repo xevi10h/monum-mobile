@@ -11,4 +11,5 @@ export default interface IUser {
   googleId?: string;
   token?: string;
   language: Language;
+  hasPassword?: boolean;
 }

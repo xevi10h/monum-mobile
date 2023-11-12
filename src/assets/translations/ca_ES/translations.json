@@ -23,7 +23,12 @@
     "update": "Actualitzar",
     "createdAt": "Creat el",
     "errorUpdating": "Error al actualitzar el perfil",
-    "errorGetting": "Error al obtenir el perfil"
+    "errorGetting": "Error al obtenir el perfil",
+    "changePassword": "Canviar contrasenya",
+    "introChangePassword": "Emplena els camps per a configurar la teva nova contrasenya",
+    "currentPassword": "Contrasenya actual",
+    "newPassword": "Nova contrasenya",
+    "confirmNewPassword": "Confirmar nova contrasenya"
   },
   "languages": {
     "en_US": "Anglès (EUA)",

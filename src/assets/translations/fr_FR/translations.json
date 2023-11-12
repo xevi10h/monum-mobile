@@ -23,7 +23,12 @@
     "update": "Mettre à jour",
     "createdAt": "Créé le",
     "errorUpdating": "Erreur lors de la mise à jour du profil",
-    "errorGetting": "Erreur lors de la récupération du profil"
+    "errorGetting": "Erreur lors de la récupération du profil",
+    "changePassword": "Changer le mot de passe",
+    "introChangePassword": "Remplissez les champs pour définir votre nouveau mot de passe",
+    "currentPassword": "Mot de passe actuel",
+    "newPassword": "Nouveau mot de passe",
+    "confirmNewPassword": "Confirmer le nouveau mot de passe"
   },
   "languages": {
     "en_US": "Anglais (États-Unis)",

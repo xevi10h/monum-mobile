@@ -12,6 +12,7 @@ export const REGISTER_USER = gql`
       language
       name
       photo
+      hasPassword
     }
   }
 `;
@@ -28,6 +29,7 @@ export const LOGIN_USER = gql`
       language
       name
       photo
+      hasPassword
     }
   }
 `;
@@ -44,6 +46,7 @@ export const LOGIN_GOOGLE_USER = gql`
       language
       name
       photo
+      hasPassword
     }
   }
 `;
@@ -60,6 +63,7 @@ export const GET_USER_BY_ID = gql`
       language
       name
       photo
+      hasPassword
     }
   }
 `;
@@ -76,6 +80,13 @@ export const UPDATE_USER = gql`
       language
       name
       photo
+      hasPassword
     }
+  }
+`;
+
+export const UPDATE_PASSWORD = gql`
+  mutation UpdatePassword($oldPassword: String!, $newPassword: String!) {
+    updatePassword(oldPassword: $oldPassword, newPassword: $newPassword)
   }
 `;

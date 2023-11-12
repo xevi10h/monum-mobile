@@ -4,20 +4,29 @@ import {
   TouchableOpacity,
   GestureResponderEvent,
   StyleSheet,
+  ViewStyle,
 } from 'react-native';
 
-interface LogoutButtonProps {
+interface SecondaryButtonProps {
   text: string;
   onPress: (event: GestureResponderEvent) => void;
+  style?: ViewStyle;
+  disabled?: boolean;
 }
 
-export default function LogoutButton({text, onPress}: LogoutButtonProps) {
+export default function SecondaryButton({
+  text,
+  onPress,
+  style,
+  disabled,
+}: SecondaryButtonProps) {
   return (
     <TouchableOpacity
       activeOpacity={0.2}
-      style={[styles.button]}
-      onPress={onPress}>
-      <Text style={styles.buttonText}>{text}</Text>
+      style={[styles.button, style, {opacity: disabled ? 0.48 : 1}]}
+      onPress={onPress}
+      disabled={disabled}>
+      <Text style={[styles.buttonText]}>{text}</Text>
     </TouchableOpacity>
   );
 }

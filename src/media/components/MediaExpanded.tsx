@@ -26,12 +26,13 @@ import place_detail_media_rating_star from '../../assets/images/icons/place_deta
 import media_expanded_back from '../../assets/images/icons/media_expanded_back.png';
 import media_expanded_forward from '../../assets/images/icons/media_expanded_forward.png';
 import media_expanded_play from '../../assets/images/icons/media_expanded_play.png';
+import media_expanded_pause from '../../assets/images/icons/media_expanded_pause.png';
 import IPlace from '../../shared/interfaces/IPlace';
 import {Slider} from '@rneui/themed';
 import {AppDispatch, RootState} from '../../redux/store';
 import {useDispatch, useSelector} from 'react-redux';
 import {skipToNext, skipToPrev, togglePlaying} from '../../redux/states/medias';
-import TrackPlayer from 'react-native-track-player';
+import TrackPlayer, {State} from 'react-native-track-player';
 
 export function secondsToMinutes(seconds: number) {
   const minutes = Math.floor(seconds / 60);
@@ -44,7 +45,7 @@ export function secondsToMinutes(seconds: number) {
 
 const {height} = Dimensions.get('window');
 
-interface MapPlaceDetailExpandedProps {
+interface MediaExpandedProps {
   place: IPlace;
   setExpandedDetail: Dispatch<SetStateAction<boolean>>;
   trackPosition: number;
@@ -56,13 +57,14 @@ type GestureContext = {
   startY: number;
 };
 
-export default function MapPlaceDetailExpanded({
+export default function MediaExpanded({
   place,
   setExpandedDetail,
   trackPosition,
   trackDuration,
   setTrackPosition,
-}: MapPlaceDetailExpandedProps) {
+}: MediaExpandedProps) {
+  const {statePlayer} = useSelector((state: RootState) => state.medias);
   const dispatch = useDispatch<AppDispatch>();
   const {currentMedia, mediaList} = useSelector(
     (state: RootState) => state.medias,
@@ -192,7 +194,11 @@ export default function MapPlaceDetailExpanded({
                     style={styles.mediaPlayerButtons}
                     onPress={() => dispatch(togglePlaying())}>
                     <Image
-                      source={media_expanded_play}
+                      source={
+                        statePlayer === State.Paused
+                          ? media_expanded_play
+                          : media_expanded_pause
+                      }
                       style={styles.mediaPlayerButtonsPlayImage}
                       resizeMode="contain"
                     />

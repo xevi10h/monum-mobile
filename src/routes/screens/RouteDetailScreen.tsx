@@ -1,7 +1,6 @@
 import {
   Dimensions,
   Image,
-  ScrollView,
   StyleSheet,
   Text,
   Touchable,
@@ -9,12 +8,12 @@ import {
 } from 'react-native';
 import {RouteDetailScreenProps} from '../navigator/RoutesNavigator';
 import Mapbox, {Camera, MapView} from '@rnmapbox/maps';
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useLayoutEffect, useRef, useState} from 'react';
 import media_bubble_back from '../../assets/images/icons/media_bubble_back.png';
 import {useQuery} from '@apollo/client';
 import {GET_ROUTE_DETAIL} from '../../graphql/queries/routeQueries';
 import {MarkerComponent} from '../../map/components/Marker';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import RatingPill from '../components/RatingPill';
 import TextSearch from '../components/TextSearch';
@@ -36,6 +35,8 @@ export default function RouteDetailScreen({
   const mapRef = useRef<MapView>(null);
   const camera = useRef<Camera>(null);
   const scrollViewRef = useRef<ScrollView>(null);
+  const [key, setKey] = useState(0);
+  const forceRender = () => setKey(prevKey => prevKey + 1);
 
   const [originalData, setOriginalData] = useState<any | null>(null);
   const [markers, setMarkers] = useState<IMarker[]>([]);
@@ -144,21 +145,21 @@ export default function RouteDetailScreen({
   }, [placesFromRoute]);
 
   useEffect(() => {
-    if (markerSelected) {
-      pillRefs.get(markerSelected)?.current?.expandPill();
-      pillRefs.get(markerSelected)?.current?.highlightPill();
-      let height = 0;
-      for (const marker of markers) {
-        if (marker.id === markerSelected) break;
-        const pillRef = pillRefs.get(marker.id)?.current;
-        height += pillRef?.isExpanded ? 230 : 80;
+    async function scrollMarkers() {
+      if (markerSelected) {
+        let height = 0;
+        for (const marker of markers) {
+          if (marker.id === markerSelected) break;
+          const pillRef = pillRefs.get(marker.id)?.current;
+          height += pillRef?.isExpanded ? 230 : 80;
+        }
+        pillRefs.get(markerSelected)?.current?.expandPill();
+        pillRefs.get(markerSelected)?.current?.highlightPill();
+        scrollViewRef.current?.scrollTo({y: height, animated: true});
+        // forceRender();
       }
-      scrollViewRef.current?.scrollTo({
-        x: 0,
-        y: height,
-        animated: true,
-      });
     }
+    scrollMarkers();
   }, [markerSelected]);
 
   const pillRefs = useRef<Map<string, React.RefObject<PlaceFromRoutePillRef>>>(
@@ -176,7 +177,6 @@ export default function RouteDetailScreen({
           shadowOpacity: 0.25,
           shadowRadius: 4,
           elevation: 5,
-          backgroundColor: 'red',
         }}>
         <Mapbox.MapView
           ref={mapRef}
@@ -239,6 +239,7 @@ export default function RouteDetailScreen({
       </View>
       <View style={{flex: 1}}>
         <ScrollView
+          key={key}
           style={{
             borderRadius: 12,
             paddingTop: 15,

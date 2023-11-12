@@ -33,7 +33,9 @@ export default function ListRoutesScreen({
   });
 
   useEffect(() => {
-    setRoutes(data?.routes || []);
+    if (data) {
+      setRoutes(data?.routes || []);
+    }
   }, [data, setRoutes]);
   return (
     <SafeAreaView style={styles.page}>

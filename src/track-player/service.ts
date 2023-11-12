@@ -16,6 +16,7 @@ export async function setupPlayerService() {
         appKilledPlaybackBehavior:
           AppKilledPlaybackBehavior.StopPlaybackAndRemoveNotification,
       },
+
       capabilities: [
         Capability.Play,
         Capability.Pause,
@@ -28,6 +29,21 @@ export async function setupPlayerService() {
         Capability.Pause,
         Capability.SkipToNext,
       ],
+      notificationCapabilities: [
+        Capability.Play,
+        Capability.Pause,
+        Capability.SkipToNext,
+        Capability.SkipToPrevious,
+        Capability.SeekTo,
+      ],
+      icon: require('../assets/images/icons/exclamation.png'),
+      playIcon: require('../assets/images/icons/exclamation.png'),
+      stopIcon: require('../assets/images/icons/exclamation.png'),
+      previousIcon: require('../assets/images/icons/exclamation.png'),
+      nextIcon: require('../assets/images/icons/exclamation.png'),
+      rewindIcon: require('../assets/images/icons/exclamation.png'),
+      forwardIcon: require('../assets/images/icons/exclamation.png'),
+      color: 1,
       progressUpdateEventInterval: 2,
     });
 

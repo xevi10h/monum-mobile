@@ -93,7 +93,7 @@ const PlaceFromRoutePill = forwardRef<
 
   const animatedStyle = useAnimatedStyle(() => {
     return {
-      height: animationValue.value * 150 + 60, // Interpolación manual entre 60 y 150
+      height: animationValue.value * 150 + 60, // Interpolación manual entre 60 y 210
     };
   });
   return (
@@ -108,7 +108,7 @@ const PlaceFromRoutePill = forwardRef<
         style={[
           styles.placeMediaPillAnimated,
           animatedStyle,
-          {backgroundColor: highlightedPill ? 'red' : '#ECF3EC'},
+          {backgroundColor: highlightedPill ? '#D6E5D6' : '#ECF3EC'},
         ]}>
         <View style={{flex: 1}}>
           <TouchableOpacity onPress={toggleExpanded}>
@@ -117,7 +117,7 @@ const PlaceFromRoutePill = forwardRef<
                 styles.placeMediaPillContainer,
                 {marginBottom: expandedPill ? 10 : 17.5},
                 {height: expandedPill ? 32.5 : 25},
-                {backgroundColor: highlightedPill ? 'red' : '#ECF3EC'},
+                {backgroundColor: highlightedPill ? '#D6E5D6' : '#ECF3EC'},
               ]}>
               <View style={{width: '75%'}}>
                 <Text style={styles.placeNameText}>{place.name}</Text>
@@ -163,7 +163,7 @@ const PlaceFromRoutePill = forwardRef<
               <View
                 style={[
                   styles.placeMediaContainer,
-                  {backgroundColor: highlightedPill ? 'red' : '#ECF3EC'},
+                  {backgroundColor: highlightedPill ? '#D6E5D6' : '#ECF3EC'},
                 ]}>
                 <View style={styles.placeMediaIntroContainer}>
                   <Text style={styles.placeMediaIntroText}>

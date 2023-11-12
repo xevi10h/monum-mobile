@@ -9,7 +9,7 @@ import bottom_bar_map_inactive from './assets/images/icons/bottom_bar_map_inacti
 import bottom_bar_profile_inactive from './assets/images/icons/bottom_bar_profile_inactive.png';
 import MapScreen from './map/screens/MapScreen';
 
-import ProfileScreen from './profile/screens/ProfileScreen';
+import ProfileScreen from './profile/screens/ProfileDetailScreen';
 import MediaComponent from './media/components/MediaComponent';
 import IPlace from './shared/interfaces/IPlace';
 import IMedia from './shared/interfaces/IMedia';
@@ -18,6 +18,7 @@ import {StackNavigationProp} from '@react-navigation/stack';
 import RoutesNavigator from './routes/navigator/RoutesNavigator';
 import {useDispatch, useSelector} from 'react-redux';
 import {RootState} from './redux/store';
+import ProfileNavigator from './profile/navigator/ProfileNavigator';
 
 const BOTTOM_TAB_NAVIGATOR_HEIGHT = 56;
 
@@ -88,7 +89,7 @@ function BottomTabNavigator({navigation}: Props) {
         initialRouteName="Map"
         screenOptions={{
           tabBarStyle: [
-            styles.hol,
+            styles.map,
             {
               display: isTabBarVisible ? 'flex' : 'none',
               height: useSafeAreaInsets().bottom + BOTTOM_TAB_NAVIGATOR_HEIGHT,
@@ -124,11 +125,11 @@ function BottomTabNavigator({navigation}: Props) {
             tabBarIcon: ({focused}) =>
               renderTabBarIcon({focused, name: 'Profile'}),
           }}>
-          {() => <ProfileScreen navigationToLogin={navigation} />}
+          {() => <ProfileNavigator navigationToLogin={navigation} />}
         </Tab.Screen>
       </Tab.Navigator>
       {typeof currentMedia === 'number' && mediaList.length > 0 && place && (
-        <MediaComponent place={place} setPlace={setPlace} />
+        <MediaComponent place={place} />
       )}
     </NavigationContainer>
   );
@@ -139,7 +140,7 @@ const styles = StyleSheet.create({
     width: 30,
     height: 30,
   },
-  hol: {
+  map: {
     position: 'absolute',
     backgroundColor: 'white',
     shadowColor: 'black',

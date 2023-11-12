@@ -10,10 +10,10 @@ const initialState: IUser = {
   createdAt: new Date().toISOString(),
   name: '',
   photo: '',
-  hashedPassword: '',
   googleId: '',
   token: '',
   language: 'en_US',
+  hasPassword: false,
 };
 
 export const userSlice = createSlice({
@@ -39,6 +39,8 @@ export const userSlice = createSlice({
         action.payload?.hashedPassword || initialState.hashedPassword;
       state.googleId = action.payload?.googleId || initialState.googleId;
       state.language = action.payload?.language || initialState.language;
+      state.hasPassword =
+        action.payload?.hasPassword || initialState.hasPassword;
       i18n.changeLanguage(state.language);
     },
   },

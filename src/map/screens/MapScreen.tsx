@@ -131,7 +131,7 @@ export default function MapScreen({
             ref={camera}
           />
         </Mapbox.MapView>
-        <FilterComponent filters={filters} setFilters={setFilters} />
+        {/* <FilterComponent filters={filters} setFilters={setFilters} /> */}
         <CenterCoordinatesButton setCenterCamera={setCenterCamera} />
         <MapPlaceDetail
           placeId={markerSelected}

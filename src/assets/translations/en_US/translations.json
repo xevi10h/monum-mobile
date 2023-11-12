@@ -23,7 +23,12 @@
     "update": "Update",
     "createdAt": "Created at",
     "errorUpdating": "Error updating profile",
-    "errorGetting": "Error getting profile"
+    "errorGetting": "Error getting profile",
+    "changePassword": "Change password",
+    "introChangePassword": "Fill in the fields to set up your new password",
+    "currentPassword": "Current password",
+    "newPassword": "New password",
+    "confirmedNewPassword": "Confirm new password"
   },
   "languages": {
     "en_US": "English (United States)",

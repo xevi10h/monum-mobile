@@ -10,14 +10,15 @@ import {t} from 'i18next';
 import ProfilePhotoComponent from '../components/ProfilePhoto';
 import LanguageSelector from '../components/LanguageSelector';
 import NameInput from '../components/NameInput';
-import UpdateButton from '../components/UpdateButton';
-import LogoutButton from '../components/LogoutButton';
+import PrimaryButton from '../components/PrimaryButton';
+import SecondaryButton from '../components/SecondaryButton';
 import LoadingSpinner from '../../shared/components/LoadingSpinner';
 import ErrorComponent from '../../shared/components/ErrorComponent';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {RootStackParamList} from '../../auth/navigator/AuthNavigator';
 import {Language} from '../../shared/types/Language';
+import {ProfileStackParamList} from '../navigator/ProfileNavigator';
 
 const BOTTOM_TAB_NAVIGATOR_HEIGHT = 56;
 
@@ -28,13 +29,13 @@ type RegisterScreenNavigationProp = StackNavigationProp<
 
 type Props = {
   navigationToLogin: RegisterScreenNavigationProp;
+  navigation: any;
 };
 
-export default function ProfileScreen({navigationToLogin}: Props) {
+export default function ProfileScreen({navigationToLogin, navigation}: Props) {
   const dispatch = useDispatch();
   // Acceder al estado global para ver si 'user' ya existe
   const user = useSelector((state: RootState) => state.user);
-
   const [provisionalUser, setProvisionalUser] = useState<IUser>(user);
 
   const [photoBase64, setPhotoBase64] = useState<string | undefined>(undefined);
@@ -155,7 +156,16 @@ export default function ProfileScreen({navigationToLogin}: Props) {
         />
       </View>
       <View style={styles.updateButtonContainer}>
-        <UpdateButton
+        {user.hasPassword && (
+          <SecondaryButton
+            text={t('profile.changePassword')}
+            onPress={() => {
+              navigation.navigate('ChangePassword');
+            }}
+            style={{marginTop: 20}}
+          />
+        )}
+        <PrimaryButton
           text={t('profile.update')}
           onPress={async () => {
             return await updateUser({
@@ -169,6 +179,7 @@ export default function ProfileScreen({navigationToLogin}: Props) {
             });
           }}
         />
+
         <Text style={styles.textCreatedAt}>{`${t(
           'profile.createdAt',
         )} ${new Date(provisionalUser.createdAt).toLocaleDateString(
@@ -188,7 +199,7 @@ export default function ProfileScreen({navigationToLogin}: Props) {
               useSafeAreaInsets().bottom + BOTTOM_TAB_NAVIGATOR_HEIGHT + 20,
           },
         ]}>
-        <LogoutButton
+        <SecondaryButton
           text={t('profile.logout')}
           onPress={() => {
             dispatch(setUser(null));
