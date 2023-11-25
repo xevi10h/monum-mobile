@@ -17,15 +17,16 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
   },
   logoContainer: {
+    paddingTop: 50,
     flex: 3,
     alignItems: 'center',
     justifyContent: 'center',
   },
   logo: {
-    height: 100,
+    width: 300,
   },
   buttonContainer: {
-    flex: 6,
+    flex: 8,
     width: '80%',
     height: '100%',
     alignItems: 'center',

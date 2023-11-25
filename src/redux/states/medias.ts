@@ -89,7 +89,7 @@ export const setNewCurrentMedia =
           id: media.id,
           url: media.audioUrl,
           title: media.title,
-          artist: 'Xplorear',
+          artist: 'Monum',
         })),
       );
       await TrackPlayer.setRepeatMode(RepeatMode.Queue);

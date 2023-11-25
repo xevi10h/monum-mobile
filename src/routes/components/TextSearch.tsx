@@ -1,4 +1,4 @@
-import {View, Image, TextInput, StyleSheet} from 'react-native';
+import {View, Image, TextInput, StyleSheet, ViewStyle} from 'react-native';
 import routes_text_search from '../../assets/images/icons/routes_text_search.png';
 import {t} from 'i18next';
 import LinearGradient from 'react-native-linear-gradient';

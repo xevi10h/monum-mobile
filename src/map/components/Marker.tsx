@@ -59,12 +59,6 @@ export function MarkerComponent({
     }
   };
 
-  const singleTap = Gesture.Tap()
-    .maxDuration(250)
-    .onStart(() => {
-      runOnJS(setMarkerSelected)(id);
-    });
-
   useEffect(() => {
     chooseIcon();
   }, [selected]);

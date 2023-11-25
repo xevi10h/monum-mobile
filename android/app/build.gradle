@@ -74,9 +74,9 @@ android {
 
     compileSdkVersion rootProject.ext.compileSdkVersion
 
-    namespace "com.xplorear"
+    namespace "com.monum"
     defaultConfig {
-        applicationId "com.xplorear"
+        applicationId "com.monum"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1

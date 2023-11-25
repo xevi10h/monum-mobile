@@ -1,5 +1,5 @@
 import Geolocation from '@react-native-community/geolocation';
-import Mapbox, {Camera} from '@rnmapbox/maps';
+import Mapbox, {Camera, MarkerView} from '@rnmapbox/maps';
 import React, {
   Dispatch,
   SetStateAction,
@@ -7,19 +7,22 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import {Dimensions, StyleSheet, View} from 'react-native';
+import {
+  Dimensions,
+  Image,
+  Keyboard,
+  StyleSheet,
+  TouchableWithoutFeedback,
+  View,
+} from 'react-native';
 
 import CenterCoordinatesButton from '../components/CenterCoordinatesButton';
-import FilterComponent from '../components/filter/FilterComponent';
 import {MarkerComponent} from '../components/Marker';
 import MapPlaceDetail from '../components/placeDetail/MapPlaceDetail';
-import IFilter from '../domain/IFilter';
-import {getAllFilters} from '../services/FakeData';
 import MapServices from '../services/MapServices';
 import IPlace from '../../shared/interfaces/IPlace';
-import IMedia from '../../shared/interfaces/IMedia';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import {IMarker} from 'src/shared/interfaces/IMarker';
+import TextSearchMap from '../components/TextSearchMap';
 
 Mapbox.setAccessToken(
   'pk.eyJ1IjoieHBsb3JlYXIiLCJhIjoiY2xqMmU0Z3NyMGFxeTNwbzByNW90dmdxcSJ9.cMT52Rc64Z05YUGPIutXFw',
@@ -36,17 +39,28 @@ export default function MapScreen({
   setPlace,
   place,
 }: MapScreenProps) {
-  const mapRef = useRef(null);
-  const [filters, setFilters] = useState<IFilter[]>([]);
+  const mapRef = useRef<Mapbox.MapView>(null);
   const [centerCamera, setCenterCamera] = useState(false);
-  const [centerCoordinates, setCenterCoordinates] = useState([0, 0]);
+  const [centerCoordinates, setCenterCoordinates] = useState<[number, number]>([
+    0, 0,
+  ]);
   const [markers, setMarkers] = useState<IMarker[]>([]);
   const [markerSelected, setMarkerSelected] = useState<string | null>(null);
+  const [textSearch, setTextSearch] = useState<string | undefined>('');
+  const [onSubmitEditing, setOnSubmitEditing] = useState(true);
   const camera = useRef<Camera>(null);
+  const [isDropdownVisible, setIsDropdownVisible] = useState(false);
+
+  const toggleDropdown = (visible: boolean) => {
+    setIsDropdownVisible(visible);
+  };
 
   useEffect(() => {
     const fetchMarkers = async () => {
-      const markersData = await MapServices.getAllMarkers();
+      const markersData = await MapServices.getMarkers(
+        textSearch,
+        centerCoordinates,
+      );
       setMarkers(
         markersData.map(marker => ({
           id: marker.id,
@@ -60,14 +74,17 @@ export default function MapScreen({
         })),
       );
     };
-    fetchMarkers();
-  }, [filters]);
+    if (onSubmitEditing) {
+      fetchMarkers();
+      setOnSubmitEditing(false);
+    }
+  }, [onSubmitEditing]);
 
   useEffect(() => {
     if (markerSelected) {
       camera.current?.setCamera({
         animationDuration: 1000,
-        zoomLevel: 12,
+        zoomLevel: 17,
         centerCoordinate:
           markers?.find(m => m.id === markerSelected)?.coordinates ||
           centerCoordinates,
@@ -91,57 +108,101 @@ export default function MapScreen({
     ),
       camera.current?.setCamera({
         animationDuration: 1000,
-        zoomLevel: 5,
+        zoomLevel: 15,
         centerCoordinate: centerCoordinates,
       });
     setCenterCamera(false);
   }, [centerCamera]);
 
-  useEffect(() => {
-    // Make a request with a GET of possible filters
-    setFilters(getAllFilters());
-  }, []);
-
   return (
-    <View style={styles.mapContainer}>
-      <View
-        style={{
-          height: Dimensions.get('window').height,
-          width: Dimensions.get('window').width,
-        }}>
-        <Mapbox.MapView
-          ref={mapRef}
-          styleURL="mapbox://styles/mapbox/light-v11"
-          scaleBarEnabled={false}
-          style={styles.mapView}>
-          {markers.map(marker => (
-            <MarkerComponent
-              key={marker.id}
-              id={marker.id}
-              importance={marker.importance}
-              coordinates={marker.coordinates}
-              selected={markerSelected === marker.id ? true : false}
-              setMarkerSelected={setMarkerSelected}
+    <TouchableWithoutFeedback
+      onPress={() => {
+        Keyboard.dismiss();
+        toggleDropdown(false);
+      }}
+      accessible={false}>
+      <View style={styles.mapContainer}>
+        <View
+          style={{
+            height: Dimensions.get('window').height,
+            width: Dimensions.get('window').width,
+          }}>
+          <Mapbox.MapView
+            ref={mapRef}
+            styleURL="mapbox://styles/mapbox/light-v11"
+            scaleBarEnabled={false}
+            style={styles.mapView}>
+            {markers.map(marker => (
+              <MarkerComponent
+                key={marker.id}
+                id={marker.id}
+                importance={marker.importance}
+                coordinates={marker.coordinates}
+                selected={markerSelected === marker.id ? true : false}
+                setMarkerSelected={setMarkerSelected}
+              />
+            ))}
+            {centerCoordinates && (
+              <MarkerView
+                id={'center'}
+                key={'center'}
+                coordinate={centerCoordinates}>
+                <View
+                  style={{
+                    backgroundColor: 'rgba(114,154,255,0.2)',
+                    width: 30,
+                    height: 30,
+                    borderRadius: 15,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}>
+                  <View
+                    style={{
+                      backgroundColor: 'white',
+                      width: 16,
+                      height: 16,
+                      borderRadius: 9,
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}>
+                    <View
+                      style={{
+                        backgroundColor: '#2F69FF',
+                        width: 13,
+                        height: 13,
+                        borderRadius: 7.5,
+                      }}
+                    />
+                  </View>
+                </View>
+              </MarkerView>
+            )}
+            <Camera
+              centerCoordinate={centerCoordinates}
+              zoomLevel={10}
+              ref={camera}
+              minZoomLevel={10}
             />
-          ))}
-          <Camera
-            centerCoordinate={centerCoordinates}
-            zoomLevel={5}
-            animationDuration={3000}
-            ref={camera}
+          </Mapbox.MapView>
+          {/* <FilterComponent filters={filters} setFilters={setFilters} /> */}
+          <CenterCoordinatesButton setCenterCamera={setCenterCamera} />
+          <TextSearchMap
+            textSearch={textSearch}
+            setTextSearch={setTextSearch}
+            onSubmitEditing={() => setOnSubmitEditing(true)}
+            isDropdownVisible={isDropdownVisible}
+            toggleDropdown={toggleDropdown}
           />
-        </Mapbox.MapView>
-        {/* <FilterComponent filters={filters} setFilters={setFilters} /> */}
-        <CenterCoordinatesButton setCenterCamera={setCenterCamera} />
-        <MapPlaceDetail
-          placeId={markerSelected}
-          setMarkerSelected={setMarkerSelected}
-          setTabBarVisible={setTabBarVisible}
-          setPlace={setPlace}
-          place={place}
-        />
+          <MapPlaceDetail
+            placeId={markerSelected}
+            setMarkerSelected={setMarkerSelected}
+            setTabBarVisible={setTabBarVisible}
+            setPlace={setPlace}
+            place={place}
+          />
+        </View>
       </View>
-    </View>
+    </TouchableWithoutFeedback>
   );
 }
 

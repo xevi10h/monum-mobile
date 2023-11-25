@@ -1,8 +1,8 @@
 import {gql} from '@apollo/client';
 
 export const GET_MARKERS = gql`
-  query Places {
-    places {
+  query Places($textSearch: String, $centerCoordinates: [Float]) {
+    places(textSearch: $textSearch, centerCoordinates: $centerCoordinates) {
       id
       address {
         coordinates {
@@ -36,5 +36,11 @@ export const GET_PLACE_INFO = gql`
       rating
       imagesUrl
     }
+  }
+`;
+
+export const GET_PLACE_SEARCHER_SUGGESTIONS = gql`
+  query Query($textSearch: String!) {
+    placeSearcherSuggestions(textSearch: $textSearch)
   }
 `;

@@ -1,4 +1,4 @@
-package com.xplorear;
+package com.monum;
 
 import android.app.Application;
 import com.facebook.react.PackageList;

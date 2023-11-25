@@ -1,14 +1,22 @@
 import IPlace from '../../shared/interfaces/IPlace';
 import {MarkerResponse} from './MapServicesInterfaces';
 import client from '../../graphql/connection';
-import {GET_MARKERS, GET_PLACE_INFO} from '../../graphql/queries/placeQueries';
+import {
+  GET_MARKERS,
+  GET_PLACE_INFO,
+  GET_PLACE_SEARCHER_SUGGESTIONS,
+} from '../../graphql/queries/placeQueries';
 import {GET_PLACE_MEDIA} from '../../graphql/queries/mediaQueries';
 
 class MapServices {
-  public async getAllMarkers(): Promise<MarkerResponse[]> {
+  public async getMarkers(
+    textSearch: string | undefined,
+    centerCoordinates: [number, number],
+  ): Promise<MarkerResponse[]> {
     try {
       const response = await client.query({
         query: GET_MARKERS,
+        variables: {textSearch: textSearch, centerCoordinates},
       });
       return response.data.places || [];
     } catch (error) {
@@ -39,6 +47,19 @@ class MapServices {
       return response.data?.medias || [];
     } catch (error) {
       console.error('Error trying to get place media:', error);
+      return [];
+    }
+  }
+
+  public async getPlaceSearcherSuggestions(textSearch: string) {
+    try {
+      const response = await client.query({
+        query: GET_PLACE_SEARCHER_SUGGESTIONS,
+        variables: {textSearch},
+      });
+      return response.data?.placeSearcherSuggestions || [];
+    } catch (error) {
+      console.error('Error trying to get place searcher suggestions:', error);
       return [];
     }
   }
