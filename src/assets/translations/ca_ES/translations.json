@@ -1,4 +1,16 @@
 {
+  "errors": {
+    "auth": {
+      "random": "Ha succeït un error inesperat. Si us plau, torna-ho a intentar més tard.",
+      "incorrectPassword": "El correu electrònic o nom d'usuari i la contrasenya introduïts no coincideixen amb cap compte dels nostres registres. Si us plau, verifica les dades i prova de nou.",
+      "passwordNotStrong": "La contrasenya ha de tenir un mínim de 8 caràcters, incloure majúscules, minúscules, números i símbols, i no pot contenir paraules comunes o seqüències previsibles.",
+      "userAlreadyExists": "Aquest correu electrònic ja està registrat a l'aplicació. Si us plau, utilitza una altra adreça o recupera la teva contrasenya si no recordes la informació d'accés."
+    },
+    "profile": {
+      "incorrectPassword": "La contrasenya antiga que has introduït no coincideix amb la teva contrasenya actual. Si us plau, intenta-ho de nou.",
+      "passwordNotStrong": "La contrasenya ha de tenir un mínim de 8 caràcters, incloure majúscules, minúscules, números i símbols, i no pot contenir paraules comunes o seqüències previsibles."
+    }
+  },
   "authScreens": {
     "loginWithGoogle": "Continuar amb Google",
     "loginWithCredentials": "Continuar amb un altre correu",

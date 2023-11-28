@@ -1,4 +1,16 @@
 {
+  "errors": {
+    "auth": {
+      "random": "Une erreur s'est produite. Veuillez réessayer plus tard.",
+      "incorrectPassword": "L'adresse email ou le nom d'utilisateur et le mot de passe saisis ne correspondent à aucun compte dans nos registres. Veuillez vérifier vos informations et réessayer.",
+      "passwordNotStrong": "Votre mot de passe doit comporter au moins 8 caractères, inclure des lettres majuscules et minuscules, des chiffres et des symboles, et ne peut contenir des mots communs ou des séquences prévisibles.",
+      "userAlreadyExists": "Cette adresse email est déjà enregistrée dans l'application. Veuillez utiliser une autre adresse ou récupérer votre mot de passe si vous avez oublié vos informations de connexion."
+    },
+    "profile": {
+      "incorrectPassword": "L'ancien mot de passe que vous avez saisi ne correspond pas à votre mot de passe actuel. Veuillez réessayer.",
+      "passwordNotStrong": "Votre mot de passe doit comporter au moins 8 caractères, inclure des lettres majuscules et minuscules, des chiffres et des symboles, et ne peut contenir des mots communs ou des séquences prévisibles."
+    }
+  },
   "authScreens": {
     "loginWithGoogle": "Continuer avec Google",
     "loginWithCredentials": "Continuer avec une autre adresse e-mail",

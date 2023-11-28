@@ -39,9 +39,9 @@ class AuthService {
       });
       const user = response.data?.registerUser;
       return user;
-    } catch (error) {
+    } catch (error: any) {
       console.error('Error al realizar el registro de usuario', error);
-      return null;
+      throw new Error(error?.graphQLErrors[0]?.extensions?.code || 'RANDOM');
     }
   }
 
@@ -56,9 +56,9 @@ class AuthService {
       });
       const user = response.data?.loginUser;
       return user;
-    } catch (error) {
-      console.error('Error al realizar el inicio de sesión:', error);
-      return null;
+    } catch (error: any) {
+      console.log('Error al realizar el inicio de sesión:', error);
+      throw new Error(error?.graphQLErrors[0]?.extensions?.code || 'RANDOM');
     }
   }
 

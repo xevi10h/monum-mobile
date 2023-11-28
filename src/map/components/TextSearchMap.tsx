@@ -59,12 +59,12 @@ export default function TextSearchMap({
         alignSelf: 'center',
       }}>
       <View style={[styles.container]}>
-        <LinearGradient
+        {/* <LinearGradient
           start={{x: 0, y: 0}}
-          end={{x: 0, y: 0.3}}
-          colors={['#3C6AF62E', '#3F713B14']}
+          end={{x: 0, y: 1}}
+          colors={['#3C6AF62E', '#D6E5D6']}
           style={styles.linearGradient}
-        />
+        /> */}
         <Image source={routes_text_search} style={styles.image} />
         <TextInput
           placeholder={t('routes.search') || 'Search'}
@@ -88,9 +88,11 @@ export default function TextSearchMap({
         }}>
         <ScrollView
           style={{
-            backgroundColor: 'rgba(255,255,255,0.6)',
-            maxHeight: isDropdownVisible ? 200 : 0,
-            borderRadius: 12,
+            backgroundColor: 'rgb(255,255,255)',
+            maxHeight: isDropdownVisible ? 210 : 0,
+            borderBottomLeftRadius: 12,
+            borderBottomRightRadius: 12,
+            marginTop: -10,
           }}>
           {suggestions.map((suggestion, i) => (
             <TouchableOpacity
@@ -102,10 +104,12 @@ export default function TextSearchMap({
               <View
                 key={i}
                 style={{
-                  borderWidth: 0.3,
-                  borderColor: 'rgba(0,0,0,0.2)',
+                  paddingTop: i === 0 ? 10 : 0,
+                  borderTopColor: i === 0 ? 'white' : 'rgba(0,0,0,0.2)',
+                  borderBottomColor: 'rgba(0,0,0,0.2)',
+                  borderWidth: i === 0 ? 0 : 0.3,
                   marginHorizontal: -10,
-                  height: 40,
+                  height: i === 0 ? 50 : 40,
                 }}>
                 <Text
                   style={{
@@ -127,7 +131,7 @@ export default function TextSearchMap({
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: 'rgba(63, 113, 59, 0.1)',
+    backgroundColor: '#D6E5D6',
     borderRadius: 12,
     alignItems: 'center',
     flexDirection: 'row',
@@ -135,6 +139,10 @@ const styles = StyleSheet.create({
     height: 42,
     zIndex: 2,
     opacity: 1,
+    shadowColor: '#000',
+    shadowOffset: {width: 0, height: 2},
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
   },
   linearGradient: {
     position: 'absolute',

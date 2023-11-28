@@ -1,7 +1,7 @@
 // import axios from 'axios';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {t} from 'i18next';
-import React, {useState} from 'react';
+import React, {useRef, useState} from 'react';
 import {
   View,
   Text,
@@ -21,6 +21,8 @@ import {styles} from '../styles/LoginStyles';
 import AuthServices from '../services/AuthServices';
 import {useDispatch} from 'react-redux';
 import {setAuthToken, setUser} from '../../redux/states/user';
+import {Animated} from 'react-native';
+import ErrorComponent from '../components/ErrorComponent';
 type LoginScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
   'Login'
@@ -34,18 +36,54 @@ export default function LoginScreen({navigation}: Props) {
   const [emailOrUsername, setEmailOrUsername] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
   };
 
+  const shakeAnimation = useRef(new Animated.Value(0)).current;
+
+  const startShake = () => {
+    Animated.sequence([
+      Animated.timing(shakeAnimation, {
+        toValue: 10,
+        duration: 100,
+        useNativeDriver: true,
+      }),
+      Animated.timing(shakeAnimation, {
+        toValue: -10,
+        duration: 100,
+        useNativeDriver: true,
+      }),
+      Animated.timing(shakeAnimation, {
+        toValue: 10,
+        duration: 100,
+        useNativeDriver: true,
+      }),
+      Animated.timing(shakeAnimation, {
+        toValue: 0,
+        duration: 100,
+        useNativeDriver: true,
+      }),
+    ]).start();
+  };
+
   const dispatch = useDispatch();
+
+  console.log('error', error);
 
   return (
     <View style={styles.backgroundContainer}>
       <View style={styles.backgroundColor} />
       <ImageBackground source={background_monuments} style={styles.background}>
-        <View style={styles.container}>
+        <Animated.View
+          style={[
+            styles.container,
+            {
+              transform: [{translateX: shakeAnimation}],
+            },
+          ]}>
           <View style={styles.logoContainer}>
             <Image
               source={logo_white}
@@ -59,7 +97,12 @@ export default function LoginScreen({navigation}: Props) {
                 t('authScreens.emailOrUsername') || 'Email or username'
               }
               placeholderTextColor="#FFFFFF"
-              style={styles.inputButton}
+              style={[
+                styles.inputButton,
+                {
+                  borderColor: error ? 'rgb(208, 54, 60)' : 'white',
+                },
+              ]}
               value={emailOrUsername}
               onChangeText={setEmailOrUsername}
             />
@@ -67,7 +110,12 @@ export default function LoginScreen({navigation}: Props) {
               <TextInput
                 placeholder={t('authScreens.password') || 'Password'}
                 placeholderTextColor="#FFFFFF"
-                style={[styles.inputButton]}
+                style={[
+                  styles.inputButton,
+                  {
+                    borderColor: error ? 'rgb(208, 54, 60)' : 'white',
+                  },
+                ]}
                 secureTextEntry={!showPassword} // Mostrar o ocultar la contraseña según el estado
                 value={password}
                 onChangeText={setPassword}
@@ -98,19 +146,23 @@ export default function LoginScreen({navigation}: Props) {
             <PrimaryButton
               text={t('authScreens.access')}
               onPress={async () => {
-                const response = await AuthServices.login(
-                  emailOrUsername,
-                  password,
-                );
-                if (response) {
-                  dispatch(setAuthToken(response.token || ''));
-                  dispatch(setUser(response || {}));
-                  navigation.navigate('BottomTabNavigator');
-                } else {
-                  console.log('ERROR WHEN LOGGING IN');
+                try {
+                  const response = await AuthServices.login(
+                    emailOrUsername,
+                    password,
+                  );
+                  if (response) {
+                    dispatch(setAuthToken(response.token || ''));
+                    dispatch(setUser(response || {}));
+                    navigation.navigate('BottomTabNavigator');
+                  }
+                } catch (error: string | any) {
+                  startShake();
+                  setError(error instanceof Error ? error.message : 'random');
                 }
               }}
             />
+            {error && <ErrorComponent text={t(`errors.auth.${error}`)} />}
           </View>
           <View style={styles.bottomContainer}>
             <View style={styles.registerContainer}>
@@ -133,7 +185,7 @@ export default function LoginScreen({navigation}: Props) {
               </Text>
             </View>
           </View>
-        </View>
+        </Animated.View>
       </ImageBackground>
     </View>
   );

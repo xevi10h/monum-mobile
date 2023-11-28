@@ -1,4 +1,16 @@
 {
+  "errors": {
+    "auth": {
+      "random": "Ha ocurrido un error inesperado. Por favor, inténtalo de nuevo más tarde.",
+      "incorrectPassword": "El correo electrónico o nombre de usuario y la contraseña introducidos no coinciden con ninguna cuenta de nuestros registros. Por favor, verifica los datos e inténtalo de nuevo.",
+      "passwordNotStrong": "La contraseña debe tener al menos 8 caracteres, incluir mayúsculas, minúsculas, números y símbolos, y no puede contener palabras comunes o secuencias predecibles.",
+      "userAlreadyExists": "Este correo electrónico ya está registrado en la aplicación. Por favor, utiliza otra dirección o recupera tu contraseña si no recuerdas tus datos de acceso."
+    },
+    "profile": {
+      "incorrectPassword": "La contraseña antigua que has introducido no coincide con tu contraseña actual. Por favor, inténtalo de nuevo.",
+      "passwordNotStrong": "La contraseña debe tener al menos 8 caracteres, incluir mayúsculas, minúsculas, números y símbolos, y no puede contener palabras comunes o secuencias predecibles."
+    }
+  },
   "authScreens": {
     "loginWithGoogle": "Continuar con Google",
     "loginWithCredentials": "Continuar con otro correo",

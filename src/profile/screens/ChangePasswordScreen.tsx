@@ -32,37 +32,14 @@ export default function UpdatePasswordScreen({
 
   const [
     updatePassword,
-    {
-      data: dataUpdatedPassword,
-      loading: loadingUpdatedPassword,
-      error: errorUpdatedPassword,
-    },
+    {data: dataUpdatedPassword, loading: loadingUpdatedPassword, error: error},
   ] = useMutation(UPDATE_PASSWORD);
 
   const isDisabled = () => {
-    return (
-      currentPassword.length < 6 ||
-      newPassword.length < 6 ||
-      confirmNewPassword.length < 6 ||
-      newPassword !== confirmNewPassword
-    );
+    return newPassword !== confirmNewPassword;
   };
 
   if (loadingUpdatedPassword) return <LoadingSpinner />;
-  if (errorUpdatedPassword)
-    return (
-      <ErrorComponent
-        errorMessage={t('profile.errorUpdating')}
-        onRetry={async () =>
-          await updatePassword({
-            variables: {
-              oldPassword: currentPassword,
-              newPassword: newPassword,
-            },
-          })
-        }
-      />
-    );
 
   return (
     <SafeAreaView style={styles.page}>
@@ -79,22 +56,50 @@ export default function UpdatePasswordScreen({
           {t('profile.introChangePassword')}
         </Text>
         <ChangePasswordInput
+          isError={
+            error?.graphQLErrors[0]?.extensions?.code === 'incorrectPassword1'
+          }
           value={currentPassword}
           setValue={setCurrentPassword}
           defaultText={t('profile.currentPassword') || 'Current password'}
         />
         <ChangePasswordInput
+          isError={
+            error?.graphQLErrors[0]?.extensions?.code === 'passwordNotStrong'
+          }
           value={newPassword}
           setValue={setNewPassword}
           defaultText={t('profile.newPassword') || 'New password'}
         />
         <ChangePasswordInput
+          isError={
+            error?.graphQLErrors[0]?.extensions?.code === 'passwordNotStrong'
+          }
           value={confirmNewPassword}
           setValue={setConfirmNewPassword}
           defaultText={
             t('profile.confirmedNewPassword') || 'Confirm new password'
           }
         />
+        {error && (
+          <View
+            style={{
+              width: '100%',
+              alignItems: 'center',
+              justifyContent: 'center',
+              marginTop: 10,
+            }}>
+            <Text
+              style={{
+                color: 'red',
+                fontFamily: 'Montserrat',
+                fontSize: 16,
+                textAlign: 'center',
+              }}>
+              {t(`errors.profile.${error?.graphQLErrors[0]?.extensions?.code}`)}
+            </Text>
+          </View>
+        )}
       </View>
       <View style={{paddingHorizontal: 20}}>
         <SecondaryButton

@@ -1,13 +1,14 @@
 // import axios from 'axios';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {t} from 'i18next';
-import React, {useState} from 'react';
+import React, {useRef, useState} from 'react';
 import {
   View,
   Image,
   TouchableOpacity,
   ImageBackground,
   TextInput,
+  Animated,
 } from 'react-native';
 
 import background_monuments from '../../assets/images/backgrounds/background_monuments.png';
@@ -21,6 +22,7 @@ import AuthServices from '../services/AuthServices';
 import {Text} from 'react-native';
 import {setAuthToken, setUser} from '../../redux/states/user';
 import {useDispatch} from 'react-redux';
+import ErrorComponent from '../components/ErrorComponent';
 
 type RegisterScreenNavigationProp = StackNavigationProp<
   RootStackParamList,
@@ -37,6 +39,7 @@ export default function RegisterScreen({navigation}: Props) {
   const [showPassword, setShowPassword] = useState(false);
   const [confirmedPassword, setConfirmedPassword] = useState('');
   const [showConfirmedPassword, setShowConfirmedPassword] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const togglePasswordVisibility = () => {
     setShowPassword(!showPassword);
@@ -45,12 +48,46 @@ export default function RegisterScreen({navigation}: Props) {
   const toggleConfirmedPasswordVisibility = () => {
     setShowConfirmedPassword(!showConfirmedPassword);
   };
+
+  const shakeAnimation = useRef(new Animated.Value(0)).current;
+
+  const startShake = () => {
+    Animated.sequence([
+      Animated.timing(shakeAnimation, {
+        toValue: 10,
+        duration: 100,
+        useNativeDriver: true,
+      }),
+      Animated.timing(shakeAnimation, {
+        toValue: -10,
+        duration: 100,
+        useNativeDriver: true,
+      }),
+      Animated.timing(shakeAnimation, {
+        toValue: 10,
+        duration: 100,
+        useNativeDriver: true,
+      }),
+      Animated.timing(shakeAnimation, {
+        toValue: 0,
+        duration: 100,
+        useNativeDriver: true,
+      }),
+    ]).start();
+  };
+
   const dispatch = useDispatch();
   return (
     <View style={styles.backgroundContainer}>
       <View style={styles.backgroundColor} />
       <ImageBackground source={background_monuments} style={styles.background}>
-        <View style={styles.container}>
+        <Animated.View
+          style={[
+            styles.container,
+            {
+              transform: [{translateX: shakeAnimation}],
+            },
+          ]}>
           <View style={styles.logoContainer}>
             <Image
               source={logo_white}
@@ -62,7 +99,15 @@ export default function RegisterScreen({navigation}: Props) {
             <TextInput
               placeholder={t('authScreens.email') || 'Email '}
               placeholderTextColor="#FFFFFF"
-              style={styles.inputButton}
+              style={[
+                styles.inputButton,
+                {
+                  borderColor:
+                    error === 'userAlreadyExists'
+                      ? 'rgb(208, 54, 60)'
+                      : 'white',
+                },
+              ]}
               value={email}
               onChangeText={setEmail}
             />
@@ -70,7 +115,15 @@ export default function RegisterScreen({navigation}: Props) {
               <TextInput
                 placeholder={t('authScreens.password') || 'Password'}
                 placeholderTextColor="#FFFFFF"
-                style={[styles.inputButton]}
+                style={[
+                  styles.inputButton,
+                  {
+                    borderColor:
+                      error === 'passwordNotStrong'
+                        ? 'rgb(208, 54, 60)'
+                        : 'white',
+                  },
+                ]}
                 secureTextEntry={!showPassword} // Mostrar o ocultar la contraseña según el estado
                 value={password}
                 onChangeText={setPassword}
@@ -99,7 +152,15 @@ export default function RegisterScreen({navigation}: Props) {
                   t('authScreens.confirmedPassword') || 'Confirm password'
                 }
                 placeholderTextColor="#FFFFFF"
-                style={[styles.inputButton]}
+                style={[
+                  styles.inputButton,
+                  {
+                    borderColor:
+                      error === 'passwordNotStrong'
+                        ? 'rgb(208, 54, 60)'
+                        : 'white',
+                  },
+                ]}
                 secureTextEntry={!showConfirmedPassword} // Mostrar o ocultar la contraseña según el estado
                 value={confirmedPassword}
                 onChangeText={setConfirmedPassword}
@@ -123,18 +184,23 @@ export default function RegisterScreen({navigation}: Props) {
               </TouchableOpacity>
             </View>
             <PrimaryButton
+              disabled={password !== confirmedPassword}
               text={t('authScreens.signup')}
               onPress={async () => {
-                const response = await AuthServices.signup(email, password);
-                if (response) {
-                  dispatch(setAuthToken(response.token || ''));
-                  dispatch(setUser(response || {}));
-                  navigation.navigate('BottomTabNavigator');
-                } else {
-                  console.log('ERROR WHEN REGISTERING');
+                try {
+                  const response = await AuthServices.signup(email, password);
+                  if (response) {
+                    dispatch(setAuthToken(response.token || ''));
+                    dispatch(setUser(response || {}));
+                    navigation.navigate('BottomTabNavigator');
+                  }
+                } catch (error: string | any) {
+                  startShake();
+                  setError(error instanceof Error ? error.message : 'random');
                 }
               }}
             />
+            {error && <ErrorComponent text={t(`errors.auth.${error}`)} />}
           </View>
           <View style={styles.bottomContainer}>
             <View style={styles.companyContainer}>
@@ -143,7 +209,7 @@ export default function RegisterScreen({navigation}: Props) {
               </Text>
             </View>
           </View>
-        </View>
+        </Animated.View>
       </ImageBackground>
     </View>
   );

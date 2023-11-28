@@ -23,7 +23,7 @@ export default function SecondaryButton({
   return (
     <TouchableOpacity
       activeOpacity={0.2}
-      style={[styles.button, style, {opacity: disabled ? 0.48 : 1}]}
+      style={[styles.button, style, {opacity: disabled ? 0.5 : 1}]}
       onPress={onPress}
       disabled={disabled}>
       <Text style={[styles.buttonText]}>{text}</Text>

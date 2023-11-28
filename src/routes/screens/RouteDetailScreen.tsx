@@ -1,14 +1,7 @@
-import {
-  Dimensions,
-  Image,
-  StyleSheet,
-  Text,
-  Touchable,
-  View,
-} from 'react-native';
+import {Dimensions, Image, StyleSheet, Text, View} from 'react-native';
 import {RouteDetailScreenProps} from '../navigator/RoutesNavigator';
 import Mapbox, {Camera, MapView} from '@rnmapbox/maps';
-import React, {useEffect, useLayoutEffect, useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import media_bubble_back from '../../assets/images/icons/media_bubble_back.png';
 import {useQuery} from '@apollo/client';
 import {GET_ROUTE_DETAIL} from '../../graphql/queries/routeQueries';
@@ -17,16 +10,16 @@ import {ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import RatingPill from '../components/RatingPill';
 import TextSearch from '../components/TextSearch';
-import IPlacePill from '../../shared/interfaces/IFullRoute';
 import {IMarker} from '../../shared/interfaces/IMarker';
-import IFullRoute from '../../shared/interfaces/IFullRoute';
 import PlaceFromRoutePill, {
   PlaceFromRoutePillRef,
 } from '../components/placeFromRoutePill/PlaceFromRoutePill';
 import IPlaceFromRoute from '../../shared/interfaces/IPlaceFromRoute';
 import IStop from '../../shared/interfaces/IStop';
-import PlaceMediaPill from '../../map/components/placeDetail/PlaceMediaPill';
-import {use} from 'i18next';
+import CenterCoordinatesButton from '../components/CenterCoordinatesButton';
+import Geolocation from '@react-native-community/geolocation';
+import CurrentPositionMarker from '../../map/components/CurrentPositionMarker';
+import LinearGradient from 'react-native-linear-gradient';
 
 export default function RouteDetailScreen({
   route,
@@ -36,12 +29,14 @@ export default function RouteDetailScreen({
   const camera = useRef<Camera>(null);
   const scrollViewRef = useRef<ScrollView>(null);
   const [key, setKey] = useState(0);
-  const forceRender = () => setKey(prevKey => prevKey + 1);
+  const [centerCamera, setCenterCamera] = useState(false);
 
   const [originalData, setOriginalData] = useState<any | null>(null);
   const [markers, setMarkers] = useState<IMarker[]>([]);
   const [placesFromRoute, setPlacesFromRoute] = useState<IPlaceFromRoute[]>();
-  const [centerCoordinates, setCenterCoordinates] = useState([0, 0]);
+  const [centerCoordinates, setCenterCoordinates] = useState<[number, number]>([
+    0, 0,
+  ]);
   const [markerSelected, setMarkerSelected] = useState<string | null>(null);
   const [textSearch, setTextSearch] = useState<string | undefined>(undefined);
   const {loading, error, data, refetch} = useQuery(GET_ROUTE_DETAIL, {
@@ -162,6 +157,28 @@ export default function RouteDetailScreen({
     scrollMarkers();
   }, [markerSelected]);
 
+  useEffect(() => {
+    Geolocation.getCurrentPosition(
+      position => {
+        const latitude = position.coords.latitude;
+        const longitude = position.coords.longitude;
+        // setCenterCoordinates([longitude, latitude]);
+        setCenterCoordinates([2.15, 41.38]); // Barcelona
+      },
+      error => {
+        console.log('Error obtaining geolocation:', error);
+        setCenterCoordinates([2.15, 41.38]);
+      },
+      {enableHighAccuracy: true, timeout: 15000, maximumAge: 10000},
+    ),
+      camera.current?.setCamera({
+        animationDuration: 1000,
+        zoomLevel: 15,
+        centerCoordinate: centerCoordinates,
+      });
+    setCenterCamera(false);
+  }, [centerCamera]);
+
   const pillRefs = useRef<Map<string, React.RefObject<PlaceFromRoutePillRef>>>(
     new Map(),
   ).current;
@@ -173,10 +190,9 @@ export default function RouteDetailScreen({
           height: Dimensions.get('window').height * 0.4,
           width: Dimensions.get('window').width,
           shadowColor: '#000',
-          shadowOffset: {width: 0, height: 4},
-          shadowOpacity: 0.25,
+          shadowOffset: {width: 0, height: 2},
+          shadowOpacity: 0.5,
           shadowRadius: 4,
-          elevation: 5,
         }}>
         <Mapbox.MapView
           ref={mapRef}
@@ -193,6 +209,9 @@ export default function RouteDetailScreen({
               setMarkerSelected={setMarkerSelected}
             />
           ))}
+          {centerCoordinates && (
+            <CurrentPositionMarker centerCoordinates={centerCoordinates} />
+          )}
           <Camera
             centerCoordinate={centerCoordinates}
             ref={camera}
@@ -200,72 +219,85 @@ export default function RouteDetailScreen({
             animationDuration={0}
           />
         </Mapbox.MapView>
+        <CenterCoordinatesButton setCenterCamera={setCenterCamera} />
       </View>
-      <View style={styles.contentContainer}>
-        <View
-          style={{
-            flexDirection: 'row',
-            paddingTop: 10,
-            alignItems: 'center',
-            justifyContent: 'space-between',
-            width: '100%',
-          }}>
+      <View style={{flex: 1, backgroundColor: 'white'}}>
+        <View style={styles.contentContainer}>
           <View
             style={{
               flexDirection: 'row',
+              paddingTop: 10,
               alignItems: 'center',
-              justifyContent: 'center',
+              justifyContent: 'space-between',
+              width: '100%',
             }}>
-            <TouchableOpacity
-              style={{padding: 10}}
-              onPress={() => navigation.goBack()}>
-              <Image
-                source={media_bubble_back}
-                style={{height: 14, width: 8}}
-              />
-            </TouchableOpacity>
-            <Text
+            <View
               style={{
-                color: '#032000',
-                fontFamily: 'Montserrat',
-                fontSize: 18,
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'center',
               }}>
-              {route.params.route.title}
-            </Text>
+              <TouchableOpacity
+                style={{padding: 10}}
+                onPress={() => navigation.goBack()}>
+                <Image
+                  source={media_bubble_back}
+                  style={{height: 14, width: 8}}
+                />
+              </TouchableOpacity>
+              <Text
+                style={{
+                  color: '#032000',
+                  fontFamily: 'Montserrat',
+                  fontSize: 18,
+                }}>
+                {route.params.route.title}
+              </Text>
+            </View>
+            <RatingPill number={route.params.route.rating || 0} />
           </View>
-          <RatingPill number={route.params.route.rating || 0} />
+          <TextSearch setTextSearch={setTextSearch} textSearch={textSearch} />
         </View>
-        <TextSearch setTextSearch={setTextSearch} textSearch={textSearch} />
-      </View>
-      <View style={{flex: 1}}>
-        <ScrollView
-          key={key}
+        <View style={{flex: 1}}>
+          <ScrollView
+            key={key}
+            style={{
+              borderRadius: 12,
+              paddingTop: 15,
+              width: '100%',
+              marginBottom: useSafeAreaInsets().bottom + 40,
+              marginTop: 10,
+              paddingHorizontal: 12,
+            }}
+            showsVerticalScrollIndicator={false}
+            horizontal={false}
+            ref={scrollViewRef}>
+            {placesFromRoute?.map((placeFromRoute, index) => (
+              <PlaceFromRoutePill
+                ref={pillRefs.get(placeFromRoute.place.id)}
+                key={placeFromRoute.place.id}
+                style={
+                  index === 0
+                    ? {marginTop: -10}
+                    : index === placesFromRoute.length - 1
+                    ? {paddingBottom: 40}
+                    : {}
+                }
+                {...placeFromRoute}
+              />
+            ))}
+          </ScrollView>
+        </View>
+        <LinearGradient
+          start={{x: 0, y: 0}}
+          end={{x: 0, y: 0.02}}
+          colors={['rgba(0,0,0,0.2)', 'transparent']}
           style={{
-            borderRadius: 12,
-            paddingTop: 15,
+            position: 'absolute',
             width: '100%',
-            marginBottom: useSafeAreaInsets().bottom + 40,
-            marginTop: 10,
-            paddingHorizontal: 12,
+            height: '100%',
           }}
-          showsVerticalScrollIndicator={false}
-          horizontal={false}
-          ref={scrollViewRef}>
-          {placesFromRoute?.map((placeFromRoute, index) => (
-            <PlaceFromRoutePill
-              ref={pillRefs.get(placeFromRoute.place.id)}
-              key={placeFromRoute.place.id}
-              style={
-                index === 0
-                  ? {marginTop: -10}
-                  : index === placesFromRoute.length - 1
-                  ? {paddingBottom: 40}
-                  : {}
-              }
-              {...placeFromRoute}
-            />
-          ))}
-        </ScrollView>
+        />
       </View>
     </View>
   );
@@ -276,7 +308,7 @@ const styles = StyleSheet.create({
     height: Dimensions.get('screen').height,
     width: Dimensions.get('screen').width,
   },
-  mapView: {flex: 1, color: 'white', intensity: 0.4},
+  mapView: {color: 'white', intensity: 0.4, flex: 1},
   contentContainer: {
     paddingHorizontal: 15,
     alignItems: 'center',

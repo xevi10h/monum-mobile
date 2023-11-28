@@ -23,6 +23,7 @@ import MapServices from '../services/MapServices';
 import IPlace from '../../shared/interfaces/IPlace';
 import {IMarker} from 'src/shared/interfaces/IMarker';
 import TextSearchMap from '../components/TextSearchMap';
+import CurrentPositionMarker from '../components/CurrentPositionMarker';
 
 Mapbox.setAccessToken(
   'pk.eyJ1IjoieHBsb3JlYXIiLCJhIjoiY2xqMmU0Z3NyMGFxeTNwbzByNW90dmdxcSJ9.cMT52Rc64Z05YUGPIutXFw',
@@ -143,39 +144,7 @@ export default function MapScreen({
               />
             ))}
             {centerCoordinates && (
-              <MarkerView
-                id={'center'}
-                key={'center'}
-                coordinate={centerCoordinates}>
-                <View
-                  style={{
-                    backgroundColor: 'rgba(114,154,255,0.2)',
-                    width: 30,
-                    height: 30,
-                    borderRadius: 15,
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                  }}>
-                  <View
-                    style={{
-                      backgroundColor: 'white',
-                      width: 16,
-                      height: 16,
-                      borderRadius: 9,
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                    }}>
-                    <View
-                      style={{
-                        backgroundColor: '#2F69FF',
-                        width: 13,
-                        height: 13,
-                        borderRadius: 7.5,
-                      }}
-                    />
-                  </View>
-                </View>
-              </MarkerView>
+              <CurrentPositionMarker centerCoordinates={centerCoordinates} />
             )}
             <Camera
               centerCoordinate={centerCoordinates}

@@ -14,12 +14,12 @@ export default function TextSearch({
 }: TextSearchProps) {
   return (
     <View style={styles.container}>
-      <LinearGradient
+      {/* <LinearGradient
         start={{x: 0, y: 0}}
         end={{x: 0, y: 0.3}}
         colors={['#3C6AF62E', '#3F713B14']}
         style={styles.linearGradient}
-      />
+      /> */}
       <Image source={routes_text_search} style={styles.image} />
       <TextInput
         placeholder={t('routes.search') || 'Search'}
@@ -34,7 +34,7 @@ export default function TextSearch({
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#3F713B14',
+    backgroundColor: '#D6E5D6',
     borderRadius: 12,
     alignItems: 'center',
     flexDirection: 'row',
@@ -43,6 +43,10 @@ const styles = StyleSheet.create({
     width: '100%',
     zIndex: 999,
     marginTop: 10,
+    shadowColor: '#000',
+    shadowOffset: {width: 0, height: 2},
+    shadowOpacity: 0.2,
+    shadowRadius: 4,
   },
   linearGradient: {
     position: 'absolute',
