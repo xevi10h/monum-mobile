@@ -3,7 +3,10 @@ import {setContext} from '@apollo/client/link/context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {store} from '../redux/store';
 
-const BASE_URL = 'http://127.0.0.1:4000';
+const BASE_URL =
+  process.env.ENVIRONMENT === 'DEV'
+    ? 'http://127.0.0.1:4000'
+    : 'https://api.monum.es';
 
 const httpLink = createHttpLink({
   uri: BASE_URL,
