@@ -2,11 +2,9 @@ import {ApolloClient, InMemoryCache, createHttpLink} from '@apollo/client';
 import {setContext} from '@apollo/client/link/context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {store} from '../redux/store';
+import Config from 'react-native-config';
 
-const BASE_URL =
-  process.env.ENVIRONMENT === 'DEV'
-    ? 'http://127.0.0.1:4000'
-    : 'https://api.monum.es';
+const BASE_URL = Config.API_URL;
 
 const httpLink = createHttpLink({
   uri: BASE_URL,

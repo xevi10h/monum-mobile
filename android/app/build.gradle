@@ -76,13 +76,13 @@ android {
 
     namespace "com.monum"
     defaultConfig {
-        applicationId "com.monum"
+        applicationId "com.xplorearapp"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
         versionCode 1
         versionName "1.0"
         vectorDrawables.useSupportLibrary = true
-        targetSdkVersion 27
+        targetSdkVersion 31
     }
     signingConfigs {
         debug {

@@ -6,6 +6,7 @@ import {
   LOGIN_USER,
   REGISTER_USER,
 } from '../../graphql/queries/userQueries';
+import Config from 'react-native-config';
 
 interface LoginGoogle {
   email: string;
@@ -50,6 +51,8 @@ class AuthService {
     password: string,
   ): Promise<IUser | null> {
     try {
+      const BASE_URL = Config.API_URL;
+      console.log('BASE_URL', BASE_URL);
       const response = await client.mutate({
         mutation: LOGIN_USER,
         variables: {loginInput: {emailOrUsername, password}},
@@ -57,7 +60,10 @@ class AuthService {
       const user = response.data?.loginUser;
       return user;
     } catch (error: any) {
-      console.log('Error al realizar el inicio de sesión:', error);
+      console.log(
+        'Error al realizar el inicio de sesión:',
+        JSON.stringify(error),
+      );
       throw new Error(error?.graphQLErrors[0]?.extensions?.code || 'RANDOM');
     }
   }
