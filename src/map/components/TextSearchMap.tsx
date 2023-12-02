@@ -3,18 +3,14 @@ import {
   Image,
   TextInput,
   StyleSheet,
-  ViewStyle,
   Text,
   ScrollView,
 } from 'react-native';
 import routes_text_search from '../../assets/images/icons/routes_text_search.png';
 import {t} from 'i18next';
-import LinearGradient from 'react-native-linear-gradient';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 import {useEffect, useState} from 'react';
 import MapServices from '../services/MapServices';
-import {Animated} from 'react-native';
-import {Touchable} from 'react-native';
 import {TouchableOpacity} from 'react-native';
 
 interface TextSearchMapProps {

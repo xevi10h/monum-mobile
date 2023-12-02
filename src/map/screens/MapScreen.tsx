@@ -116,62 +116,62 @@ export default function MapScreen({
   }, [centerCamera]);
 
   return (
-    <TouchableWithoutFeedback
-      onPress={() => {
-        Keyboard.dismiss();
-        toggleDropdown(false);
-      }}
-      accessible={false}>
-      <View style={styles.mapContainer}>
-        <View
-          style={{
-            height: Dimensions.get('window').height,
-            width: Dimensions.get('window').width,
-          }}>
-          <Mapbox.MapView
-            ref={mapRef}
-            styleURL="mapbox://styles/mapbox/light-v11"
-            scaleBarEnabled={false}
-            style={styles.mapView}>
-            {markers.map(marker => (
-              <MarkerComponent
-                key={marker.id}
-                id={marker.id}
-                importance={marker.importance}
-                coordinates={marker.coordinates}
-                selected={markerSelected === marker.id ? true : false}
-                setMarkerSelected={setMarkerSelected}
-              />
-            ))}
-            {centerCoordinates && (
-              <CurrentPositionMarker centerCoordinates={centerCoordinates} />
-            )}
-            <Camera
-              centerCoordinate={centerCoordinates}
-              zoomLevel={10}
-              ref={camera}
-              minZoomLevel={10}
+    // <TouchableWithoutFeedback
+    //   onPress={() => {
+    //     Keyboard.dismiss();
+    //     toggleDropdown(false);
+    //   }}
+    //   accessible={false}>
+    <View style={styles.mapContainer}>
+      <View
+        style={{
+          height: Dimensions.get('window').height,
+          width: Dimensions.get('window').width,
+        }}>
+        <Mapbox.MapView
+          ref={mapRef}
+          styleURL="mapbox://styles/mapbox/light-v11"
+          scaleBarEnabled={false}
+          style={styles.mapView}>
+          {markers.map(marker => (
+            <MarkerComponent
+              key={marker.id}
+              id={marker.id}
+              importance={marker.importance}
+              coordinates={marker.coordinates}
+              selected={markerSelected === marker.id ? true : false}
+              setMarkerSelected={setMarkerSelected}
             />
-          </Mapbox.MapView>
-          {/* <FilterComponent filters={filters} setFilters={setFilters} /> */}
-          <CenterCoordinatesButton setCenterCamera={setCenterCamera} />
-          <TextSearchMap
-            textSearch={textSearch}
-            setTextSearch={setTextSearch}
-            onSubmitEditing={() => setOnSubmitEditing(true)}
-            isDropdownVisible={isDropdownVisible}
-            toggleDropdown={toggleDropdown}
+          ))}
+          {centerCoordinates && (
+            <CurrentPositionMarker centerCoordinates={centerCoordinates} />
+          )}
+          <Camera
+            centerCoordinate={centerCoordinates}
+            zoomLevel={10}
+            ref={camera}
+            minZoomLevel={10}
           />
-          <MapPlaceDetail
-            placeId={markerSelected}
-            setMarkerSelected={setMarkerSelected}
-            setTabBarVisible={setTabBarVisible}
-            setPlace={setPlace}
-            place={place}
-          />
-        </View>
+        </Mapbox.MapView>
+        {/* <FilterComponent filters={filters} setFilters={setFilters} /> */}
+        <CenterCoordinatesButton setCenterCamera={setCenterCamera} />
+        <TextSearchMap
+          textSearch={textSearch}
+          setTextSearch={setTextSearch}
+          onSubmitEditing={() => setOnSubmitEditing(true)}
+          isDropdownVisible={isDropdownVisible}
+          toggleDropdown={toggleDropdown}
+        />
+        <MapPlaceDetail
+          placeId={markerSelected}
+          setMarkerSelected={setMarkerSelected}
+          setTabBarVisible={setTabBarVisible}
+          setPlace={setPlace}
+          place={place}
+        />
       </View>
-    </TouchableWithoutFeedback>
+    </View>
+    // </TouchableWithoutFeedback>
   );
 }
 
