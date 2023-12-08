@@ -1,50 +1,161 @@
 {
   "project_info": {
-    "project_number": "944908105248",
-    "project_id": "xplorearapp",
-    "storage_bucket": "xplorearapp.appspot.com"
+    "project_number": "1331268974",
+    "project_id": "monum-c8338",
+    "storage_bucket": "monum-c8338.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:944908105248:android:fc49c23a86cca8fe51ae45",
+        "mobilesdk_app_id": "1:1331268974:android:f535a4c16542224ce0057f",
         "android_client_info": {
-          "package_name": "com.xplorearapp"
+          "package_name": "com.monum.development"
         }
       },
       "oauth_client": [
         {
-          "client_id": "944908105248-0ucrar06hrnd6dlhqdiqcqdh9htjhd1d.apps.googleusercontent.com",
+          "client_id": "1331268974-69noa74m4ti4gotl04ak97n7vhsspp8d.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.xplorearapp",
-            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
-          }
-        },
-        {
-          "client_id": "944908105248-j5b7se1kunv93825bv3al673gdf3hrq1.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.xplorearapp",
+            "package_name": "com.monum.development",
             "certificate_hash": "c5eef77511ee99209bb659f2098f4d5b01e7d2b3"
           }
         },
         {
-          "client_id": "944908105248-u4k7dp5du3a3ahcg1u6a284u0mri26av.apps.googleusercontent.com",
+          "client_id": "1331268974-of9s65c1fh31p0b3mrl0i9cecc56ag5n.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.monum.development",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "1331268974-3pgaajm8anuaikjkfmkjkkg49d9uplen.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyD0i-A0UmE31r_SRMr3xiKYO6l7OdfH2ks"
+          "current_key": "AIzaSyAikK96SyB9oG9-1MINDStVMmEFmzcg3QQ"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "944908105248-u4k7dp5du3a3ahcg1u6a284u0mri26av.apps.googleusercontent.com",
+              "client_id": "1331268974-3pgaajm8anuaikjkfmkjkkg49d9uplen.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "1331268974-1dkck5r1et59nvl9acrngv5lnin14vdm.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.monum.staging"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1331268974:android:f6e4e2be8ece1ae4e0057f",
+        "android_client_info": {
+          "package_name": "com.monum.production"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1331268974-e7k4u2d49cjriaus1mqlub66riot4ck4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.monum.production",
+            "certificate_hash": "c5eef77511ee99209bb659f2098f4d5b01e7d2b3"
+          }
+        },
+        {
+          "client_id": "1331268974-j7d9f97m6cbaftmaokcl8meuucidokme.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.monum.production",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "1331268974-3pgaajm8anuaikjkfmkjkkg49d9uplen.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAikK96SyB9oG9-1MINDStVMmEFmzcg3QQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1331268974-3pgaajm8anuaikjkfmkjkkg49d9uplen.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1331268974-1dkck5r1et59nvl9acrngv5lnin14vdm.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.monum.staging"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1331268974:android:0060911dae78afaae0057f",
+        "android_client_info": {
+          "package_name": "com.monum.stag"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1331268974-9i3g7l9mbuh7d9qr46gftot9cotjas89.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.monum.stag",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "1331268974-l5rbdiqprnklp1ajbglqv139undi9ak7.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.monum.stag",
+            "certificate_hash": "c5eef77511ee99209bb659f2098f4d5b01e7d2b3"
+          }
+        },
+        {
+          "client_id": "1331268974-3pgaajm8anuaikjkfmkjkkg49d9uplen.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAikK96SyB9oG9-1MINDStVMmEFmzcg3QQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1331268974-3pgaajm8anuaikjkfmkjkkg49d9uplen.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "1331268974-1dkck5r1et59nvl9acrngv5lnin14vdm.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.monum.staging"
+              }
             }
           ]
         }
