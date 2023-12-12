@@ -2,7 +2,7 @@ import 'react-native-gesture-handler';
 import React, {useEffect} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {store} from './src/redux/store';
-import AuthNavigator from './src/auth/navigator/AuthNavigator';
+import MainNavigator from './src/MainNavigator';
 import GoogleAuthService from './src/auth/services/GoogleAuthService';
 import {Provider} from 'react-redux';
 import {ApolloProvider} from '@apollo/client';
@@ -17,7 +17,7 @@ function App() {
     <Provider store={store}>
       <ApolloProvider client={client}>
         <View style={styles.container}>
-          <AuthNavigator />
+          <MainNavigator />
         </View>
       </ApolloProvider>
     </Provider>

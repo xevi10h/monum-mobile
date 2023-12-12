@@ -192,7 +192,6 @@ export default function RegisterScreen({navigation}: Props) {
                   if (response) {
                     dispatch(setAuthToken(response.token || ''));
                     dispatch(setUser(response || {}));
-                    navigation.navigate('BottomTabNavigator');
                   }
                 } catch (error: string | any) {
                   startShake();

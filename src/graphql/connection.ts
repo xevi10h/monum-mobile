@@ -4,7 +4,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {store} from '../redux/store';
 import Config from 'react-native-config';
 
-const BASE_URL = Config.API_URL || 'http://localhost:4000/';
+const BASE_URL = 'http://localhost:4000/';
 
 const httpLink = createHttpLink({
   uri: BASE_URL,

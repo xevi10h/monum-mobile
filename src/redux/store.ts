@@ -1,20 +1,16 @@
 import {Action, configureStore} from '@reduxjs/toolkit';
 import thunk, {ThunkAction} from 'redux-thunk';
 import userSlice from './states/user';
-import mediasSlice from './states/medias';
 import IUser from '../shared/interfaces/IUser';
-import IMedias from '../shared/interfaces/IMedias';
 import managerSlice, {IManager} from './states/manager';
 
 export interface AppStore {
   user: IUser;
-  medias: IMedias;
   manager: IManager;
 }
 export const store = configureStore<AppStore>({
   reducer: {
     user: userSlice,
-    medias: mediasSlice,
     manager: managerSlice,
   },
   middleware: [thunk],

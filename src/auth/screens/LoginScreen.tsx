@@ -43,7 +43,6 @@ export default function LoginScreen({navigation}: Props) {
                 if (response) {
                   dispatch(setAuthToken(response.token || ''));
                   dispatch(setUser(response || {}));
-                  navigation.navigate('BottomTabNavigator');
                 } else {
                   console.log('ERROR WHEN LOGGING IN WITH GOOGLE');
                 }
