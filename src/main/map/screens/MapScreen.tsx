@@ -7,14 +7,7 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import {
-  Dimensions,
-  Image,
-  Keyboard,
-  StyleSheet,
-  TouchableWithoutFeedback,
-  View,
-} from 'react-native';
+import {Dimensions, StyleSheet, View} from 'react-native';
 
 import CenterCoordinatesButton from '../components/CenterCoordinatesButton';
 import {MarkerComponent} from '../components/Marker';
@@ -24,7 +17,6 @@ import IPlace from '../../../shared/interfaces/IPlace';
 import {IMarker} from 'src/shared/interfaces/IMarker';
 import TextSearchMap from '../components/TextSearchMap';
 import CurrentPositionMarker from '../components/CurrentPositionMarker';
-
 Mapbox.setAccessToken(
   'pk.eyJ1IjoieHBsb3JlYXIiLCJhIjoiY2xqMmU0Z3NyMGFxeTNwbzByNW90dmdxcSJ9.cMT52Rc64Z05YUGPIutXFw',
 );
@@ -53,9 +45,9 @@ export default function MapScreen({
   mapRef,
 }: MapScreenProps) {
   const [centerCamera, setCenterCamera] = useState(false);
-  const [centerCoordinates, setCenterCoordinates] = useState<[number, number]>([
-    2.15, 41.38,
-  ]);
+  const [centerCoordinates, setCenterCoordinates] = useState<
+    [number, number] | undefined
+  >(undefined);
   const [markers, setMarkers] = useState<IMarker[]>([]);
   const [textSearch, setTextSearch] = useState<string | undefined>('');
   const [onSubmitEditing, setOnSubmitEditing] = useState(true);
@@ -69,7 +61,9 @@ export default function MapScreen({
     const fetchMarkers = async () => {
       const markersData = await MapServices.getMarkers(
         textSearch,
-        centerCoordinates,
+        centerCoordinates || [2.15, 41.38],
+        'importance',
+        'asc',
       );
       setMarkers(
         markersData.map(marker => ({
@@ -77,7 +71,7 @@ export default function MapScreen({
           coordinates: [
             marker.address.coordinates.lng,
             marker.address.coordinates.lat,
-          ],
+          ] as [number, number],
           importance: marker.importance,
           setMarkerSelected,
           markerSelected,

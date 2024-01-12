@@ -10,7 +10,9 @@ interface ListRoutePillProps {
 
 export default function ListRoutePill({route, onPress}: ListRoutePillProps) {
   return (
-    <TouchableOpacity onPress={onPress}>
+    <TouchableOpacity
+      onPress={onPress}
+      style={{elevation: 5, paddingHorizontal: 12}}>
       <View style={styles.placeMediaPillContainer}>
         <View style={styles.placeMediaPill}>
           <Text style={styles.placeMediaPillTitle}>{route.title}</Text>
@@ -41,6 +43,7 @@ const styles = StyleSheet.create({
     height: 50,
     borderRadius: 12,
     backgroundColor: 'white',
+    elevation: 5,
     marginVertical: 10,
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -50,11 +53,11 @@ const styles = StyleSheet.create({
   placeMediaPillTitle: {
     fontSize: 14,
     color: '#032000',
-    fontFamily: 'Montserrat',
+    fontFamily: 'Montserrat-Regular',
   },
   placeMediaPillDuration: {
     fontSize: 10,
     color: '#032000',
-    fontFamily: 'Montserrat',
+    fontFamily: 'Montserrat-Regular',
   },
 });

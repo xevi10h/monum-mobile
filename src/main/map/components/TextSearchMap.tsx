@@ -13,6 +13,7 @@ import {useEffect, useState} from 'react';
 import MapServices from '../services/MapServices';
 import {TouchableOpacity} from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
+import {Platform} from 'react-native';
 
 interface TextSearchMapProps {
   textSearch: string | undefined;
@@ -48,9 +49,9 @@ export default function TextSearchMap({
   return (
     <View
       style={{
-        width: '90%',
-        top: useSafeAreaInsets().top,
-        marginTop: 10,
+        width: '100%',
+        top: 60,
+        paddingHorizontal: 15,
         position: 'absolute',
         alignSelf: 'center',
       }}>
@@ -61,7 +62,12 @@ export default function TextSearchMap({
           colors={['#3C6AF62E', '#3F713B14']}
           style={styles.linearGradient}
         />
-        <Image source={routes_text_search} style={styles.image} />
+        <Image
+          source={routes_text_search}
+          style={
+            Platform.OS === 'android' ? styles.imageAndroid : styles.imageIOS
+          }
+        />
         <TextInput
           placeholder={t('routes.search') || 'Search'}
           placeholderTextColor="#3F713B"
@@ -80,7 +86,7 @@ export default function TextSearchMap({
           shadowOpacity: 0.2,
           shadowRadius: 4,
           elevation: 10,
-          zIndex: 1,
+          zIndex: -1,
         }}>
         <ScrollView
           style={{
@@ -109,7 +115,7 @@ export default function TextSearchMap({
                 }}>
                 <Text
                   style={{
-                    fontFamily: 'Montserrat',
+                    fontFamily: 'Montserrat-Regular',
                     fontSize: 14,
                     paddingHorizontal: 30,
                     paddingVertical: 10,
@@ -129,11 +135,11 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: '#F4FFF4',
     borderRadius: 12,
-    alignItems: 'center',
-    flexDirection: 'row',
-    paddingHorizontal: 10,
+    justifyContent: Platform.OS === 'android' ? 'center' : undefined,
+    alignItems: Platform.OS === 'android' ? undefined : 'center',
+    flexDirection: Platform.OS === 'android' ? undefined : 'row',
+    paddingHorizontal: 15,
     height: 42,
-    zIndex: 2,
     opacity: 1,
     shadowColor: '#000',
     shadowOffset: {width: 0, height: 2},
@@ -148,13 +154,21 @@ const styles = StyleSheet.create({
     right: 0,
     borderRadius: 12,
   },
-  image: {width: 22, height: 22, marginRight: 10},
+  imageIOS: {width: 22, height: 22, marginRight: 10},
+  imageAndroid: {
+    width: 22,
+    height: 22,
+    marginRight: 10,
+    position: 'absolute',
+    left: 15,
+  },
   textInput: {
     color: '#3F713B',
     paddingRight: 50,
     alignItems: 'center',
     justifyContent: 'center',
     fontSize: 16,
-    fontFamily: 'Montserrat',
+    fontFamily: 'Montserrat-Regular',
+    marginLeft: Platform.OS === 'android' ? 30 : undefined,
   },
 });

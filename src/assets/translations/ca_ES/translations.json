@@ -53,5 +53,10 @@
     "stops": "aturades",
     "audio": "audio",
     "audios": "audios"
+  },
+  "actionSheets": {
+    "directionSheet": {
+      "title": "Obrir amb"
+    }
   }
 }

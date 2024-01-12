@@ -1,4 +1,4 @@
-import {StyleSheet, Text, View} from 'react-native';
+import {Platform, StyleSheet, Text, View} from 'react-native';
 import {TextInput} from 'react-native-gesture-handler';
 
 interface NameInputProps {
@@ -43,7 +43,7 @@ const styles = StyleSheet.create({
   labelText: {
     fontSize: 16,
     color: '#3F713B',
-    fontFamily: 'Montserrat',
+    fontFamily: 'Montserrat-Regular',
   },
   inputContainer: {alignItems: 'center', width: '100%'},
   inputText: {
@@ -58,7 +58,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     fontSize: 16,
-    fontFamily: 'Montserrat',
+    fontFamily:
+      Platform.OS === 'android' ? 'Montserrat-SemiBold' : 'Montserrat',
     fontWeight: '600',
   },
 });

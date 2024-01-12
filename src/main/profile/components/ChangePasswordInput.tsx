@@ -78,7 +78,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     fontSize: 16,
-    fontFamily: 'Montserrat',
+    fontFamily: 'Montserrat-Regular',
   },
   hidePasswordButton: {
     position: 'absolute',

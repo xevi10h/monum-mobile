@@ -322,7 +322,6 @@ const styles = StyleSheet.create({
     height: 50,
   },
   mediaTitle: {
-    fontWeight: '600',
     fontSize: 16,
     color: '#032000',
     fontFamily: 'Montserrat-SemiBold',
@@ -330,7 +329,7 @@ const styles = StyleSheet.create({
   placeName: {
     fontSize: 14,
     color: '#032000',
-    fontFamily: 'Montserrat',
+    fontFamily: 'Montserrat-Regular',
   },
   mediaPlayerContainer: {
     marginVertical: 15,
@@ -359,7 +358,7 @@ const styles = StyleSheet.create({
   durationMediaText: {
     fontSize: 12,
     color: '#032000',
-    fontFamily: 'Montserrat',
+    fontFamily: 'Montserrat-Regular',
   },
   placeMediaIntroContainer: {
     paddingVertical: 10,
@@ -372,7 +371,6 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   placeMediaIntroText: {
-    fontWeight: '600',
     color: '#3F713B',
     fontSize: 12,
     fontFamily: 'Montserrat-SemiBold',
@@ -382,6 +380,6 @@ const styles = StyleSheet.create({
     textAlign: 'justify',
     paddingTop: 20,
     fontSize: 12,
-    fontFamily: 'Montserrat',
+    fontFamily: 'Montserrat-Regular',
   },
 });

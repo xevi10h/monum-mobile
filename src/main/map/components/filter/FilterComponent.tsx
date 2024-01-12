@@ -1,34 +1,14 @@
 import React, {Dispatch, SetStateAction, useRef, useState} from 'react';
 import {NativeScrollEvent, ScrollView, StyleSheet} from 'react-native';
 import {SafeAreaView} from 'react-native-safe-area-context';
-import IFilter from 'src/map/domain/IFilter';
 
 import FilterArrow from './FilterArrow';
 import FilterPill from './FilterPill';
 
-interface FilterComponent {
-  filters: IFilter[];
-  setFilters: Dispatch<SetStateAction<IFilter[]>>;
-}
-
-export default function FilterComponent({
-  filters,
-  setFilters,
-}: FilterComponent) {
+export default function FilterComponent() {
   const scrollRef = useRef<ScrollView>(null);
   const [showRightArrow, setShowRightArrow] = useState(true);
   const [showLeftArrow, setShowLeftArrow] = useState(false);
-
-  const handlePillPress = (pillId: string) => {
-    // Cambiar el estado de la pastilla y realizar la llamada al backend
-    setFilters((filters: IFilter[]) =>
-      filters.map(filter =>
-        filter.id === pillId ? {...filter, active: !filter.active} : filter,
-      ),
-    );
-    // Realizar la llamada al backend y cambiar los filtros del mapa
-    // ...
-  };
 
   const handleScroll = ({
     contentOffset,
@@ -67,14 +47,14 @@ export default function FilterComponent({
         showsHorizontalScrollIndicator={false}
         scrollEventThrottle={16}
         onScroll={event => handleScroll(event.nativeEvent)}>
-        {filters.map(filter => (
+        {/* {filters.map(filter => (
           <FilterPill
             key={filter.id}
             label={filter.label}
             active={filter.active}
             onPress={() => handlePillPress(filter.id)}
           />
-        ))}
+        ))} */}
       </ScrollView>
       {showRightArrow && (
         <FilterArrow direction="left" onPress={handlePressRight} />

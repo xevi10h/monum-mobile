@@ -7,6 +7,7 @@ import {
   REGISTER_USER,
 } from '../../graphql/queries/userQueries';
 import Config from 'react-native-config';
+import {ApolloClient} from '@apollo/client';
 
 interface LoginGoogle {
   email: string;
@@ -36,7 +37,7 @@ class AuthService {
     try {
       const response = await client.mutate({
         mutation: REGISTER_USER,
-        variables: {registerInput: {email, password, language: 'en-US'}},
+        variables: {registerInput: {email, password}},
       });
       const user = response.data?.registerUser;
       return user;

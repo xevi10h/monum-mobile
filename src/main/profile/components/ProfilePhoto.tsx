@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
     fontSize: 55,
     alignSelf: 'center',
     color: '#3F713B',
-    fontFamily: 'Montserrat',
+    fontFamily: 'Montserrat-Regular',
     fontWeight: '400',
   },
   addButtonContainer: {

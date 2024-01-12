@@ -1,4 +1,4 @@
-import {Text} from 'react-native';
+import {Platform, Text} from 'react-native';
 import {View} from 'react-native';
 
 interface ErrorComponentProps {
@@ -17,7 +17,8 @@ export default function ErrorComponent({text}: ErrorComponentProps) {
       <Text
         style={{
           color: '#FFF172',
-          fontFamily: 'Montserrat',
+          fontFamily:
+            Platform.OS === 'android' ? 'Montserrat-Regular' : 'Montserrat',
           fontSize: 16,
           textAlign: 'center',
         }}>

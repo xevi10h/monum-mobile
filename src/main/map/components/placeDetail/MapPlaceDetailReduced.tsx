@@ -44,10 +44,7 @@ export default function MapPlaceDetailReduced({
           <View style={styles.arrowContainer}>
             <Image
               source={place_pre_detail_arrow_top}
-              style={[
-                styles.arrowIcon,
-                //   {transform: [{rotate: arrowDown ? '180deg' : '0deg'}]},
-              ]}
+              style={[styles.arrowIcon]}
               resizeMode="cover"
             />
           </View>
@@ -128,7 +125,6 @@ const styles = StyleSheet.create({
     height: '100%',
   },
   textPlaceName: {
-    fontWeight: '600',
     fontSize: 14,
     color: '#032000',
     fontFamily: 'Montserrat-SemiBold',
@@ -136,7 +132,7 @@ const styles = StyleSheet.create({
   textPlaceAddress: {
     fontSize: 14,
     color: '#032000',
-    fontFamily: 'Montserrat',
+    fontFamily: 'Montserrat-Regular',
   },
   importanceIconContainer: {flex: 1, marginHorizontal: '6%'},
   importanceIconImage: {width: 40, height: 40},

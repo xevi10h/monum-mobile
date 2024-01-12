@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
-import {SafeAreaView, ScrollView, StyleSheet, View} from 'react-native';
+import {ScrollView, StyleSheet, View} from 'react-native';
+import {SafeAreaView} from 'react-native-safe-area-context';
 import {useQuery} from '@apollo/client';
 import TextSearch from '../components/TextSearch';
 import {t} from 'i18next';
@@ -42,12 +43,12 @@ export default function ListCitiesScreen({navigation}: Props) {
   }, [textSearch, refetch]);
 
   return (
-    <SafeAreaView style={styles.page}>
+    <View style={styles.page}>
       <View style={styles.contentContainer}>
         <TextSearch
           setTextSearch={setTextSearch}
           textSearch={textSearch}
-          style={{paddingHorizontal: 15}}
+          style={{paddingHorizontal: 15, marginTop: 60}}
         />
         {loading ? (
           <LoadingSpinner />
@@ -57,27 +58,28 @@ export default function ListCitiesScreen({navigation}: Props) {
             onRetry={() => refetch()}
           />
         ) : (
-          <ScrollView
-            scrollEventThrottle={16}
-            style={{
-              width: '100%',
-              marginBottom: useSafeAreaInsets().bottom + 30,
-              marginTop: 15,
-              paddingHorizontal: 15,
-            }}
-            showsVerticalScrollIndicator={false}>
-            {cities.map((city, i) => (
-              <ListCityPill
-                key={i}
-                onPress={() => navigation.navigate('ListRoutes', {city})}
-                cityName={city.translations[user.language] || ''}
-                imageUrl={city.imageUrl}
-              />
-            ))}
-          </ScrollView>
+          <View style={{flex: 1, width: '100%'}}>
+            <ScrollView
+              scrollEventThrottle={16}
+              style={{
+                width: '100%',
+                marginBottom: useSafeAreaInsets().bottom + 30,
+                marginTop: 15,
+              }}
+              showsVerticalScrollIndicator={false}>
+              {cities.map((city, i) => (
+                <ListCityPill
+                  key={i}
+                  onPress={() => navigation.navigate('ListRoutes', {city})}
+                  cityName={city.translations[user.language] || ''}
+                  imageUrl={city.imageUrl}
+                />
+              ))}
+            </ScrollView>
+          </View>
         )}
       </View>
-    </SafeAreaView>
+    </View>
   );
 }
 
@@ -89,5 +91,6 @@ const styles = StyleSheet.create({
   contentContainer: {
     flex: 1,
     alignItems: 'center',
+    backgroundColor: 'white',
   },
 });

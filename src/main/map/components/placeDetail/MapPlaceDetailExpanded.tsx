@@ -1,9 +1,18 @@
 import {t} from 'i18next';
-import React, {Dispatch, SetStateAction} from 'react';
-import {Image, ImageSourcePropType, StyleSheet, Text, View} from 'react-native';
+import React, {Dispatch, SetStateAction, useRef} from 'react';
+import {
+  Image,
+  ImageSourcePropType,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+import {SheetManager} from 'react-native-actions-sheet';
 import {ScrollView} from 'react-native-gesture-handler';
 import LinearGradient from 'react-native-linear-gradient';
 import place_detail_arrow_bottom_white from '../../../../assets/images/icons/place_detail_arrow_bottom_white.png';
+import place_detail_direction_white from '../../../../assets/images/icons/place_detail_direction_white.png';
 import IMedia from '../../../../shared/interfaces/IMedia';
 import IPlace from '../../../../shared/interfaces/IPlace';
 import ShowRatingStars from '../ShowRatingStars';
@@ -62,12 +71,52 @@ export default function MapPlaceDetailExpanded({
               }>{`${place?.address.city}, ${place?.address.country}`}</Text>
             <ShowRatingStars rating={place?.rating || 0} />
           </View>
-          <View>
-            <Image
-              source={importanceIcon}
-              style={styles.importanceIcon}
-              resizeMode="contain"
-            />
+          <View
+            style={{
+              flexDirection: 'row',
+            }}>
+            <TouchableOpacity
+              onPress={() => {
+                SheetManager.show('direction-sheet', {
+                  payload: {
+                    coordinates: place?.address?.coordinates,
+                    label: place?.name,
+                  },
+                });
+              }}>
+              <View
+                style={{
+                  width: 40,
+                  height: 40,
+                  marginRight: 10,
+
+                  justifyContent: 'flex-end',
+                  alignItems: 'center',
+                }}>
+                <View
+                  style={{
+                    width: 36,
+                    height: 36,
+                    backgroundColor: '#3F713B',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    borderRadius: 20,
+                  }}>
+                  <Image
+                    source={place_detail_direction_white}
+                    style={styles.directionIcon}
+                    resizeMode="contain"
+                  />
+                </View>
+              </View>
+            </TouchableOpacity>
+            <View>
+              <Image
+                source={importanceIcon}
+                style={styles.importanceIcon}
+                resizeMode="contain"
+              />
+            </View>
           </View>
         </View>
         <View style={styles.descriptionContainer}>
@@ -144,7 +193,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   placeName: {
-    fontWeight: '600',
     fontSize: 14,
     color: '#032000',
     fontFamily: 'Montserrat-SemiBold',
@@ -152,16 +200,17 @@ const styles = StyleSheet.create({
   placeAddress: {
     fontSize: 14,
     color: '#032000',
-    fontFamily: 'Montserrat',
+    fontFamily: 'Montserrat-Regular',
     paddingVertical: 5,
   },
+  directionIcon: {width: 22, height: 22},
   importanceIcon: {width: 40, height: 40},
   descriptionContainer: {paddingBottom: 20},
   descriptionText: {
     color: '#032000',
     textAlign: 'justify',
     fontSize: 12,
-    fontFamily: 'Montserrat',
+    fontFamily: 'Montserrat-Regular',
   },
   placeMediaContainer: {
     flex: 1,
@@ -176,7 +225,6 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
   },
   placeMediaIntroText: {
-    fontWeight: '600',
     color: '#3F713B',
     fontSize: 12,
     fontFamily: 'Montserrat-SemiBold',

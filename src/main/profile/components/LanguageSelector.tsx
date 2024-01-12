@@ -1,6 +1,6 @@
 import {t} from 'i18next';
 import {useEffect, useState} from 'react';
-import {StyleSheet, Text, View} from 'react-native';
+import {Platform, StyleSheet, Text, View} from 'react-native';
 import DropDownPicker from 'react-native-dropdown-picker';
 import {Language} from '../../../shared/types/Language';
 
@@ -84,7 +84,7 @@ const styles = StyleSheet.create({
   labelText: {
     fontSize: 16,
     color: '#3F713B',
-    fontFamily: 'Montserrat',
+    fontFamily: 'Montserrat-Regular',
   },
   dropDownContainer: {
     paddingHorizontal: 5,
@@ -103,16 +103,19 @@ const styles = StyleSheet.create({
   dropDownText: {
     fontSize: 16,
     color: '#3F713B',
-    fontFamily: 'Montserrat',
+    fontFamily: 'Montserrat-Regular',
     fontWeight: '400',
   },
   dropDownLabel: {
     fontSize: 16,
     color: '#3F713B',
-    fontFamily: 'Montserrat',
+    fontFamily:
+      Platform.OS === 'android' ? 'Montserrat-SemiBold' : 'Montserrat',
     fontWeight: '600',
   },
   dropDownSelectedItemLabel: {
+    fontFamily:
+      Platform.OS === 'android' ? 'Montserrat-SemiBold' : 'Montserrat',
     fontWeight: '600',
   },
   dropDownListItemLabel: {

@@ -53,6 +53,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.25,
     shadowRadius: 4,
     elevation: 5,
+    marginTop: 20,
   },
   image: {
     position: 'absolute',
@@ -66,7 +67,7 @@ const styles = StyleSheet.create({
   cityName: {
     color: 'white',
     fontSize: 24,
-    fontFamily: 'Montserrat',
+    fontFamily: 'Montserrat-Regular',
   },
   linearGradient: {
     position: 'absolute',

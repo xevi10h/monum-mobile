@@ -149,6 +149,7 @@ export default function RouteDetailScreen({
           const pillRef = pillRefs.get(marker.id)?.current;
           height += pillRef?.isExpanded ? 230 : 80;
         }
+        console.log(height);
         pillRefs.get(markerSelected)?.current?.expandPill();
         pillRefs.get(markerSelected)?.current?.highlightPill();
         scrollViewRef.current?.scrollTo({y: height, animated: true});
@@ -178,7 +179,7 @@ export default function RouteDetailScreen({
         centerCoordinate: centerCoordinates,
       });
     setCenterCamera(false);
-  }, [centerCamera, setCenterCoordinates, setCenterCamera, centerCoordinates]);
+  }, [centerCamera]);
 
   const pillRefs = useRef<Map<string, React.RefObject<PlaceFromRoutePillRef>>>(
     new Map(),
@@ -250,7 +251,7 @@ export default function RouteDetailScreen({
             <Text
               style={{
                 color: '#032000',
-                fontFamily: 'Montserrat',
+                fontFamily: 'Montserrat-Regular',
                 fontSize: 18,
               }}>
               {route.title}
@@ -266,15 +267,14 @@ export default function RouteDetailScreen({
         <ScrollView
           key={key}
           style={{
-            borderRadius: 12,
-            paddingTop: 15,
+            paddingTop: 5,
             width: '100%',
             marginBottom: useSafeAreaInsets().bottom + 40,
             marginTop: 10,
             paddingHorizontal: 12,
+            backgroundColor: 'white',
           }}
           showsVerticalScrollIndicator={false}
-          horizontal={false}
           ref={scrollViewRef}>
           {placesFromRoute?.map((placeFromRoute, index) => (
             <PlaceFromRoutePill
@@ -282,7 +282,7 @@ export default function RouteDetailScreen({
               key={placeFromRoute.place.id}
               style={
                 index === 0
-                  ? {marginTop: -10}
+                  ? {}
                   : index === placesFromRoute.length - 1
                   ? {paddingBottom: 40}
                   : {}
@@ -291,18 +291,18 @@ export default function RouteDetailScreen({
             />
           ))}
         </ScrollView>
+        <LinearGradient
+          start={{x: 0, y: 0}}
+          end={{x: 0, y: 1}}
+          colors={['rgba(0,0,0,0.2)', 'transparent']}
+          style={{
+            position: 'absolute',
+            height: 10,
+            left: 0,
+            right: 0,
+          }}
+        />
       </View>
-      <LinearGradient
-        start={{x: 0, y: 0}}
-        end={{x: 0, y: 0.02}}
-        colors={['rgba(0,0,0,0.2)', 'transparent']}
-        style={{
-          position: 'absolute',
-          width: '100%',
-          height: '100%',
-          zIndex: -1,
-        }}
-      />
     </View>
   );
 }
@@ -328,7 +328,7 @@ const styles = StyleSheet.create({
   mediaPillRatingText: {
     fontSize: 8,
     color: 'white',
-    fontFamily: 'Montserrat',
+    fontFamily: 'Montserrat-Regular',
   },
   mediaPillRatingImage: {width: 8, height: 8},
 });

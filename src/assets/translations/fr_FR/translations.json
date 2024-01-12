@@ -53,5 +53,10 @@
     "stops": "arrêts",
     "audio": "audio",
     "audios": "audios"
+  },
+  "actionSheets": {
+    "directionSheet": {
+      "title": "Ouvrir avec"
+    }
   }
 }

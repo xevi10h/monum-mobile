@@ -1,4 +1,4 @@
-import {StyleSheet} from 'react-native';
+import {Platform, StyleSheet} from 'react-native';
 
 export const styles = StyleSheet.create({
   backgroundContainer: {
@@ -49,7 +49,7 @@ export const styles = StyleSheet.create({
   primaryButtonText: {
     fontSize: 18,
     color: '#032000',
-    fontFamily: 'Montserrat',
+    fontFamily: 'Montserrat-Regular',
   },
   secondaryButton: {
     borderColor: '#FFFFFF',
@@ -77,7 +77,7 @@ export const styles = StyleSheet.create({
   secondaryButtonText: {
     fontSize: 16,
     color: 'white',
-    fontFamily: 'Montserrat',
+    fontFamily: 'Montserrat-Regular',
   },
   separatorContainer: {
     flexDirection: 'row',
@@ -111,7 +111,7 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     flexDirection: 'row',
     fontSize: 16,
-    fontFamily: 'Montserrat',
+    fontFamily: 'Montserrat-Regular',
     backgroundColor: '#3F713B',
   },
   passwordContainer: {
@@ -136,7 +136,7 @@ export const styles = StyleSheet.create({
     textAlign: 'left',
     backgroundColor: '#3F713B',
     textDecorationLine: 'underline',
-    fontFamily: 'Montserrat',
+    fontFamily: 'Montserrat-Regular',
   },
   bottomContainer: {
     flex: 1,
@@ -151,7 +151,7 @@ export const styles = StyleSheet.create({
     fontSize: 16,
     textAlign: 'center',
     backgroundColor: '#3F713B',
-    fontFamily: 'Montserrat',
+    fontFamily: 'Montserrat-Regular',
   },
   registerButtonText: {
     color: '#FFF172',
@@ -159,14 +159,13 @@ export const styles = StyleSheet.create({
     textAlign: 'center',
     backgroundColor: '#3F713B',
     textDecorationLine: 'underline',
-    fontFamily: 'Montserrat',
+    fontFamily: 'Montserrat-Regular',
   },
   companyContainer: {
     alignItems: 'center',
     marginTop: 6,
   },
   companyText: {
-    fontWeight: '600',
     color: '#FFFFFF',
     fontSize: 12,
     backgroundColor: '#3F713B',

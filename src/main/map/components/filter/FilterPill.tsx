@@ -49,6 +49,5 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
     fontFamily: 'Montserrat-SemiBold',
     fontSize: 12,
-    fontWeight: '600',
   },
 });

@@ -1,4 +1,4 @@
-import {SafeAreaView, ScrollView, Text, View} from 'react-native';
+import {ScrollView, Text, View} from 'react-native';
 import {RootState} from 'src/redux/store';
 import {useSelector} from 'react-redux';
 import {ListRoutesScreenProps} from '../navigator/RoutesNavigator';
@@ -11,7 +11,7 @@ import DetailCityPill from '../components/DetailCityPill';
 import TextSearch from '../components/TextSearch';
 import LoadingSpinner from '../../../shared/components/LoadingSpinner';
 import ErrorComponent from '../../../shared/components/ErrorComponent';
-import {useSafeAreaInsets} from 'react-native-safe-area-context';
+import {SafeAreaView, useSafeAreaInsets} from 'react-native-safe-area-context';
 import {t} from 'i18next';
 import ListRoutePill from '../components/ListRoutePill';
 
@@ -56,7 +56,7 @@ export default function ListRoutesScreen({
         <TextSearch
           setTextSearch={setTextSearch}
           textSearch={textSearch}
-          style={{paddingHorizontal: 15, paddingTop: 15}}
+          style={{marginTop: 15, paddingHorizontal: 15}}
         />
         {loading ? (
           <LoadingSpinner />
@@ -66,23 +66,25 @@ export default function ListRoutesScreen({
             onRetry={() => refetch()}
           />
         ) : (
-          <ScrollView
-            scrollEventThrottle={16}
-            style={{
-              width: '100%',
-              marginBottom: useSafeAreaInsets().bottom + 30,
-              marginTop: 15,
-              paddingHorizontal: 12,
-            }}
-            showsVerticalScrollIndicator={false}>
-            {routes.map((route, i) => (
-              <ListRoutePill
-                route={route}
-                key={i}
-                onPress={() => navigation.navigate('RouteDetail', {route})}
-              />
-            ))}
-          </ScrollView>
+          <View style={{flex: 1, width: '100%'}}>
+            <ScrollView
+              scrollEventThrottle={16}
+              style={{
+                width: '100%',
+                marginBottom: useSafeAreaInsets().bottom + 30,
+                marginTop: 15,
+                backgroundColor: 'white',
+              }}
+              showsVerticalScrollIndicator={false}>
+              {routes.map((route, i) => (
+                <ListRoutePill
+                  route={route}
+                  key={i}
+                  onPress={() => navigation.navigate('RouteDetail', {route})}
+                />
+              ))}
+            </ScrollView>
+          </View>
         )}
       </View>
     </SafeAreaView>
@@ -92,7 +94,6 @@ export default function ListRoutesScreen({
 const styles = StyleSheet.create({
   page: {
     flex: 1,
-    backgroundColor: 'white',
   },
   contentContainer: {
     flex: 1,

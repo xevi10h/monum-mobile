@@ -41,7 +41,7 @@ export default function UpdatePasswordScreen({
   if (loadingUpdatedPassword) return <LoadingSpinner />;
 
   return (
-    <SafeAreaView style={styles.page}>
+    <View style={[styles.page, {paddingTop: useSafeAreaInsets().top + 20}]}>
       <View style={styles.container}>
         <View style={styles.profilePhotoContainer}>
           <TouchableOpacity
@@ -91,7 +91,7 @@ export default function UpdatePasswordScreen({
             <Text
               style={{
                 color: 'red',
-                fontFamily: 'Montserrat',
+                fontFamily: 'Montserrat-Regular',
                 fontSize: 16,
                 textAlign: 'center',
               }}>
@@ -112,11 +112,11 @@ export default function UpdatePasswordScreen({
             });
             navigation.goBack();
           }}
-          style={{marginBottom: useSafeAreaInsets().bottom + 50}}
+          style={{marginBottom: useSafeAreaInsets().bottom + 100}}
           disabled={isDisabled()}
         />
       </View>
-    </SafeAreaView>
+    </View>
   );
 }
 
@@ -138,12 +138,12 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
     color: '#032000',
-    fontFamily: 'Montserrat',
+    fontFamily: 'Montserrat-Regular',
   },
   introductionText: {
     fontSize: 14,
     color: '#3F713B',
-    fontFamily: 'Montserrat',
+    fontFamily: 'Montserrat-Regular',
     paddingVertical: 10,
   },
 });

@@ -1,8 +1,18 @@
 import {gql} from '@apollo/client';
 
 export const GET_MARKERS = gql`
-  query Places($textSearch: String, $centerCoordinates: [Float]) {
-    places(textSearch: $textSearch, centerCoordinates: $centerCoordinates) {
+  query Places(
+    $textSearch: String
+    $centerCoordinates: [Float]
+    $sortOrder: SortOrder
+    $sortField: SortField
+  ) {
+    places(
+      textSearch: $textSearch
+      centerCoordinates: $centerCoordinates
+      sortOrder: $sortOrder
+      sortField: $sortField
+    ) {
       id
       address {
         coordinates {

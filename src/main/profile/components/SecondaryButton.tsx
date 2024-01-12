@@ -48,6 +48,6 @@ const styles = StyleSheet.create({
   buttonText: {
     fontSize: 18,
     color: '#032000',
-    fontFamily: 'Montserrat',
+    fontFamily: 'Montserrat-Regular',
   },
 });

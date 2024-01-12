@@ -12,11 +12,22 @@ class MapServices {
   public async getMarkers(
     textSearch: string | undefined,
     centerCoordinates: [number, number],
+    sortField: 'importance' | 'name' | 'rating',
+    sortOrder: 'asc' | 'desc',
   ): Promise<MarkerResponse[]> {
     try {
+      console.log('textSearch:', textSearch);
+      console.log('centerCoordinates:', centerCoordinates);
+      console.log('sortField:', sortField);
+      console.log('sortOrder:', sortOrder);
       const response = await client.query({
         query: GET_MARKERS,
-        variables: {textSearch: textSearch, centerCoordinates},
+        variables: {
+          textSearch: textSearch,
+          centerCoordinates,
+          sortField,
+          sortOrder,
+        },
       });
       return response.data.places || [];
     } catch (error) {

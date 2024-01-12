@@ -53,5 +53,10 @@
     "stops": "paradas",
     "audio": "audio",
     "audios": "audios"
+  },
+  "actionSheets": {
+    "directionSheet": {
+      "title": "Abrir con"
+    }
   }
 }

@@ -378,7 +378,7 @@ PODS:
     - React-Core
   - react-native-geolocation (3.1.0):
     - React-Core
-  - react-native-pager-view (6.2.0):
+  - react-native-pager-view (6.2.2):
     - React-Core
   - react-native-safe-area-context (4.7.3):
     - React-Core
@@ -506,6 +506,8 @@ PODS:
     - Firebase/Auth (= 10.7.0)
     - React-Core
     - RNFBApp
+  - RNFlashList (1.6.3):
+    - React-Core
   - RNGestureHandler (2.13.4):
     - RCT-Folly (= 2021.07.22.00)
     - React-Core
@@ -625,6 +627,7 @@ DEPENDENCIES:
   - "RNCMaskedView (from `../node_modules/@react-native-community/masked-view`)"
   - "RNFBApp (from `../node_modules/@react-native-firebase/app`)"
   - "RNFBAuth (from `../node_modules/@react-native-firebase/auth`)"
+  - "RNFlashList (from `../node_modules/@shopify/flash-list`)"
   - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
   - "RNGoogleSignin (from `../node_modules/@react-native-google-signin/google-signin`)"
   - RNImageCropPicker (from `../node_modules/react-native-image-crop-picker`)
@@ -756,6 +759,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/@react-native-firebase/app"
   RNFBAuth:
     :path: "../node_modules/@react-native-firebase/auth"
+  RNFlashList:
+    :path: "../node_modules/@shopify/flash-list"
   RNGestureHandler:
     :path: "../node_modules/react-native-gesture-handler"
   RNGoogleSignin:
@@ -816,7 +821,7 @@ SPEC CHECKSUMS:
   React-logger: cebf22b6cf43434e471dc561e5911b40ac01d289
   react-native-config: 86038147314e2e6d10ea9972022aa171e6b1d4d8
   react-native-geolocation: ef66fb798d96284c6043f0b16c15d9d1d4955db4
-  react-native-pager-view: 0ccb8bf60e2ebd38b1f3669fa3650ecce81db2df
+  react-native-pager-view: 02a5c4962530f7efc10dd51ee9cdabeff5e6c631
   react-native-safe-area-context: 238cd8b619e05cb904ccad97ef42e84d1b5ae6ec
   react-native-track-player: 0c26d981b5097910486cbbeb6d8f5352d41be069
   React-NativeModulesApple: 1802a680a4cd891d2ab97780771bcb2ff11fdc0b
@@ -840,6 +845,7 @@ SPEC CHECKSUMS:
   RNCMaskedView: 0e1bc4bfa8365eba5fbbb71e07fbdc0555249489
   RNFBApp: d59efa0872fff4e27de03cca3c528c203a436ae5
   RNFBAuth: 54e598bb1358a0cf6c0a187f43161cd1bde90455
+  RNFlashList: 4b4b6b093afc0df60ae08f9cbf6ccd4c836c667a
   RNGestureHandler: 6594263b1a123e43c23ff72c8d99080187e74bf9
   RNGoogleSignin: c15bdaa7e8a9e190b6169d9c96a4e8380a740f22
   RNImageCropPicker: 486e2f7e2b0461ce24321f751410dce1b3b49e6d

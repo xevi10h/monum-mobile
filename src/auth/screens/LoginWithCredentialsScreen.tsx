@@ -71,8 +71,6 @@ export default function LoginScreen({navigation}: Props) {
 
   const dispatch = useDispatch();
 
-  console.log('error', error);
-
   return (
     <View style={styles.backgroundContainer}>
       <View style={styles.backgroundColor} />

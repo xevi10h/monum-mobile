@@ -101,6 +101,7 @@ const PlaceFromRoutePill = forwardRef<
       style={[
         {
           width: '100%',
+          elevation: 10,
         },
         style,
       ]}>
@@ -121,7 +122,9 @@ const PlaceFromRoutePill = forwardRef<
               ]}>
               <View style={{width: '75%'}}>
                 <Text style={styles.placeNameText}>{place.name}</Text>
-                <Text style={styles.placeDescriptionText}>
+                <Text
+                  style={styles.placeDescriptionText}
+                  numberOfLines={expandedPill ? 3 : 2}>
                   {place.description}
                 </Text>
               </View>
@@ -228,17 +231,17 @@ const styles = StyleSheet.create({
   placeNameText: {
     fontSize: 12,
     color: '#3F713B',
-    fontFamily: 'Montserrat',
+    fontFamily: 'Montserrat-Regular',
   },
   placeDescriptionText: {
     fontSize: 8,
     color: '#3F713B',
-    fontFamily: 'Montserrat',
+    fontFamily: 'Montserrat-Regular',
   },
   audiosNumberText: {
     fontSize: 10,
     color: '#3F713B',
-    fontFamily: 'Montserrat',
+    fontFamily: 'Montserrat-Regular',
   },
   placeMediaContainer: {
     flex: 1,
@@ -251,7 +254,6 @@ const styles = StyleSheet.create({
     alignSelf: 'flex-start',
   },
   placeMediaIntroText: {
-    fontWeight: '600',
     color: '#3F713B',
     fontSize: 8,
     fontFamily: 'Montserrat-SemiBold',

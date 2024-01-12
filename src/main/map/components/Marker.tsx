@@ -1,7 +1,7 @@
 import {MarkerView} from '@rnmapbox/maps';
 import {useState} from 'react';
 import React, {useEffect} from 'react';
-import {Image, View} from 'react-native';
+import {Image, Platform, TouchableOpacity, View} from 'react-native';
 import {Gesture, GestureDetector} from 'react-native-gesture-handler';
 import {runOnJS} from 'react-native-reanimated';
 
@@ -64,38 +64,31 @@ export function MarkerComponent({
   }, [selected]);
 
   return (
-    <GestureDetector
-      gesture={Gesture.Tap().onTouchesUp(() => {
-        runOnJS(setMarkerSelected)(id);
-      })}>
-      <MarkerView
-        id={id}
-        key={id}
-        coordinate={coordinates}
+    <MarkerView id={id} key={id} coordinate={coordinates}>
+      <TouchableOpacity
+        onPress={() => {
+          setMarkerSelected(id);
+        }}
         style={{
           shadowColor: '#000',
           shadowOffset: {width: 0, height: 2},
           shadowOpacity: 0.5,
           shadowRadius: 4,
-          elevation: 10,
+          backgroundColor: backgroundColor,
+          borderRadius: 30,
+          width: dimensions,
+          height: dimensions,
+          alignItems: 'center',
+          justifyContent: 'center',
+          elevation: 5,
+          margin: Platform.OS === 'android' ? 10 : 0,
         }}>
-        <View
-          style={{
-            backgroundColor: backgroundColor,
-            width: dimensions,
-            height: dimensions,
-            alignItems: 'center',
-            justifyContent: 'center',
-            overflow: 'hidden',
-            borderRadius: 30,
-          }}>
-          <Image
-            source={icon}
-            style={{width: '65%', height: '65%'}}
-            resizeMode={'contain'}
-          />
-        </View>
-      </MarkerView>
-    </GestureDetector>
+        <Image
+          source={icon}
+          style={{width: '65%', height: '65%'}}
+          resizeMode={'contain'}
+        />
+      </TouchableOpacity>
+    </MarkerView>
   );
 }

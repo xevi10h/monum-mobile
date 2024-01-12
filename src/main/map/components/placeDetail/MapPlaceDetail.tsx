@@ -5,7 +5,7 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import {Dimensions, StyleSheet, View} from 'react-native';
+import {Dimensions, Platform, StyleSheet, View} from 'react-native';
 import {
   PanGestureHandler,
   PanGestureHandlerGestureEvent,
@@ -33,10 +33,10 @@ import MapServices from '../../services/MapServices';
 import {useSelector} from 'react-redux';
 import {RootState} from '../../../../redux/store';
 
-const {height} = Dimensions.get('window');
+const {height} = Dimensions.get('screen');
 
 const BOTTOM_TAB_NAVIGATOR_HEIGHT = 56;
-const BOTTOM_TAB_HEIGHT = 120;
+const BOTTOM_TAB_HEIGHT = 130;
 const MAX_MARGIN_TOP = 50;
 
 interface MapPlaceDetailProps {
@@ -158,31 +158,28 @@ export default function MapPlaceDetail({
 
   useEffect(() => {
     if (placeId) {
-      // TO DO: Change it for a call to the API
+      console.log('place', place);
       const placeInfo = {};
       if (placeInfo) {
         const fetchPlace = async () => {
           const placeData = await MapServices.getPlaceInfo(placeId);
           setPlace(placeData);
+          const placeMedia = await MapServices.getPlaceMedia(
+            placeId,
+            userLanguage,
+          );
+          setPlaceMedia(placeMedia);
+          position.value = withTiming(height - BOTTOM_TOTAL_TAB_HEIGHT, {
+            duration: 300,
+          });
         };
         fetchPlace();
-        position.value = withTiming(height - BOTTOM_TOTAL_TAB_HEIGHT, {
-          duration: 300,
-        });
       }
     }
   }, [placeId]);
 
   useEffect(() => {
     if (place && showPlaceDetailExpanded) {
-      const fetchPlaceMedia = async () => {
-        const placeMedia = await MapServices.getPlaceMedia(
-          place.id,
-          userLanguage,
-        );
-        setPlaceMedia(placeMedia);
-      };
-      fetchPlaceMedia();
       position.value = withTiming(MAX_MARGIN_TOP, {duration: 300});
     }
   }, [showPlaceDetailExpanded, place]);

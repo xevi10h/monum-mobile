@@ -1,7 +1,7 @@
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {NavigationContainer} from '@react-navigation/native';
 import React, {useRef, useState} from 'react';
-import {StyleSheet, Image, StatusBar} from 'react-native';
+import {StyleSheet, Image, StatusBar, Platform} from 'react-native';
 import {useSafeAreaInsets} from 'react-native-safe-area-context';
 
 import bottom_bar_list_inactive from '../assets/images/icons/bottom_bar_list_inactive.png';
@@ -142,7 +142,6 @@ const styles = StyleSheet.create({
     shadowOffset: {width: 0, height: 2},
     shadowOpacity: 0.8,
     shadowRadius: 10,
-    elevation: 10,
     borderTopLeftRadius: 24,
     borderTopRightRadius: 24,
     justifyContent: 'flex-start',

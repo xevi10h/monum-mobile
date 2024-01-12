@@ -275,7 +275,7 @@ const styles = StyleSheet.create({
   mediaBubbleTitleText: {
     color: '#032000',
     fontSize: 14,
-    fontFamily: 'Montserrat',
+    fontFamily: 'Montserrat-Regular',
   },
   mediaBubbleLocationContainer: {
     width: '100%',
@@ -283,7 +283,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     fontSize: 12,
-    fontFamily: 'Montserrat',
+    fontFamily: 'Montserrat-Regular',
   },
   mediaBubbleLocationImage: {width: 15, height: 15, marginHorizontal: 3},
   mediaBubbleLocationText: {color: '#3F713B', fontSize: 14},

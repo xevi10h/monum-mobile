@@ -98,12 +98,12 @@ const styles = StyleSheet.create({
   placeMediaPillTitle: {
     fontSize: 12,
     color: '#3F713B',
-    fontFamily: 'Montserrat',
+    fontFamily: 'Montserrat-Regular',
   },
   placeMediaPillDuration: {
     fontSize: 10,
     color: '#3F713B',
-    fontFamily: 'Montserrat',
+    fontFamily: 'Montserrat-Regular',
   },
   placeMediaPillPlayIcon: {width: 24, height: 24},
   mediaPillRatingContainer: {
@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
   mediaPillRatingText: {
     fontSize: 8,
     color: 'white',
-    fontFamily: 'Montserrat',
+    fontFamily: 'Montserrat-Regular',
   },
   mediaPillRatingImage: {width: 8, height: 8},
 });

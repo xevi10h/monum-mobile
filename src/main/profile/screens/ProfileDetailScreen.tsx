@@ -24,11 +24,6 @@ import {Language} from '../../../shared/types/Language';
 
 const BOTTOM_TAB_NAVIGATOR_HEIGHT = 56;
 
-type RegisterScreenNavigationProp = StackNavigationProp<
-  RootStackParamList,
-  'Register'
->;
-
 type Props = {
   navigation: any;
 };
@@ -137,7 +132,7 @@ export default function ProfileScreen({navigation}: Props) {
     );
 
   return (
-    <SafeAreaView style={styles.page}>
+    <View style={[styles.page, {paddingTop: useSafeAreaInsets().top + 20}]}>
       <View style={styles.profilePhotoContainer}>
         <ProfilePhotoComponent
           url={user.photo}
@@ -197,7 +192,7 @@ export default function ProfileScreen({navigation}: Props) {
           styles.logoutButtonContainer,
           {
             bottom:
-              useSafeAreaInsets().bottom + BOTTOM_TAB_NAVIGATOR_HEIGHT + 20,
+              useSafeAreaInsets().bottom + BOTTOM_TAB_NAVIGATOR_HEIGHT + 40,
           },
         ]}>
         <SecondaryButton
@@ -208,7 +203,7 @@ export default function ProfileScreen({navigation}: Props) {
           }}
         />
       </View>
-    </SafeAreaView>
+    </View>
   );
 }
 
@@ -228,7 +223,7 @@ const styles = StyleSheet.create({
   textCreatedAt: {
     fontSize: 16,
     color: '#3F713B',
-    fontFamily: 'Montserrat',
+    fontFamily: 'Montserrat-Regular',
     textAlign: 'center',
   },
   logoutButtonContainer: {

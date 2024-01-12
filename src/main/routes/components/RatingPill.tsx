@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
   mediaPillRatingText: {
     fontSize: 8,
     color: 'white',
-    fontFamily: 'Montserrat',
+    fontFamily: 'Montserrat-Regular',
   },
   mediaPillRatingImage: {width: 8, height: 8},
 });
